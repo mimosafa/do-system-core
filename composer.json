@@ -1,0 +1,13 @@
+{
+    "name": "w-tokyodo/do-system-core",
+    "description": "Core architecture for \"Do System\" application.",
+    "authors": [
+        {
+            "name": "Mimoto, Toshimichi",
+            "email": "mimoto@w-tokyodo.com"
+        }
+    ],
+    "require": {
+        "php": "^7.2"
+    }
+}
