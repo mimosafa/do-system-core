@@ -5,7 +5,7 @@ namespace DoSystem\InMemory\Repositories;
 use DoSystem\Domain\Models\Vendor\Vendor;
 use DoSystem\Domain\Models\Vendor\VendorValueId;
 use DoSystem\Domain\Models\Vendor\VendorValueName;
-use DoSystem\Domain\Repositories\VendorRepositoryInterface;
+use DoSystem\Domain\Models\Vendor\VendorRepositoryInterface;
 use DoSystem\Exception\NotFoundException;
 
 class VendorRepository implements VendorRepositoryInterface
@@ -29,7 +29,7 @@ class VendorRepository implements VendorRepositoryInterface
         $name = $model->getName();
 
         if ($id === null) {
-            $int = count($this->db);
+            $int = count($this->db) + 1;
             $this->db[$int] = [];
         } else {
             $int = $id->getValue();
