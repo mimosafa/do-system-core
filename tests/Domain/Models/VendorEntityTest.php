@@ -56,7 +56,7 @@ class VendorEntityTest extends TestCase
         $id1 = $this->ids[0];
         $this->assertTrue($id1 instanceof VendorValueId);
 
-        $entity1 = $this->repository->find($id1);
+        $entity1 = $this->repository->findById($id1);
         $this->assertTrue($entity1 instanceof Vendor);
     }
 
@@ -66,10 +66,10 @@ class VendorEntityTest extends TestCase
     public function VendorValueId()
     {
         $id1 = $this->ids[0];
-        $entity1 = $this->repository->find($id1);
+        $entity1 = $this->repository->findById($id1);
 
         $id2 = $this->ids[1];
-        $entity2 = $this->repository->find($id2);
+        $entity2 = $this->repository->findById($id2);
 
         // VendorValueId
         $this->assertTrue($id1->equals($entity1->getId()));
@@ -82,11 +82,11 @@ class VendorEntityTest extends TestCase
     public function VendorValueName()
     {
         $id1 = $this->ids[0];
-        $entity1 = $this->repository->find($id1);
+        $entity1 = $this->repository->findById($id1);
         $name1 = $entity1->getName();
 
         $id2 = $this->ids[1];
-        $entity2 = $this->repository->find($id2);
+        $entity2 = $this->repository->findById($id2);
         $name2 = $entity2->getName();
 
         // VendorValueName

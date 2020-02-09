@@ -50,7 +50,7 @@ class VendorRepository implements VendorRepositoryInterface
      * @return Vendor|null
      * @throws NotFoundException
      */
-    public function find(VendorValueId $id): Vendor
+    public function findById(VendorValueId $id): Vendor
     {
         /** @var int */
         $int = $id->getValue();
