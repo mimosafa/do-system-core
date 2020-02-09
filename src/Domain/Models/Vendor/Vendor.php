@@ -5,7 +5,7 @@ namespace DoSystem\Domain\Models\Vendor;
 class Vendor
 {
     /**
-     * @var VendorValueId
+     * @var VendorValueId|null
      */
     private $id;
 
@@ -17,19 +17,19 @@ class Vendor
     /**
      * Constructor
      *
-     * @param VendorValueId $id
+     * @param VendorValueId|null $id
      * @param VendorValueName $name
      */
-    public function __construct(VendorValueId $id, VendorValueName $name)
+    public function __construct(?VendorValueId $id, VendorValueName $name)
     {
         $this->id = $id;
         $this->name = $name;
     }
 
     /**
-     * @return VendorValueId
+     * @return VendorValueId|null
      */
-    public function getId(): VendorValueId
+    public function getId(): ?VendorValueId
     {
         return $this->id;
     }

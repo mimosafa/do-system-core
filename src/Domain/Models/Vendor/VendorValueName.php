@@ -2,8 +2,13 @@
 
 namespace DoSystem\Domain\Models\Vendor;
 
-final class VendorValueName
+use DoSystem\Module\Domain\Models\ValueObjectInterface;
+use DoSystem\Module\Domain\Models\ValueObjectTrait;
+
+final class VendorValueName implements ValueObjectInterface
 {
+    use ValueObjectTrait;
+
     /**
      * @var string
      */
