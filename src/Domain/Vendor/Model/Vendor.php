@@ -1,6 +1,6 @@
 <?php
 
-namespace DoSystem\Domain\Models\Vendor;
+namespace DoSystem\Domain\Vendor\Model;
 
 class Vendor
 {

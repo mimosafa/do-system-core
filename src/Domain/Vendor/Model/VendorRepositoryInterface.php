@@ -1,9 +1,6 @@
 <?php
 
-namespace DoSystem\Domain\Models\Vendor;
-
-use DoSystem\Domain\Models\Vendor\Vendor;
-use DoSystem\Domain\Models\Vendor\VendorValueId;
+namespace DoSystem\Domain\Vendor\Model;
 
 interface VendorRepositoryInterface
 {

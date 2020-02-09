@@ -1,9 +1,9 @@
 <?php
 
-namespace DoSystem\Domain\Models\Vendor;
+namespace DoSystem\Domain\Vendor\Model;
 
-use DoSystem\Module\Domain\Models\ValueObjectInterface;
-use DoSystem\Module\Domain\Models\ValueObjectTrait;
+use DoSystem\Module\Domain\Model\ValueObjectInterface;
+use DoSystem\Module\Domain\Model\ValueObjectTrait;
 
 final class VendorValueId implements ValueObjectInterface
 {

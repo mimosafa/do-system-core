@@ -1,8 +1,8 @@
 <?php
 
-namespace DoSystem\Module\Domain\Models;
+namespace DoSystem\Module\Domain\Model;
 
-use DoSystem\Module\Domain\Models\ValueObjectInterface;
+use DoSystem\Module\Domain\Model\ValueObjectInterface;
 
 trait ValueObjectTrait
 {

@@ -9,6 +9,6 @@ class SampleTest extends TestCase
 {
     public function testSample()
     {
-        $this->assertTrue(class_exists('DoSystem\\Domain\\Models\\User\\User'));
+        $this->assertTrue(class_exists('DoSystem\\Domain\\User\\Model\\User'));
     }
 }

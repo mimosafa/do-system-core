@@ -2,10 +2,10 @@
 
 namespace DoSystem\InMemory\Repositories;
 
-use DoSystem\Domain\Models\Vendor\Vendor;
-use DoSystem\Domain\Models\Vendor\VendorValueId;
-use DoSystem\Domain\Models\Vendor\VendorValueName;
-use DoSystem\Domain\Models\Vendor\VendorRepositoryInterface;
+use DoSystem\Domain\Vendor\Model\Vendor;
+use DoSystem\Domain\Vendor\Model\VendorValueId;
+use DoSystem\Domain\Vendor\Model\VendorValueName;
+use DoSystem\Domain\Vendor\Model\VendorRepositoryInterface;
 use DoSystem\Exception\NotFoundException;
 
 class VendorRepository implements VendorRepositoryInterface

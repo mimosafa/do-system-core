@@ -1,6 +1,6 @@
 <?php
 
-namespace DoSystem\Module\Domain\Models;
+namespace DoSystem\Module\Domain\Model;
 
 interface ValueObjectInterface
 {
