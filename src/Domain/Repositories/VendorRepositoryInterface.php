@@ -17,5 +17,5 @@ interface VendorRepositoryInterface
      * @param VendorValueId $id
      * @return Vendor
      */
-    public function find(VandorValueId $id): Vendor;
+    public function find(VendorValueId $id): Vendor;
 }
