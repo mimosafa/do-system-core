@@ -19,6 +19,6 @@
         }
     },
     "scripts": {
-        "phpunit": "phpunit"
+        "phpunit": "phpunit --colors=always --testdox"
     }
 }
