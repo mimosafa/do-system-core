@@ -2,8 +2,6 @@
 
 namespace DoSystem\Module\Domain\Model;
 
-use DoSystem\Module\Domain\Model\ValueObjectInterface;
-
 trait ValueObjectTrait
 {
     /**
@@ -13,6 +11,7 @@ trait ValueObjectTrait
 
     /**
      * @param ValueObjectInterface $valueObject
+     * @return bool
      */
     public function equals(ValueObjectInterface $valueObject): bool
     {
