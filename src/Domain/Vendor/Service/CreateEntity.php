@@ -4,6 +4,7 @@ namespace DoSystem\Domain\Vendor\Service;
 
 use DoSystem\Domain\Vendor\Model\Vendor;
 use DoSystem\Domain\Vendor\Model\VendorValueName;
+use DoSystem\Domain\Vendor\Model\VendorValueStatus;
 use DoSystem\Domain\Vendor\Model\VendorRepositoryInterface;
 
 class CreateEntity
@@ -27,10 +28,13 @@ class CreateEntity
      * @param string $name
      * @return Vendor
      */
-    public function handle(string $name): Vendor
+    public function handle(string $name, int $statusEnum): Vendor
     {
-        $nameVal = new VendorValueName($name);
-        $id = $this->vendorRepository->store(new Vendor(null, $nameVal));
+        $nameVal = VendorValueName::of($name);
+        $statusVal = VendorValueStatus::of($statusEnum);
+
+        $model = new Vendor(null, $nameVal, $statusVal);
+        $id = $this->vendorRepository->store($model);
 
         return $this->vendorRepository->findById($id);
     }

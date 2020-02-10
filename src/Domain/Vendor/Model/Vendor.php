@@ -15,15 +15,21 @@ class Vendor
     private $name;
 
     /**
+     * @var VendorValueStatus
+     */
+    private $status;
+
+    /**
      * Constructor
      *
      * @param VendorValueId|null $id
      * @param VendorValueName $name
      */
-    public function __construct(?VendorValueId $id, VendorValueName $name)
+    public function __construct(?VendorValueId $id, VendorValueName $name, VendorValueStatus $status)
     {
         $this->id = $id;
         $this->name = $name;
+        $this->status = $status;
     }
 
     /**
@@ -40,5 +46,13 @@ class Vendor
     public function getName(): VendorValueName
     {
         return $this->name;
+    }
+
+    /**
+     * @return VendorValueStatus
+     */
+    public function getStatus(): VendorValueStatus
+    {
+        return $this->status;
     }
 }

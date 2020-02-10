@@ -6,6 +6,7 @@ use PHPUnit\Framework\TestCase;
 use DoSystem\Domain\Vendor\Model\Vendor;
 use DoSystem\Domain\Vendor\Model\VendorValueId;
 use DoSystem\Domain\Vendor\Model\VendorValueName;
+use DoSystem\Domain\Vendor\Model\VendorValueStatus;
 use DoSystem\Domain\Vendor\Model\VendorRepositoryInterface;
 use DoSystem\InMemory\Repositories\VendorRepository;
 
@@ -23,10 +24,12 @@ class VendorEntityTest extends TestCase
         // Id will be 1
         [
             'name' => 'TokyoDo',
+            'status' => 3,
         ],
         // Id will be 2
         [
             'name' => 'Workstore',
+            'status' => 0
         ],
     ];
 
@@ -43,7 +46,8 @@ class VendorEntityTest extends TestCase
 
         foreach ($this->data as $args) {
             $name = VendorValueName::of($args['name']);
-            $entity = new Vendor(null, $name);
+            $status = VendorValueStatus::of($args['status']);
+            $entity = new Vendor(null, $name, $status);
             $this->ids[] = $this->repository->store($entity);
         }
     }
