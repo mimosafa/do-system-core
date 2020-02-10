@@ -5,17 +5,23 @@ namespace DoSystem\Module\Domain\Model;
 trait ValueObjectTrait
 {
     /**
+     * @abstract
+     *
      * @return mixed
      */
     abstract public function getValue();
 
     /**
+     * @final
+     *
      * @param ValueObjectInterface $valueObject
      * @return bool
      */
-    public function equals(ValueObjectInterface $valueObject): bool
+    final public function equals(ValueObjectInterface $valueObject): bool
     {
-        return $this->getValue() === $valueObject->getValue();
+        return $valueObject instanceof static
+            && $this->getValue() === $valueObject->getValue()
+            && \get_called_class() === \get_class($valueObject);
     }
 
     /**
@@ -27,6 +33,8 @@ trait ValueObjectTrait
     }
 
     /**
+     * @static
+     *
      * @param mixed $value
      * @return ValueObjectInterface
      */
