@@ -141,7 +141,7 @@ abstract class AbstractValueObjectEnum
      *
      * Checks that value of the object and
      * value corresponding to the called key are equal
-     * @method bool is{$snakedKey}()
+     * @method bool is{$StudlyCasedKey}()
      * @throws BadMethodCallException
      *
      * @uses Str::snake()

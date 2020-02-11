@@ -147,5 +147,8 @@ class ValueObjectEnumTest extends TestCase
     {
         $this->assertTrue($this->vo1->isMale());
         $this->assertFalse($this->vo1->isFemale());
+
+        $this->assertTrue($this->vo2->isNotApplicable());
+        $this->assertFalse($this->vo2->isMale());
     }
 }
