@@ -9,7 +9,8 @@
     ],
     "require": {
         "php": "^7.2",
-        "illuminate/support": "^6.0"
+        "illuminate/support": "^6.0",
+        "illuminate/container": "^6.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^8.0"
@@ -17,7 +18,10 @@
     "autoload": {
         "psr-4": {
             "DoSystem\\": "src/"
-        }
+        },
+        "files": [
+            "src/bootstrap.php"
+        ]
     },
     "scripts": {
         "phpunit": "phpunit --colors=always --testdox"
