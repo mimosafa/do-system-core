@@ -10,6 +10,12 @@ final class VendorValueId implements ValueObjectInterface
     use ValueObjectTrait;
 
     /**
+     * Id value for model unstored to storage.
+     * Used by usecase storing new model.
+     */
+    private const UNSTORED_ENTITY_MODEL_ID = -1;
+
+    /**
      * @var int
      */
     private $value;
@@ -17,10 +23,13 @@ final class VendorValueId implements ValueObjectInterface
     /**
      * Constructor
      *
-     * @param int $value
+     * @param int|null $value
      */
-    public function __construct(int $value)
+    public function __construct(?int $value = null)
     {
+        if ($value === null) {
+            $value = self::UNSTORED_ENTITY_MODEL_ID;
+        }
         $this->value = $value;
     }
 
@@ -30,5 +39,13 @@ final class VendorValueId implements ValueObjectInterface
     public function getValue(): int
     {
         return $this->value;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPersisted(): bool
+    {
+        return $this->value !== self::UNSTORED_ENTITY_MODEL_ID;
     }
 }

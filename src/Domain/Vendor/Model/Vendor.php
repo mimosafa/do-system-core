@@ -22,10 +22,10 @@ class Vendor
     /**
      * Constructor
      *
-     * @param VendorValueId|null $id
+     * @param VendorValueId $id
      * @param VendorValueName $name
      */
-    public function __construct(?VendorValueId $id, VendorValueName $name, VendorValueStatus $status)
+    public function __construct(VendorValueId $id, VendorValueName $name, VendorValueStatus $status)
     {
         $this->id = $id;
         $this->name = $name;

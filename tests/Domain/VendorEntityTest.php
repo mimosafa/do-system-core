@@ -45,9 +45,10 @@ class VendorEntityTest extends TestCase
         $this->repository = new VendorRepository();
 
         foreach ($this->data as $args) {
+            $id = VendorValueId::of(null); // Temporary id object
             $name = VendorValueName::of($args['name']);
             $status = VendorValueStatus::of($args['status']);
-            $entity = new Vendor(null, $name, $status);
+            $entity = new Vendor($id, $name, $status);
             $this->ids[] = $this->repository->store($entity);
         }
     }
