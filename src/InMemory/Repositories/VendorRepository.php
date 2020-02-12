@@ -23,7 +23,7 @@ class VendorRepository implements VendorRepositoryInterface
      */
     public function store(Vendor $model): VendorValueId
     {
-        /** @var VendorValueId|null */
+        /** @var VendorValueId */
         $id = $model->getId();
 
         /** @var VendorValueName */
@@ -32,7 +32,7 @@ class VendorRepository implements VendorRepositoryInterface
         /** @var VendorValueStatus */
         $status = $model->getStatus();
 
-        if ($id === null) {
+        if (!$id->isPersisted()) {
             $int = count($this->db) + 1;
             $this->db[$int] = [];
         } else {
@@ -47,7 +47,7 @@ class VendorRepository implements VendorRepositoryInterface
         $row['name'] = $name->getValue();
         $row['status'] = $status->getValue();
 
-        return new VendorValueId($int);
+        return VendorValueId::of($int);
     }
 
     /**
