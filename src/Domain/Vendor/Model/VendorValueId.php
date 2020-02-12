@@ -2,10 +2,10 @@
 
 namespace DoSystem\Domain\Vendor\Model;
 
-use DoSystem\Module\Domain\Model\ValueObjectIdentificationInterface;
-use DoSystem\Module\Domain\Model\AbstractValueObjectIntIncrementedForIdentification as Base;
+use DoSystem\Module\Domain\Model\ValueObjectIdInterface;
+use DoSystem\Module\Domain\Model\AbstractValueObjectIntForId;
 
-final class VendorValueId extends Base implements ValueObjectIdentificationInterface
+final class VendorValueId extends AbstractValueObjectIntForId implements ValueObjectIdInterface
 {
     //
 }

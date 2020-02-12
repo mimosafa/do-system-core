@@ -2,7 +2,7 @@
 
 namespace DoSystem\Module\Domain\Model;
 
-abstract class AbstractValueObjectIntIncrementedForIdentification
+abstract class AbstractValueObjectIntForId
 {
     use ValueObjectTrait;
 
@@ -29,7 +29,7 @@ abstract class AbstractValueObjectIntIncrementedForIdentification
         }
         $this->value = $value;
     }
-    
+
     /**
      * @return int
      */

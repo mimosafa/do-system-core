@@ -2,10 +2,10 @@
 
 namespace DoSystem\Domain\Car\Model;
 
-use DoSystem\Module\Domain\Model\ValueObjectIdentificationInterface;
-use DoSystem\Module\Domain\Model\AbstractValueObjectIntIncrementedForIdentification as Base;
+use DoSystem\Module\Domain\Model\ValueObjectIdInterface;
+use DoSystem\Module\Domain\Model\AbstractValueObjectIntForId;
 
-final class CarValueId extends Base implements ValueObjectIdentificationInterface
+final class CarValueId extends AbstractValueObjectIntForId implements ValueObjectIdInterface
 {
     //
 }
