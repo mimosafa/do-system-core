@@ -32,7 +32,7 @@ class VendorRepository implements VendorRepositoryInterface
         /** @var VendorValueStatus */
         $status = $model->getStatus();
 
-        if (!$id->isPersisted()) {
+        if (!$id->exists()) {
             $int = count($this->db) + 1;
             $this->db[$int] = [];
         } else {

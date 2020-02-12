@@ -2,7 +2,11 @@
 
 namespace DoSystem\Module\Domain\Model;
 
-interface CollectionInterface
+use ArrayAccess;
+use Countable;
+use IteratorAggregate;
+
+interface CollectionInterface extends ArrayAccess, Countable, IteratorAggregate
 {
     //
 }

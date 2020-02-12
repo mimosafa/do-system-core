@@ -7,20 +7,16 @@ interface CarRepositoryInterface
     /**
      * @param Car $model
      * @return CarValueId
+     * @throws \DoSystem\Exception\NotFoundException
      */
     public function store(Car $model): CarValueId;
 
     /**
      * @param CarValueId $id
      * @return Car
+     * @throws \DoSystem\Exception\NotFoundException
      */
     public function findById(CarValueId $id): Car;
-
-    /**
-     * @param CarValueVin $vin
-     * @return Car
-     */
-    public function findByVin(CarValueVin $vin): Car;
 
     /**
      * @param array $params
