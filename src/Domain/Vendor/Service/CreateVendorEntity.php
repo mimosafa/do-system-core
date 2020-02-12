@@ -13,7 +13,7 @@ class CreateVendorEntity
     /**
      * @var VendorRepositoryInterface
      */
-    private $vendorRepository;
+    private $repository;
 
     /**
      * Constructor
@@ -22,7 +22,7 @@ class CreateVendorEntity
      */
     public function __construct(VendorRepositoryInterface $repository)
     {
-        $this->vendorRepository = $repository;
+        $this->repository = $repository;
     }
 
     /**
@@ -32,13 +32,13 @@ class CreateVendorEntity
      */
     public function handle(VendorValueName $name, ?VendorValueStatus $status = null): VendorValueId
     {
-        $id = VendorValueId::of(null);
+        $id = VendorValueId::of(null); // pseude id value object
 
         if ($status === null) {
             $status = VendorValueStatus::defaultStatus();
         }
 
         $model = new Vendor($id, $name, $status);
-        return $this->vendorRepository->store($model);
+        return $this->repository->store($model);
     }
 }

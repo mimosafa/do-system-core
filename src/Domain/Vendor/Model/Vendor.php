@@ -37,9 +37,9 @@ class Vendor
     }
 
     /**
-     * @return VendorValueId|null
+     * @return VendorValueId
      */
-    public function getId(): ?VendorValueId
+    public function getId(): VendorValueId
     {
         return $this->id;
     }

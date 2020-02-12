@@ -10,7 +10,7 @@ abstract class AbstractValueObjectIntForId
      * Id value for model unstored to storage.
      * Used by usecase storing new model.
      */
-    protected const UNSTORED_ENTITY_MODEL_ID = -1;
+    protected const UNSTORED_ENTITY_ID = -1;
 
     /**
      * @var int
@@ -20,12 +20,12 @@ abstract class AbstractValueObjectIntForId
     /**
      * Constructor
      *
-     * @param int|null $value
+     * @param int|null $value  If making pseudo id for create new entity, pass the argument `null` expressly
      */
-    public function __construct(?int $value = null)
+    public function __construct(?int $value)
     {
         if ($value === null) {
-            $value = self::UNSTORED_ENTITY_MODEL_ID;
+            $value = self::UNSTORED_ENTITY_ID;
         }
         $this->value = $value;
     }
@@ -43,6 +43,6 @@ abstract class AbstractValueObjectIntForId
      */
     public function exists(): bool
     {
-        return $this->value !== self::UNSTORED_ENTITY_MODEL_ID;
+        return $this->value !== self::UNSTORED_ENTITY_ID;
     }
 }
