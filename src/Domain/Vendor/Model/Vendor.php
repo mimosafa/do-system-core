@@ -2,6 +2,9 @@
 
 namespace DoSystem\Domain\Vendor\Model;
 
+use DoSystem\Domain\Car\Model\CarCollection;
+use DoSystem\Domain\Vendor\Service\GetCarCollectionBelongsToVendor;
+
 class Vendor
 {
     /**
@@ -58,5 +61,14 @@ class Vendor
     public function getStatus(): VendorValueStatus
     {
         return $this->status;
+    }
+
+    /**
+     * @return CarCollection
+     */
+    public function getCars(): CarCollection
+    {
+        $service = resolve(GetCarCollectionBelongsToVendor::class);
+        return $service->handle($this);
     }
 }
