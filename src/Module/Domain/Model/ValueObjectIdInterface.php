@@ -2,7 +2,7 @@
 
 namespace DoSystem\Module\Domain\Model;
 
-interface ValueObjectIdentificationInterface extends ValueObjectInterface
+interface ValueObjectIdInterface extends ValueObjectInterface
 {
     /**
      * @return bool

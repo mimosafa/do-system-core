@@ -27,6 +27,13 @@ final class VendorValueStatus extends AbstractValueObjectEnum implements ValueOb
     private const DEFAULT_STATUS = self::PROSPECTIVE;
 
     /**
+     * Exclude constants from enums
+     */
+    protected static $excludedFromEnums = [
+        'DEFAULT_STATUS',
+    ];
+
+    /**
      * @return self
      */
     public static function defaultStatus(): self

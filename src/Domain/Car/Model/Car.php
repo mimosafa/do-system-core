@@ -36,9 +36,9 @@ class Car
     }
 
     /**
-     * @return CarValueId|null
+     * @return CarValueId
      */
-    public function getId(): ?CarValueId
+    public function getId(): CarValueId
     {
         return $this->id;
     }

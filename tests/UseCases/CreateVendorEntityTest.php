@@ -3,11 +3,11 @@
 namespace Tests\UseCases;
 
 use PHPUnit\Framework\TestCase;
-use DoSystem\Domain\Vendor\Model\Vendor;
+use DoSystem\Domain\Vendor\Model\VendorValueId;
 use DoSystem\Domain\Vendor\Model\VendorValueName;
 use DoSystem\Domain\Vendor\Model\VendorValueStatus;
 use DoSystem\Domain\Vendor\Service\CreateVendorEntity;
-use DoSystem\InMemory\Repositories\VendorRepository;
+use DoSystem\InMemory\Repositories\VendorRepository; /** @todo DI */
 
 class CreateVendorEntityTest extends TestCase
 {
@@ -30,10 +30,9 @@ class CreateVendorEntityTest extends TestCase
         $name = 'Toshi';
         $status = 0;
 
-        $entity = $this->service->handle(VendorValueName::of($name), VendorValueStatus::of($status));
+        $id = $this->service->handle(VendorValueName::of($name), VendorValueStatus::of($status));
 
-        $this->assertTrue($entity instanceof Vendor);
-        $this->assertEquals($name, $entity->getName()->getValue());
+        $this->assertTrue($id instanceof VendorValueId);
     }
 
     /**
@@ -43,9 +42,8 @@ class CreateVendorEntityTest extends TestCase
     {
         $name = 'TokyoDo';
 
-        $entity = $this->service->handle(VendorValueName::of($name));
+        $id = $this->service->handle(VendorValueName::of($name));
 
-        $this->assertTrue($entity instanceof Vendor);
-        $this->assertTrue($entity->getStatus()->equals(VendorValueStatus::defaultStatus()));
+        $this->assertTrue($id instanceof VendorValueId);
     }
 }

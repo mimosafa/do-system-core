@@ -16,18 +16,19 @@ class SampleValueObjectEnum extends AbstractValueObjectEnum implements ValueObje
     private const NOT_APPLICABLE = 9;
 
     /**
-     * Static class constants
+     * Constant unique to this class, not included in Enums
+     * @see self::$excludedFromEnums
      */
     private const SAMPLE_CONSTANT = 'sample constant';
 
     /**
-     * Specific name string of enums
+     * Customized label strings for enum value
      *
      * @var array
      */
     protected $labels = [
-        0 => 'Unknown',
-        9 => 'LGBTQ',
+        0 => 'Unknown', // default: 'Not Known'
+        9 => 'LGBTQ',   // default: 'Not Applicable'
     ];
 
     /**
