@@ -28,9 +28,9 @@ class CreateVendorEntity
     /**
      * @param VendorValueName $name
      * @param VendorValueStatus|null $status
-     * @return Vendor
+     * @return VendorValueId
      */
-    public function handle(VendorValueName $name, ?VendorValueStatus $status = null): Vendor
+    public function handle(VendorValueName $name, ?VendorValueStatus $status = null): VendorValueId
     {
         $id = VendorValueId::of(null);
 
@@ -39,8 +39,6 @@ class CreateVendorEntity
         }
 
         $model = new Vendor($id, $name, $status);
-        $id = $this->vendorRepository->store($model);
-
-        return $this->vendorRepository->findById($id);
+        return $this->vendorRepository->store($model);
     }
 }

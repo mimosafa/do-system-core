@@ -27,15 +27,12 @@ class Vendor
      *
      * @param VendorValueId $id
      * @param VendorValueName $name
-     * @param VendorValueStatus|null $status
+     * @param VendorValueStatus $status
      */
-    public function __construct(VendorValueId $id, VendorValueName $name, ?VendorValueStatus $status = null)
+    public function __construct(VendorValueId $id, VendorValueName $name, VendorValueStatus $status)
     {
         $this->id = $id;
         $this->name = $name;
-        if ($status === null) {
-            $status = VendorValueStatus::defaultStatus();
-        }
         $this->status = $status;
     }
 

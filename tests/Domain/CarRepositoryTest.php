@@ -13,6 +13,7 @@ use DoSystem\Domain\Vendor\Model\Vendor;
 use DoSystem\Domain\Vendor\Model\VendorValueId;
 use DoSystem\Domain\Vendor\Model\VendorValueName;
 use DoSystem\Domain\Vendor\Model\VendorRepositoryInterface; /** @todo DI */
+use DoSystem\Domain\Vendor\Service\CreateVendorEntity;
 use DoSystem\InMemory\Repositories\CarRepository;           /** @todo DI */
 use DoSystem\InMemory\Repositories\VendorRepository;        /** @todo DI */
 
@@ -60,17 +61,12 @@ class CarRepositoryTest extends TestCase
     protected function setUp(): void
     {
         $vendorRepository = new VendorRepository();
+        $vendorCreateService = new CreateVendorEntity($vendorRepository);
 
-        $vendorId1 = $vendorRepository->store(new Vendor(
-            VendorValueId::of(null),
-            VendorValueName::of('TokyoDo')
-        ));
+        $vendorId1 = $vendorCreateService->handle(VendorValueName::of('TokyoDo'));
         $this->vendor1 = $vendorRepository->findById($vendorId1);
 
-        $vendorId2 = $vendorRepository->store(new Vendor(
-            VendorValueId::of(null),
-            VendorValueName::of('Workstore')
-        ));
+        $vendorId2 = $vendorCreateService->handle(VendorValueName::of('Workstore'));
         $this->vendor2 = $vendorRepository->findById($vendorId2);
 
         $this->repository = new CarRepository($vendorRepository);
