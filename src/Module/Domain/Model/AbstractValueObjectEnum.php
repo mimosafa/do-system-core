@@ -30,6 +30,15 @@ abstract class AbstractValueObjectEnum
     protected $labels = [];
 
     /**
+     * Exclude constants from enums
+     *
+     * @static
+     *
+     * @var string[]
+     */
+    protected static $excludedFromEnums = [];
+
+    /**
      * @var array
      */
     protected static $cache = [];
@@ -107,7 +116,13 @@ abstract class AbstractValueObjectEnum
         $class = \get_called_class();
         if (!isset(static::$cache[$class])) {
             $reflection = new ReflectionClass($class);
-            static::$cache[$class] = $reflection->getConstants();
+            $enums = $reflection->getConstants();
+            if (!empty(static::$excludedFromEnums)) {
+                $enums = \array_filter($enums, function ($key) {
+                    return !\in_array($key, static::$excludedFromEnums, true);
+                }, \ARRAY_FILTER_USE_KEY);
+            }
+            static::$cache[$class] = $enums;
         }
         return static::$cache[$class];
     }

@@ -7,6 +7,9 @@ use DoSystem\Module\Domain\Model\ValueObjectEnumInterface;
 
 final class VendorValueStatus extends AbstractValueObjectEnum implements ValueObjectEnumInterface
 {
+    /**
+     * Constants as Enums
+     */
     private const PROSPECTIVE  = 0; // 見込み
     private const UNREGISTERED = 1; // 申請中
     private const PENDING      = 2; // 保留中
@@ -17,4 +20,17 @@ final class VendorValueStatus extends AbstractValueObjectEnum implements ValueOb
     private const SUSPENDED    = 7; // 停止中
     private const DEREGISTERED = 8; // 撤退
     private const UNRELATED    = 9; // 無関係
+
+    /**
+     * Default status
+     */
+    private const DEFAULT_STATUS = self::PROSPECTIVE;
+
+    /**
+     * @return self
+     */
+    public static function defaultStatus(): self
+    {
+        return self::of(self::DEFAULT_STATUS);
+    }
 }

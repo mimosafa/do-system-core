@@ -7,7 +7,7 @@ use DoSystem\Domain\Vendor\Model\VendorValueName;
 use DoSystem\Domain\Vendor\Model\VendorValueStatus;
 use DoSystem\Domain\Vendor\Model\VendorRepositoryInterface;
 
-class CreateEntity
+class CreateVendorEntity
 {
     /**
      * @var VendorRepositoryInterface
@@ -25,15 +25,17 @@ class CreateEntity
     }
 
     /**
-     * @param string $name
+     * @param VendorValueName $name
+     * @param VendorValueStatus|null $status
      * @return Vendor
      */
-    public function handle(string $name, int $statusEnum): Vendor
+    public function handle(VendorValueName $name, ?VendorValueStatus $status = null): Vendor
     {
-        $nameVal = VendorValueName::of($name);
-        $statusVal = VendorValueStatus::of($statusEnum);
+        if ($status === null) {
+            $status = VendorValueStatus::defaultStatus();
+        }
 
-        $model = new Vendor(null, $nameVal, $statusVal);
+        $model = new Vendor(null, $name, $status);
         $id = $this->vendorRepository->store($model);
 
         return $this->vendorRepository->findById($id);
