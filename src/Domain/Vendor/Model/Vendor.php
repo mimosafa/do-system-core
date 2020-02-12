@@ -68,7 +68,7 @@ class Vendor
      */
     public function getCars(): CarCollection
     {
-        $service = resolve(GetCarCollectionBelongsToVendor::class);
+        $service = \DoSystem\app()->make(GetCarCollectionBelongsToVendor::class);
         return $service->handle($this);
     }
 }
