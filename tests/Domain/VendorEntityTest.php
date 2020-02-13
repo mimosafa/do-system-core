@@ -3,6 +3,7 @@
 namespace Tests\Domain;
 
 use PHPUnit\Framework\TestCase;
+use DoSystem\Domain\Car\Model\CarCollection;
 use DoSystem\Domain\Vendor\Model\Vendor;
 use DoSystem\Domain\Vendor\Model\VendorValueId;
 use DoSystem\Domain\Vendor\Model\VendorValueName;
@@ -96,5 +97,18 @@ class VendorEntityTest extends TestCase
 
         // VendorValueName
         $this->assertEquals($name1->getValue(), $this->data[0]['name']);
+    }
+
+    /**
+     * @test
+     */
+    public function testGetCars()
+    {
+        $id1 = $this->ids[0];
+        $entity1 = $this->repository->findById($id1);
+
+        $cars = $entity1->getCars();
+
+        $this->assertTrue($cars instanceof CarCollection);
     }
 }

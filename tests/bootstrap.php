@@ -1,7 +1,6 @@
 <?php
 
-$maybe_autoload_file_path = dirname(__DIR__) . '/vendor/autoload.php';
+namespace DoSystem;
 
-if (file_exists($maybe_autoload_file_path)) {
-    require $maybe_autoload_file_path;
-}
+app()->bind(Domain\Car\Model\CarRepositoryInterface::class, InMemory\Repositories\CarRepository::class);
+app()->bind(Domain\Vendor\Model\VendorRepositoryInterface::class, InMemory\Repositories\VendorRepository::class);

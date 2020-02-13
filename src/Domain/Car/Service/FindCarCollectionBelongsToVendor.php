@@ -31,6 +31,6 @@ class FindCarCollectionBelongsToVendor
     public function handle(Vendor $vendor, array $params = []): CarCollection
     {
         $params['vendor'] = $vendor;
-        return $this->service->find($params);
+        return $this->service->handle($params);
     }
 }
