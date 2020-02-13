@@ -9,6 +9,8 @@ final class VendorValueStatus extends AbstractValueObjectEnum implements ValueOb
 {
     /**
      * Constants as Enums
+     *
+     * @var int
      */
     private const PROSPECTIVE  = 0; // 見込み
     private const UNREGISTERED = 1; // 申請中
@@ -23,11 +25,15 @@ final class VendorValueStatus extends AbstractValueObjectEnum implements ValueOb
 
     /**
      * Default status
+     *
+     * @var int
      */
     private const DEFAULT_STATUS = self::PROSPECTIVE;
 
     /**
      * Exclude constants from enums
+     *
+     * @var string[]
      */
     protected static $excludedFromEnums = [
         'DEFAULT_STATUS',

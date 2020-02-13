@@ -8,7 +8,7 @@ use DoSystem\Domain\Vendor\Service\GetCarCollectionBelongsToVendor;
 class Vendor
 {
     /**
-     * @var VendorValueId|null
+     * @var VendorValueId
      */
     private $id;
 
