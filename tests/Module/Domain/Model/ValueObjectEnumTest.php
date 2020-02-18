@@ -1,11 +1,11 @@
 <?php
 
-namespace Tests\Unit\Domain\Model;
+namespace DoSystemTests\Module\Domain\Model;
 
 use PHPUnit\Framework\TestCase;
 use DoSystem\Module\Domain\Model\ValueObjectEnumInterface;
-use DoSystem\Module\Mock\Model\SampleValueObjectEnum;
-use DoSystem\Module\Mock\Model\SampleValueObjectEnumInherited;
+use DoSystemMock\Module\Domain\Model\SampleValueObjectEnum;
+use DoSystemMock\Module\Domain\Model\SampleValueObjectEnumInherited;
 
 class ValueObjectEnumTest extends TestCase
 {

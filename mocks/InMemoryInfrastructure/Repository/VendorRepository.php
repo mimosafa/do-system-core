@@ -1,6 +1,6 @@
 <?php
 
-namespace DoSystem\InMemory\Repositories;
+namespace DoSystemMock\InMemoryInfrastructure\Repository;
 
 use DoSystem\Domain\Vendor\Model\Vendor;
 use DoSystem\Domain\Vendor\Model\VendorValueId;

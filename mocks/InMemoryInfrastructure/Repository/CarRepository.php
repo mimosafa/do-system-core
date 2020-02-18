@@ -1,6 +1,6 @@
 <?php
 
-namespace DoSystem\InMemory\Repositories;
+namespace DoSystemMock\InMemoryInfrastructure\Repository;
 
 use DoSystem\Domain\Car\Model\Car;
 use DoSystem\Domain\Car\Model\CarValueId;

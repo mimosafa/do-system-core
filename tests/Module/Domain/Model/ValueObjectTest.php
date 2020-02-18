@@ -1,11 +1,11 @@
 <?php
 
-namespace Tests\Unit\Domain\Model;
+namespace DoSystemTests\Module\Domain\Model;
 
 use PHPUnit\Framework\TestCase;
 use DoSystem\Module\Domain\Model\ValueObjectInterface;
-use DoSystem\Module\Mock\Model\SampleValueObject;
-use DoSystem\Module\Mock\Model\SampleValueObjectInherited;
+use DoSystemMock\Module\Domain\Model\SampleValueObject;
+use DoSystemMock\Module\Domain\Model\SampleValueObjectInherited;
 
 class ValueObjectTest extends TestCase
 {
