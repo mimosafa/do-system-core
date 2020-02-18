@@ -17,7 +17,8 @@
     },
     "autoload": {
         "psr-4": {
-            "DoSystem\\": "src/"
+            "DoSystem\\": "src/",
+            "DoSystemMock\\": "mocks/"
         },
         "files": [
             "src/bootstrap.php"

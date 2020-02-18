@@ -2,33 +2,10 @@
 
 namespace DoSystem\Domain\Vendor\Model;
 
-use DoSystem\Module\Domain\Model\ValueObjectInterface;
-use DoSystem\Module\Domain\Model\ValueObjectTrait;
+use DoSystem\Module\Domain\Model\AbstractValueObjectString;
+use DoSystem\Module\Domain\Model\ValueObjectStringInterface;
 
-final class VendorValueName implements ValueObjectInterface
+final class VendorValueName extends AbstractValueObjectString implements ValueObjectStringInterface
 {
-    use ValueObjectTrait;
-
-    /**
-     * @var string
-     */
-    private $value;
-
-    /**
-     * Constructor
-     *
-     * @param string $value
-     */
-    public function __construct(string $value)
-    {
-        $this->value = $value;
-    }
-
-    /**
-     * @return string
-     */
-    public function getValue(): string
-    {
-        return $this->value;
-    }
+    //
 }

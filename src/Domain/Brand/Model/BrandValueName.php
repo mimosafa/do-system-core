@@ -1,11 +1,11 @@
 <?php
 
-namespace DoSystem\Domain\Car\Model;
+namespace DoSystem\Domain\Brand\Model;
 
 use DoSystem\Module\Domain\Model\AbstractValueObjectString;
 use DoSystem\Module\Domain\Model\ValueObjectStringInterface;
 
-final class CarValueVin extends AbstractValueObjectString implements ValueObjectStringInterface
+final class BrandValueName extends AbstractValueObjectString implements ValueObjectInterface
 {
     //
 }

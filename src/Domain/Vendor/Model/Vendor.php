@@ -8,7 +8,7 @@ use DoSystem\Domain\Vendor\Service\GetCarCollectionBelongsToVendor;
 class Vendor
 {
     /**
-     * @var VendorValueId|null
+     * @var VendorValueId
      */
     private $id;
 
@@ -65,7 +65,7 @@ class Vendor
      */
     public function getCars(): CarCollection
     {
-        $service = \DoSystem\app()->make(GetCarCollectionBelongsToVendor::class);
+        $service = doSystem()->make(GetCarCollectionBelongsToVendor::class);
         return $service->handle($this);
     }
 }
