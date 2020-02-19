@@ -35,14 +35,13 @@ class CreateVendorService
         // Pseudo Id for creating
         $id = VendorValueId::of(null);
 
-        $name = $data->getName();
-        $status = $data->getStatus();
-
-        if (!$name) {
+        if (!$name = $data->getName()) {
             // $name is required
             throw new \Exception();
         }
         $name = VendorValueName::of($name);
+
+        $status = $data->getStatus();
 
         // If not set $status, pass default Status
         $status = isset($status) ? VendorValueStatus::of($status) : VendorValueStatus::defaultStatus();

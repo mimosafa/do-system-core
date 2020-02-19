@@ -14,7 +14,7 @@ interface GetVendorOutputInterface
      *
      * ** note **
      * Parameter must be named '$model'
-     * @see DoSystem\Application\Vendor\Service\ShowVendorService::handle(int $id)
+     * @see DoSystem\Application\Vendor\Service\GetVendorService::handle(int $id)
      *
      * @param Vendor $model
      */

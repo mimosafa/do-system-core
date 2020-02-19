@@ -2,6 +2,7 @@
 
 namespace DoSystemTest\Application\Vendor\Service;
 
+use Mockery;
 use PHPUnit\Framework\TestCase;
 use DoSystem\Application\Vendor\Data\CreateVendorInputInterface;
 use DoSystem\Application\Vendor\Data\GetVendorOutputInterface;
@@ -21,7 +22,7 @@ class VendorServiceTest extends TestCase
     /**
      * @var GetVendorService
      */
-    private $showService;
+    private $getService;
 
     /**
      * Mock data: name
@@ -40,7 +41,7 @@ class VendorServiceTest extends TestCase
     protected function setUp(): void
     {
         $this->createService = doSystem()->make(CreateVendorService::class);
-        $this->showService = doSystem()->make(GetVendorService::class);
+        $this->getService = doSystem()->make(GetVendorService::class);
     }
 
     /**
@@ -50,21 +51,17 @@ class VendorServiceTest extends TestCase
      */
     public function testCreateVendor()
     {
+        // take status value at random
         $statusValues = VendorValueStatus::values();
-        $key = \rand(0, count($statusValues) - 1);
-        for ($i = 0; $i < count($statusValues); $i++) {
-            $statusValue = \array_shift($statusValues);
-            if ($i === $key) {
-                self::$sampleStatus = $statusValue->getValue();
-            }
-        }
+        $keys = array_keys($statusValues);
+        shuffle($keys);
+        self::$sampleStatus = $statusValues[$keys[0]]->getValue();
 
-        $input = doSystem()->makeWith(CreateVendorInputInterface::class, [
-            'id' => null,
-            'name' => self::$sampleName,
-            'status' => self::$sampleStatus,
-        ]);
-        $id = $this->createService->handle($input);
+        $data = Mockery::mock('CreateVendorInput', CreateVendorInputInterface::class);
+        $data->shouldReceive('getName')->andReturn(self::$sampleName);
+        $data->shouldReceive('getStatus')->andReturn(self::$sampleStatus);
+
+        $id = $this->createService->handle($data);
 
         $this->assertTrue($id instanceof VendorValueId);
 
@@ -79,7 +76,7 @@ class VendorServiceTest extends TestCase
      */
     public function testGetVendor(int $id)
     {
-        $model = $this->showService->handle($id);
+        $model = $this->getService->handle($id);
 
         $this->assertTrue($model instanceof GetVendorOutputInterface);
         $this->assertEquals($model->getName()->getValue(), self::$sampleName);
