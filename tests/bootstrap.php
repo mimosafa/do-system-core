@@ -9,3 +9,4 @@ doSystem()->singleton(Domain\Car\Model\CarRepositoryInterface::class, MockInMemo
 doSystem()->singleton(Domain\Vendor\Model\VendorRepositoryInterface::class, MockInMemoryInfrastructure\Repository\VendorRepository::class);
 
 doSystem()->bind(Application\Vendor\Data\GetVendorOutputInterface::class, MockApplication\Vendor\Data\GetVendorOutputMock::class);
+doSystem()->bind(Application\Car\Data\GetCarOutputInterface::class, MockApplication\Car\Data\GetCarOutputMock::class);

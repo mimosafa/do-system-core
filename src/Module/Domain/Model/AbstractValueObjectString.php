@@ -34,6 +34,11 @@ abstract class AbstractValueObjectString
     protected $multibyte = true;
 
     /**
+     * @var bool
+     */
+    protected $allowEmpty = true;
+
+    /**
      * Constructor
      *
      * @param string $value
@@ -52,8 +57,24 @@ abstract class AbstractValueObjectString
      */
     public function isValid($value): bool
     {
-        //
-
+        if (!\is_string($value)) {
+            return false;
+        }
+        if (!$this->allowEmpty && !$value) {
+            return false;
+        }
+        if (!$this->multibyte && (\strlen($value) !== \mb_strlen($value))) {
+            return false;
+        }
+        if ($this->pattern && !\preg_match($this->pattern, $value)) {
+            return false;
+        }
+        if (isset($this->minLength) && $this->strlen($value) < $this->minLength) {
+            return false;
+        }
+        if (isset($this->maxLength) && $this->strlen($value) > $this->maxLength) {
+            return false;
+        }
         return true;
     }
 
@@ -63,5 +84,13 @@ abstract class AbstractValueObjectString
     public function getValue(): string
     {
         return $this->value;
+    }
+
+    /**
+     * @param string $str
+     * @return int
+     */
+    protected function strlen(string $str) {
+        return $this->multibyte ? \mb_strlen($str) : \strlen($str);
     }
 }

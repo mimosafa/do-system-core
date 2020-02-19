@@ -4,6 +4,7 @@ namespace DoSystemMock\InMemoryInfrastructure\Repository;
 
 use DoSystem\Domain\Car\Model\Car;
 use DoSystem\Domain\Car\Model\CarValueId;
+use DoSystem\Domain\Car\Model\CarValueName;
 use DoSystem\Domain\Car\Model\CarValueVin;
 use DoSystem\Domain\Car\Model\CarCollection;
 use DoSystem\Domain\Car\Model\CarRepositoryInterface;
@@ -46,6 +47,9 @@ class CarRepository implements CarRepositoryInterface
         /** @var CarValueVin */
         $vin = $model->getVin();
 
+        /** @var CarValueName */
+        $name = $model->getName();
+
         if (!$maybeId->exists()) {
             $idValue = count($this->db) + 1;
             $this->db[$idValue] = [];
@@ -60,6 +64,7 @@ class CarRepository implements CarRepositoryInterface
 
         $row['vendor_id'] = $vendor->getId()->getValue();
         $row['vin'] = $vin->getValue();
+        $row['name'] = $name->getValue();
 
         return CarValueId::of($idValue);
     }
@@ -82,8 +87,9 @@ class CarRepository implements CarRepositoryInterface
         $id = CarValueId::of($idValue);
         $vendor = $this->vendorRepository->findById(VendorValueId::of($row['vendor_id']));
         $vin = CarValueVin::of($row['vin']);
+        $name = CarValueName::of($row['name']);
 
-        return new Car($id, $vendor, $vin);
+        return new Car($id, $vendor, $vin, $name);
     }
 
     /**

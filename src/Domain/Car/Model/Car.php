@@ -22,17 +22,24 @@ class Car
     private $vin;
 
     /**
+     * @var CarValueName
+     */
+    private $name;
+
+    /**
      * Constructor
      *
      * @param CarValueId $id
      * @param Vendor $vendor
      * @param CarValueVin $vin
+     * @param CarValueName $name
      */
-    public function __construct(CarValueId $id, Vendor $vendor, CarValueVin $vin)
+    public function __construct(CarValueId $id, Vendor $vendor, CarValueVin $vin, CarValueName $name)
     {
         $this->id = $id;
         $this->vendor = $vendor;
         $this->vin = $vin;
+        $this->name = $name;
     }
 
     /**
@@ -57,5 +64,13 @@ class Car
     public function getVin(): CarValueVin
     {
         return $this->vin;
+    }
+
+    /**
+     * @return CarValueName
+     */
+    public function getName(): CarValueName
+    {
+        return $this->name;
     }
 }
