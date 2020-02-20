@@ -80,16 +80,16 @@ class CarServiceTest extends TestCase
 
         $this->assertTrue($id instanceof CarValueId);
 
-        return $id->getValue();
+        return $id;
     }
 
     /**
      * @test
      * @depends testCreateCar
      *
-     * @param int $id
+     * @param CarValueId $id
      */
-    public function testGetCar(int $id)
+    public function testGetCar(CarValueId $id)
     {
         $model = $this->getService->handle($id);
 

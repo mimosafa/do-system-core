@@ -65,16 +65,16 @@ class VendorServiceTest extends TestCase
 
         $this->assertTrue($id instanceof VendorValueId);
 
-        return $id->getValue();
+        return $id;
     }
 
     /**
      * @test
      * @depends testCreateVendor
      *
-     * @param int $id
+     * @param VendorValueId $id
      */
-    public function testGetVendor(int $id)
+    public function testGetVendor(VendorValueId $id)
     {
         $model = $this->getService->handle($id);
 

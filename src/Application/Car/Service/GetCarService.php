@@ -24,12 +24,12 @@ class GetCarService
     }
 
     /**
-     * @param int $id
+     * @param CarValueId $id
      * @return GetCarOutputInterface
      */
-    public function handle(int $id): GetCarOutputInterface
+    public function handle(CarValueId $id): GetCarOutputInterface
     {
-        $model = $this->repository->findById(CarValueId::of($id));
+        $model = $this->repository->findById($id);
         return doSystem()->makeWith(GetCarOutputInterface::class, ['model' => $model]);
     }
 }

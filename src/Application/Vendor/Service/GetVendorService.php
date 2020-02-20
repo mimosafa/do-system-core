@@ -26,13 +26,13 @@ class GetVendorService
     /**
      * @uses doSystem()
      *
-     * @param int $id
+     * @param VendorValueId $id
      * @return GetVendorOutputInterface
      * @throws \DoSystem\Exception\NotFoundException
      */
-    public function handle(int $id): GetVendorOutputInterface
+    public function handle(VendorValueId $id): GetVendorOutputInterface
     {
-        $model = $this->repository->findById(VendorValueId::of($id));
+        $model = $this->repository->findById($id);
         return doSystem()->makeWith(GetVendorOutputInterface::class, ['model' => $model]);
     }
 }
