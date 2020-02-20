@@ -38,11 +38,11 @@ trait ValueObjectTrait
      * @param mixed $value
      * @return ValueObjectInterface
      */
-    public static function of($value): ValueObjectInterface
+    public static function of(...$value): ValueObjectInterface
     {
-        if ($value instanceof static) {
-            return $value;
+        if ($value[0] instanceof static) {
+            return $value[0];
         }
-        return new static($value);
+        return new static(...$value);
     }
 }

@@ -24,5 +24,5 @@ interface ValueObjectInterface
      * @param mixed $value
      * @return self
      */
-    public static function of($value): self;
+    public static function of(...$value): self;
 }
