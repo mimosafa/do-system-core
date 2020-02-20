@@ -20,21 +20,9 @@ use DoSystem\Domain\Vendor\Model\VendorValueStatus;
 class VendorServiceTest extends TestCase
 {
     /**
-     * @var CreateVendorService
+     * Sample data for tests
      */
-    private $createService;
-
-    /**
-     * @var GetVendorService
-     */
-    private $getService;
-
-    /**
-     * @var QueryVendorService
-     */
-    private $queryService;
-
-    private $sampleData = [
+    private static $sampleData = [
         /* 0 => */ [ /*'id' => 1, */ 'name' => 'Test Vendor', 'status' => 4],
         /* 1 => */ [ /*'id' => 2, */ 'name' => 'McDonald',    'status' => 3],
         /* 2 => */ [ /*'id' => 3, */ 'name' => 'Mos Buarger', 'status' => 3],
@@ -44,55 +32,33 @@ class VendorServiceTest extends TestCase
     ];
 
     /**
-     * Mock data: name
-     *
-     * @var string
-     */
-    private static $sampleName = 'Test Vendor';
-
-    /**
-     * Mock data: status
-     *
-     * @var int
-     */
-    private static $sampleStatus;
-
-    protected function setUp(): void
-    {
-        $this->createService = doSystem()->make(CreateVendorService::class);
-        $this->getService = doSystem()->make(GetVendorService::class);
-        $this->queryService = doSystem()->make(QueryVendorService::class);
-    }
-
-    /**
      * Flush VendorRepository
      */
     public static function tearDownAfterClass(): void
     {
-        $repository = doSystem()->make(VendorRepositoryInterface::class);
-        $repository->flush();
+        doSystem()->make(VendorRepositoryInterface::class)->flush();
     }
 
     /**
      * @test
      *
-     * @return VendorValueId
+     * @return VendorValueId[]
      */
-    public function testCreateVendor()
+    public function testCreateVendor(): array
     {
-        $ids = [];
+        $service = doSystem()->make(CreateVendorService::class);
 
-        foreach ($this->sampleData as $array) {
+        $ids = [];
+        foreach (self::$sampleData as $array) {
             $data = Mockery::mock('CreateVendorInput', CreateVendorInputInterface::class);
             $data->shouldReceive('getName')->andReturn($array['name']);
             $data->shouldReceive('getStatus')->andReturn($array['status']);
-            $id = $this->createService->handle($data);
+            $id = $service->handle($data);
 
             $this->assertTrue($id instanceof VendorValueId);
 
             $ids[] = $id;
         }
-
         return $ids;
     }
 
@@ -104,12 +70,14 @@ class VendorServiceTest extends TestCase
      */
     public function testGetVendor(array $ids)
     {
+        $service = doSystem()->make(GetVendorService::class);
+
         foreach ($ids as $i => $id) {
-            $output = $this->getService->handle($id);
+            $output = $service->handle($id);
 
             $this->assertTrue($output instanceof GetVendorOutputInterface);
-            $this->assertEquals($output->getName()->getValue(), $this->sampleData[$i]['name']);
-            $this->assertEquals($output->getStatus()->getValue(), $this->sampleData[$i]['status']);
+            $this->assertEquals($output->getName()->getValue(), self::$sampleData[$i]['name']);
+            $this->assertEquals($output->getStatus()->getValue(), self::$sampleData[$i]['status']);
         }
     }
 
@@ -121,43 +89,45 @@ class VendorServiceTest extends TestCase
      */
     public function testQueryVendor(array $ids)
     {
+        $service = doSystem()->make(QueryVendorService::class);
+
         // all
         $allFilter = Mockery::mock('QueryVendorFilterAll', QueryVendorFilterInterface::class);
         $allFilter->shouldReceive('getNameFilter')->andReturn(null);
         $allFilter->shouldReceive('getStatusFilter')->andReturn(null);
         $allFilter->shouldReceive('getSizePerPage')->andReturn(null);
-        $collectionAll = $this->queryService->handle($allFilter);
+        $allOutputs = $service->handle($allFilter);
 
-        $this->assertTrue($collectionAll[0] instanceof QueriedVendorOutputInterface);
-        $this->assertEquals(count($ids), count($collectionAll));
+        $this->assertTrue($allOutputs[0] instanceof QueriedVendorOutputInterface);
+        $this->assertEquals(count($ids), count($allOutputs));
 
         // filter by name
-        $nameFilter = Mockery::mock('QueryVendorFilterAll', QueryVendorFilterInterface::class);
+        $nameFilter = Mockery::mock('QueryVendorFilterName', QueryVendorFilterInterface::class);
         $nameFilter->shouldReceive('getNameFilter')->andReturn('Do'); // will be matched 'McDonald' & 'Tokyo Do'
         $nameFilter->shouldReceive('getStatusFilter')->andReturn(null);
         $nameFilter->shouldReceive('getSizePerPage')->andReturn(null);
-        $collectionFilteredByName = $this->queryService->handle($nameFilter);
+        $nameOutputs = $service->handle($nameFilter);
 
-        $this->assertEquals(2, count($collectionFilteredByName));
+        $this->assertEquals(2, count($nameOutputs));
 
         // filter by status
-        $statusFilter = Mockery::mock('QueryVendorFilterAll', QueryVendorFilterInterface::class);
+        $statusFilter = Mockery::mock('QueryVendorFilterStatus', QueryVendorFilterInterface::class);
         $statusFilter->shouldReceive('getNameFilter')->andReturn(null);
         $statusFilter->shouldReceive('getStatusFilter')->andReturn([1, 3]); // will be matched 'McDonald' & 'Mos Buarger' & 'New Face'
         $statusFilter->shouldReceive('getSizePerPage')->andReturn(null);
-        $collectionFilteredByStatus = $this->queryService->handle($statusFilter);
+        $statusOutputs = $service->handle($statusFilter);
 
-        $this->assertEquals(3, count($collectionFilteredByStatus));
+        $this->assertEquals(3, count($statusOutputs));
 
         // paged
-        $pageFilter = Mockery::mock('QueryVendorFilterAll', QueryVendorFilterInterface::class);
+        $pageFilter = Mockery::mock('QueryVendorFilterPaged', QueryVendorFilterInterface::class);
         $pageFilter->shouldReceive('getNameFilter')->andReturn(null);
         $pageFilter->shouldReceive('getStatusFilter')->andReturn(null);
         $pageFilter->shouldReceive('getSizePerPage')->andReturn(4);
         $pageFilter->shouldReceive('getPage')->andReturn(2);
-        $collectionPage2 = $this->queryService->handle($pageFilter);
+        $pageOutputs = $service->handle($pageFilter);
 
-        $this->assertEquals(2, count($collectionPage2));
-        $this->assertEquals('Mellow', $collectionPage2[0]->getName()->getValue());
+        $this->assertEquals(2, count($pageOutputs));
+        $this->assertEquals('Mellow', $pageOutputs[0]->getName()->getValue());
     }
 }

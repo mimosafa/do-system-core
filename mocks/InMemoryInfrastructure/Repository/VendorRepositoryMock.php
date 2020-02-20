@@ -36,7 +36,7 @@ class VendorRepositoryMock implements VendorRepositoryInterface
     public function store(Vendor $model): VendorValueId
     {
         /** @var VendorValueId */
-        $id = $model->getId();
+        $maybeId = $model->getId();
 
         /** @var VendorValueName */
         $name = $model->getName();
@@ -44,24 +44,24 @@ class VendorRepositoryMock implements VendorRepositoryInterface
         /** @var VendorValueStatus */
         $status = $model->getStatus();
 
-        if ($id->exists()) {
-            $int = $id->getValue();
-            $ids = array_column($this->db, 'id');
-            if (!$i = array_search($int, $ids, true)) {
+        if ($maybeId->exists()) {
+            $id = $maybeId->getValue();
+            $ids = \array_column($this->db, 'id');
+            if (!$i = \array_search($id, $ids, true)) {
                 throw new NotFoundException('Not Found');
             }
             $row =& $this->db[$i];
         }
         else {
-            $int = ++$this->lastId;
-            $this->db[] = ['id' => $int];
+            $id = ++$this->lastId;
+            $this->db[] = ['id' => $id];
             $row =& $this->db[count($this->db) - 1];
         }
 
         $row['name'] = $name->getValue();
         $row['status'] = $status->getValue();
 
-        return VendorValueId::of($int);
+        return VendorValueId::of($id);
     }
 
     /**
@@ -74,8 +74,8 @@ class VendorRepositoryMock implements VendorRepositoryInterface
         /** @var int */
         $int = $id->getValue();
 
-        $ids = array_column($this->db, 'id');
-        $row = $this->db[array_search($int, $ids, true)] ?? null;
+        $ids = \array_column($this->db, 'id');
+        $row = $this->db[\array_search($int, $ids, true)] ?? null;
 
         if (!isset($row)) {
             throw new NotFoundException('Not found');
@@ -118,7 +118,6 @@ class VendorRepositoryMock implements VendorRepositoryInterface
         }
 
         if (!empty($result)) {
-            $size = Arr::pull($params, 'size_per_page');
             $result = \array_map(function ($row) {
                 $id = VendorValueId::of($row['id']);
                 $name = VendorValueName::of($row['name']);

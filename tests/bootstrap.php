@@ -16,4 +16,5 @@ doSystem()->singleton(Domain\Vendor\Model\VendorRepositoryInterface::class, Mock
  */
 doSystem()->bind(Application\Car\Data\GetCarOutputInterface::class, MockApplication\Car\Data\GetCarOutputMock::class);
 doSystem()->bind(Application\Vendor\Data\GetVendorOutputInterface::class, MockApplication\Vendor\Data\GetVendorOutputMock::class);
+doSystem()->bind(Application\Car\Data\QueriedCarOutputInterface::class, MockApplication\Car\Data\QueriedCarOutputMock::class);
 doSystem()->bind(Application\Vendor\Data\QueriedVendorOutputInterface::class, MockApplication\Vendor\Data\QueriedVendorOutputMock::class);
