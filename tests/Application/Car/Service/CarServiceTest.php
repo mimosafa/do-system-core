@@ -65,6 +65,15 @@ class CarServiceTest extends TestCase
     }
 
     /**
+     * Flush VendorRepository
+     */
+    public static function tearDownAfterClass(): void
+    {
+        $repository = doSystem()->make(VendorRepositoryInterface::class);
+        $repository->flush();
+    }
+
+    /**
      * @test
      *
      * @return CarValueId

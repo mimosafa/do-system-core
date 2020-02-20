@@ -14,7 +14,7 @@ use DoSystem\Domain\Vendor\Model\VendorRepositoryInterface;
 use DoSystem\InMemory\Repositories\VendorRepository;
 use DoSystem\Exception\NotFoundException;
 
-class CarRepository implements CarRepositoryInterface
+class CarRepositoryMock implements CarRepositoryInterface
 {
     /**
      * @var array
