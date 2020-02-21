@@ -16,20 +16,27 @@ use DoSystem\Domain\Vendor\Model\VendorCollection;
 use DoSystem\Domain\Vendor\Model\VendorRepositoryInterface;
 use DoSystem\Domain\Vendor\Model\VendorValueId;
 use DoSystem\Domain\Vendor\Model\VendorValueStatus;
+use DoSystemMock\Factory\VendorsFactory;
 
 class VendorServiceTest extends TestCase
 {
     /**
-     * Sample data for tests
+     * @var VendorsFactory
      */
-    private static $sampleData = [
-        /* 0 => */ [ /*'id' => 1, */ 'name' => 'Test Vendor', 'status' => 4],
-        /* 1 => */ [ /*'id' => 2, */ 'name' => 'McDonald',    'status' => 3],
-        /* 2 => */ [ /*'id' => 3, */ 'name' => 'Mos Buarger', 'status' => 3],
-        /* 3 => */ [ /*'id' => 4, */ 'name' => 'Tokyo Do',    'status' => 4],
-        /* 4 => */ [ /*'id' => 5, */ 'name' => 'Mellow',      'status' => 5],
-        /* 5 => */ [ /*'id' => 6, */ 'name' => 'New Face',    'status' => 1],
-    ];
+    private static $factory;
+
+    /**
+     * Sample data for tests
+     *
+     * @var array
+     */
+    private static $sampleData;
+
+    public static function setUpBeforeClass(): void
+    {
+        self::$factory = new VendorsFactory(20);
+        self::$sampleData = self::$factory->provide();
+    }
 
     /**
      * Flush VendorRepository
@@ -103,31 +110,31 @@ class VendorServiceTest extends TestCase
 
         // filter by name
         $nameFilter = Mockery::mock('QueryVendorFilterName', QueryVendorFilterInterface::class);
-        $nameFilter->shouldReceive('getNameFilter')->andReturn('Do'); // will be matched 'McDonald' & 'Tokyo Do'
+        $nameFilter->shouldReceive('getNameFilter')->andReturn('株式会社');
         $nameFilter->shouldReceive('getStatusFilter')->andReturn(null);
         $nameFilter->shouldReceive('getSizePerPage')->andReturn(null);
         $nameOutputs = $service->handle($nameFilter);
 
-        $this->assertEquals(2, count($nameOutputs));
+        $this->assertEquals(self::$factory->count株式会社(), count($nameOutputs));
 
         // filter by status
         $statusFilter = Mockery::mock('QueryVendorFilterStatus', QueryVendorFilterInterface::class);
         $statusFilter->shouldReceive('getNameFilter')->andReturn(null);
-        $statusFilter->shouldReceive('getStatusFilter')->andReturn([1, 3]); // will be matched 'McDonald' & 'Mos Buarger' & 'New Face'
+        $statusFilter->shouldReceive('getStatusFilter')->andReturn([1, 3]);
         $statusFilter->shouldReceive('getSizePerPage')->andReturn(null);
         $statusOutputs = $service->handle($statusFilter);
 
-        $this->assertEquals(3, count($statusOutputs));
+        $this->assertEquals(self::$factory->countStatus(1) + self::$factory->countStatus(3), count($statusOutputs));
 
         // paged
         $pageFilter = Mockery::mock('QueryVendorFilterPaged', QueryVendorFilterInterface::class);
         $pageFilter->shouldReceive('getNameFilter')->andReturn(null);
         $pageFilter->shouldReceive('getStatusFilter')->andReturn(null);
-        $pageFilter->shouldReceive('getSizePerPage')->andReturn(4);
-        $pageFilter->shouldReceive('getPage')->andReturn(2);
+        $pageFilter->shouldReceive('getSizePerPage')->andReturn(8);
+        $pageFilter->shouldReceive('getPage')->andReturn(3);
         $pageOutputs = $service->handle($pageFilter);
 
-        $this->assertEquals(2, count($pageOutputs));
-        $this->assertEquals('Mellow', $pageOutputs[0]->getName()->getValue());
+        $this->assertEquals(4, count($pageOutputs)); // 20 - (8 * 2)
+        $this->assertEquals(self::$sampleData[17 - 1]['name'], $pageOutputs[0]->getName()->getValue());
     }
 }
