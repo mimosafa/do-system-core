@@ -12,19 +12,6 @@ trait ValueObjectTrait
     abstract public function getValue();
 
     /**
-     * @final
-     *
-     * @param ValueObjectInterface $valueObject
-     * @return bool
-     */
-    final public function equals(ValueObjectInterface $valueObject): bool
-    {
-        return $valueObject instanceof static
-            && $this->getValue() === $valueObject->getValue()
-            && \get_called_class() === \get_class($valueObject);
-    }
-
-    /**
      * @return string
      */
     public function __toString()

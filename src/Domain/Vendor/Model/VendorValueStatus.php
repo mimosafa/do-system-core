@@ -2,48 +2,15 @@
 
 namespace DoSystem\Domain\Vendor\Model;
 
-use DoSystem\Module\Domain\Model\AbstractValueObjectEnum;
+use DoSystem\Domain\Status\Model\AbstractValueObjectStatus;
 use DoSystem\Module\Domain\Model\ValueObjectEnumInterface;
 
-final class VendorValueStatus extends AbstractValueObjectEnum implements ValueObjectEnumInterface
+final class VendorValueStatus extends AbstractValueObjectStatus implements ValueObjectEnumInterface
 {
-    /**
-     * Constants as Enums
-     *
-     * @var int
-     */
-    private const PROSPECTIVE  = 0; // 見込み
-    private const UNREGISTERED = 1; // 申請中
-    private const PENDING      = 2; // 保留中
-    private const REGISTERED   = 3; // 登録済
-    private const ACTIVE       = 4; // 活動中
-    private const INACTIVE     = 5; // 停滞中
-    private const LEAVING      = 6; // 撤退申請中
-    private const SUSPENDED    = 7; // 停止中
-    private const DEREGISTERED = 8; // 撤退
-    private const UNRELATED    = 9; // 無関係
-
     /**
      * Default status
      *
      * @var int
      */
-    private const DEFAULT_STATUS = self::PROSPECTIVE;
-
-    /**
-     * Exclude constants from enums
-     *
-     * @var string[]
-     */
-    protected static $excludedFromEnums = [
-        'DEFAULT_STATUS',
-    ];
-
-    /**
-     * @return self
-     */
-    public static function defaultStatus(): self
-    {
-        return self::of(self::DEFAULT_STATUS);
-    }
+    protected static $defaultStatus = self::PROSPECTIVE;
 }

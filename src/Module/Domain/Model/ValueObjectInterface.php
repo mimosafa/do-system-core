@@ -10,10 +10,10 @@ interface ValueObjectInterface
     public function getValue();
 
     /**
-     * @param self $valueObject
+     * @param mixed $valueObject
      * @return bool
      */
-    public function equals(self $valueObject): bool;
+    public function equals($valueObject): bool;
 
     /**
      * @return string

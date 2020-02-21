@@ -45,4 +45,15 @@ abstract class AbstractValueObjectIntForId
     {
         return $this->value !== self::UNSTORED_ENTITY_ID;
     }
+
+    /**
+     * @param mixed $valueObject
+     * @return bool
+     */
+    public function equals($valueObject): bool
+    {
+        return $valueObject instanceof static
+            && $this->getValue() === $valueObject->getValue()
+            && \get_called_class() === \get_class($valueObject);
+    }
 }

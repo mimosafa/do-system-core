@@ -44,7 +44,7 @@ class CreateVendorService
         $status = $data->getStatus();
 
         // If not set $status, pass default Status
-        $status = isset($status) ? VendorValueStatus::of($status) : VendorValueStatus::defaultStatus();
+        $status = isset($status) ? VendorValueStatus::of($status) : VendorValueStatus::default();
 
         return $this->repository->store(new Vendor($id, $name, $status));
     }
