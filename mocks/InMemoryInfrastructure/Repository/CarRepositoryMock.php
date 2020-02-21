@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use DoSystem\Domain\Car\Model\Car;
 use DoSystem\Domain\Car\Model\CarValueId;
 use DoSystem\Domain\Car\Model\CarValueName;
+use DoSystem\Domain\Car\Model\CarValueStatus;
 use DoSystem\Domain\Car\Model\CarValueVin;
 use DoSystem\Domain\Car\Model\CarCollection;
 use DoSystem\Domain\Car\Model\CarRepositoryInterface;
@@ -62,6 +63,9 @@ class CarRepositoryMock implements CarRepositoryInterface
         /** @var CarValueVin */
         $vin = $model->getVin();
 
+        /** @var CarValueStatus */
+        $status = $model->getStatus();
+
         /** @var CarValueName */
         $name = $model->getName();
 
@@ -81,6 +85,7 @@ class CarRepositoryMock implements CarRepositoryInterface
 
         $row['vendor_id'] = $vendor->getId()->getValue();
         $row['vin'] = $vin->getValue();
+        $row['status'] = $status->getValue();
         $row['name'] = $name->getValue();
 
         return CarValueId::of($id);
@@ -106,9 +111,10 @@ class CarRepositoryMock implements CarRepositoryInterface
         $id = CarValueId::of($int);
         $vendor = $this->vendorRepository->findById(VendorValueId::of($row['vendor_id']));
         $vin = CarValueVin::of($row['vin']);
+        $status = CarValueStatus::of($row['status']);
         $name = CarValueName::of($row['name']);
 
-        return new Car($id, $vendor, $vin, $name);
+        return new Car($id, $vendor, $vin, $status, $name);
     }
 
     /**
@@ -145,8 +151,9 @@ class CarRepositoryMock implements CarRepositoryInterface
                 $id = CarValueId::of($row['id']);
                 $vendor = $this->vendorRepository->findById(VendorValueId::of($row['vendor_id']));
                 $vin = CarValueVin::of($row['vin']);
+                $status = CarValueStatus::of($row['status']);
                 $name = CarValueName::of($row['name']);
-                return new Car($id, $vendor, $vin, $name);
+                return new Car($id, $vendor, $vin, $status, $name);
             }, $result);
         }
 

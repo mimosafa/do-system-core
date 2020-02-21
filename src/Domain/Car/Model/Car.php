@@ -22,6 +22,11 @@ class Car
     private $vin;
 
     /**
+     * @var CarValueStatus
+     */
+    private $status;
+
+    /**
      * @var CarValueName
      */
     private $name;
@@ -32,14 +37,16 @@ class Car
      * @param CarValueId $id
      * @param Vendor $vendor
      * @param CarValueVin $vin
+     * @param CarValueStatus $status
      * @param CarValueName $name
      */
-    public function __construct(CarValueId $id, Vendor $vendor, CarValueVin $vin, CarValueName $name)
+    public function __construct(CarValueId $id, Vendor $vendor, CarValueVin $vin, CarValueStatus $status, CarValueName $name)
     {
-        $this->id = $id;
+        $this->id     = $id;
         $this->vendor = $vendor;
-        $this->vin = $vin;
-        $this->name = $name;
+        $this->vin    = $vin;
+        $this->status = $status;
+        $this->name   = $name;
     }
 
     /**
@@ -64,6 +71,14 @@ class Car
     public function getVin(): CarValueVin
     {
         return $this->vin;
+    }
+
+    /**
+     * @return CarValueStatus
+     */
+    public function getStatus(): CarValueStatus
+    {
+        return $this->status;
     }
 
     /**

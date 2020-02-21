@@ -32,12 +32,12 @@ class CarServiceTest extends TestCase
      * Sample Car data for tests
      */
     private static $sampleCarData = [
-        /* 0 => */ [ /*'id' => 1, */ 'vendor_id' => 1, 'vin' => '品川500さ2345', 'name' => 'Test Car'],
-        /* 1 => */ [ /*'id' => 2, */ 'vendor_id' => 1, 'vin' => '多摩500さ4649', 'name' => 'DeLorean'],
-        /* 2 => */ [ /*'id' => 3, */ 'vendor_id' => 2, 'vin' => '京都500あ4649', 'name' => 'Benz'],
-        /* 3 => */ [ /*'id' => 4, */ 'vendor_id' => 3, 'vin' => '北見580あ4649', 'name' => 'Crown'],
-        /* 4 => */ [ /*'id' => 5, */ 'vendor_id' => 1, 'vin' => '鹿児島480り4649', 'name' => 'Delica'],
-        /* 5 => */ [ /*'id' => 6, */ 'vendor_id' => 3, 'vin' => '品川500り4649', 'name' => 'Super Car'],
+        /* 0 => */ [ /*'id' => 1, */ 'vendor_id' => 1, 'vin' => '品川500さ2345', 'status' => 3, 'name' => 'Test Car'],
+        /* 1 => */ [ /*'id' => 2, */ 'vendor_id' => 1, 'vin' => '多摩500さ4649', 'status' => 4, 'name' => 'DeLorean'],
+        /* 2 => */ [ /*'id' => 3, */ 'vendor_id' => 2, 'vin' => '京都500あ4649', 'status' => 3, 'name' => 'Benz'],
+        /* 3 => */ [ /*'id' => 4, */ 'vendor_id' => 3, 'vin' => '北見580あ4649', 'status' => 5, 'name' => 'Crown'],
+        /* 4 => */ [ /*'id' => 5, */ 'vendor_id' => 1, 'vin' => '鹿児島480り4649', 'status' => 3, 'name' => 'Delica'],
+        /* 5 => */ [ /*'id' => 6, */ 'vendor_id' => 3, 'vin' => '品川500り4649', 'status' => 4, 'name' => 'Super Car'],
     ];
 
     /**
@@ -78,6 +78,7 @@ class CarServiceTest extends TestCase
             $data = Mockery::mock('CreateCarInput', CreateCarInputInterface::class);
             $data->shouldReceive('getVendorId')->andReturn($array['vendor_id']);
             $data->shouldReceive('getVin')->andReturn($array['vin']);
+            $data->shouldReceive('getStatus')->andReturn($array['status']);
             $data->shouldReceive('getName')->andReturn($array['name']);
             $id = $service->handle($data);
 

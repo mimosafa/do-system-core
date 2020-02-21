@@ -15,6 +15,11 @@ interface CreateCarInputInterface
     public function getVin(): string;
 
     /**
+     * @return int|null
+     */
+    public function getStatus(): ?int;
+
+    /**
      * @return string|null
      */
     public function getName(): ?string;
