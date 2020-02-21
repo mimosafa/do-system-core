@@ -24,13 +24,9 @@ class CarRepositoryMock implements CarRepositoryInterface
     private $vendorRepository;
 
     /**
-     * @var array
+     * @var array[]
      */
-    private $db = [
-        // [ 'id' => 1, 'vendor_id' => 1, 'vin' => '品川500さ2345', 'name' => 'Test Car'],
-        // [ 'id' => 2, 'vendor_id' => 1, 'vin' => '多摩500さ4649', 'name' => 'DeLorean'],
-        // [ 'id' => 3, 'vendor_id' => 2, 'vin' => '京都500あ4649', 'name' => 'Benz'],
-    ];
+    private $db = [];
 
     /**
      * @var int
@@ -118,7 +114,14 @@ class CarRepositoryMock implements CarRepositoryInterface
     }
 
     /**
-     * @param array $params
+     * @param array{
+     *      @type int $vendor_id
+     *      @type string $vin
+     *      @type int $status
+     *      @type string|null $name
+     *      @type int $size_per_page
+     *      @type int $page
+     * } $params
      * @return CarCollection
      */
     public function query(array $params): CarCollection
@@ -141,7 +144,7 @@ class CarRepositoryMock implements CarRepositoryInterface
         }
 
         if (!empty($result) && $size = Arr::pull($params, 'size_per_page')) {
-            $page = Arr::pull($params, 'page');
+            $page = Arr::pull($params, 'page', 1);
             $start = ($page - 1) * $size;
             $result = \array_slice($result, $start, $size);
         }
@@ -161,7 +164,7 @@ class CarRepositoryMock implements CarRepositoryInterface
     }
 
     /**
-     * Flush $db & $lastId for testing
+     * Flush $db & $lastId for tests
      */
     public function flush()
     {

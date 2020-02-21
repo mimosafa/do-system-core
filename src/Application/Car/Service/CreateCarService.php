@@ -36,32 +36,23 @@ class CreateCarService
     }
 
     /**
-     * @param CreateCarInputInterface $data
+     * @param CreateCarInputInterface $input
      * @return CarValueId
      */
-    public function handle(CreateCarInputInterface $data): CarValueId
+    public function handle(CreateCarInputInterface $input): CarValueId
     {
-        // Pseudo Id for createing
-        $id = CarValueId::of(null);
-
-        if (!$vendorId = $data->getVendorId()) {
-            // $vendorId is required
-            throw new \Exception();
-        }
+        $id = CarValueId::of(null); // Pseudo Id for createing
+        
+        $vendorId = $input->getVendorId();
         $vendor = $this->vendorRepository->findById(VendorValueId::of($vendorId));
+        $vin = CarValueVin::of($input->getVin());
 
-        if (!$vin = $data->getVin()) {
-            // $vin is required
-            throw new \Exception();
-        }
-        $vin = CarValueVin::of($vin);
-
-        $status = $data->getStatus();
+        $status = $input->getStatus();
 
         // If not set $status, pass default status
         $status = isset($status) ? CarValueStatus::of($status) : CarValueStatus::default();
 
-        $name = CarValueName::of($data->getName());
+        $name = CarValueName::of($input->getName());
 
         return $this->carRepository->store(new Car($id, $vendor, $vin, $status, $name));
     }

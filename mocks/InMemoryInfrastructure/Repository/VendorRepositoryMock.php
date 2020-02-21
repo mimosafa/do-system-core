@@ -15,13 +15,9 @@ use DoSystem\Exception\NotFoundException;
 class VendorRepositoryMock implements VendorRepositoryInterface
 {
     /**
-     * @var array
+     * @var array[]
      */
-    private $db = [
-        // ['id' => 1,  'name' => 'Test Vendor', 'status' => 4],
-        // ['id' => 2,  'name' => 'McDonald',    'status' => 3],
-        // ['id' => 3,  'name' => 'Mos Buarger', 'status' => 3],
-    ];
+    private $db = [];
 
     /**
      * @var int
@@ -66,7 +62,7 @@ class VendorRepositoryMock implements VendorRepositoryInterface
 
     /**
      * @param VendorValueId $id
-     * @return Vendor|null
+     * @return Vendor
      * @throws NotFoundException
      */
     public function findById(VendorValueId $id): Vendor
@@ -89,7 +85,12 @@ class VendorRepositoryMock implements VendorRepositoryInterface
     }
 
     /**
-     * @param array $params
+     * @param array{
+     *      @type string $name
+     *      @type int $status
+     *      @type int $size_per_page
+     *      @type int $page
+     * } $params
      * @return VendorCollection
      */
     public function query(array $params): VendorCollection
@@ -112,7 +113,7 @@ class VendorRepositoryMock implements VendorRepositoryInterface
         }
 
         if (!empty($result) && $size = Arr::pull($params, 'size_per_page')) {
-            $page = Arr::pull($params, 'page');
+            $page = Arr::pull($params, 'page', 1);
             $start = ($page - 1) * $size;
             $result = \array_slice($result, $start, $size);
         }
@@ -130,7 +131,7 @@ class VendorRepositoryMock implements VendorRepositoryInterface
     }
 
     /**
-     * Flush $db & $lastId for testing
+     * Flush $db & $lastId for tests
      */
     public function flush()
     {

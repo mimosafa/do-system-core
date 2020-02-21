@@ -25,7 +25,7 @@ class QueryCarService
 
     /**
      * @param QueryCarFilterInterface $filter
-     *
+     * @return QueriedCarOutputInterface[]
      */
     public function handle(QueryCarFilterInterface $filter): array
     {

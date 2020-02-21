@@ -7,5 +7,8 @@ use DoSystem\Module\Domain\Model\ValueObjectStringInterface;
 
 final class VendorValueName extends AbstractValueObjectString implements ValueObjectStringInterface
 {
-    //
+    /**
+     * @var bool
+     */
+    protected $allowEmpty = false;
 }
