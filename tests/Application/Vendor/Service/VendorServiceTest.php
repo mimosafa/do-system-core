@@ -99,39 +99,40 @@ class VendorServiceTest extends TestCase
         $service = doSystem()->make(QueryVendorService::class);
 
         // all
-        $allFilter = Mockery::mock('QueryVendorFilterAll', QueryVendorFilterInterface::class);
-        $allFilter->shouldReceive('getNameFilter')->andReturn(null);
-        $allFilter->shouldReceive('getStatusFilter')->andReturn(null);
-        $allFilter->shouldReceive('getSizePerPage')->andReturn(null);
+        $allFilter = doSystem()->makeWith(QueryVendorFilterInterface::class, [
+            'name' => null,
+            'status' => null,
+        ]);
         $allOutputs = $service->handle($allFilter);
 
         $this->assertTrue($allOutputs[0] instanceof QueriedVendorOutputInterface);
         $this->assertEquals(count($ids), count($allOutputs));
 
         // filter by name
-        $nameFilter = Mockery::mock('QueryVendorFilterName', QueryVendorFilterInterface::class);
-        $nameFilter->shouldReceive('getNameFilter')->andReturn('株式会社');
-        $nameFilter->shouldReceive('getStatusFilter')->andReturn(null);
-        $nameFilter->shouldReceive('getSizePerPage')->andReturn(null);
+        $nameFilter = doSystem()->makeWith(QueryVendorFilterInterface::class, [
+            'name' => '株式会社',
+            'status' => null,
+        ]);
         $nameOutputs = $service->handle($nameFilter);
 
         $this->assertEquals(self::$factory->count株式会社(), count($nameOutputs));
 
         // filter by status
-        $statusFilter = Mockery::mock('QueryVendorFilterStatus', QueryVendorFilterInterface::class);
-        $statusFilter->shouldReceive('getNameFilter')->andReturn(null);
-        $statusFilter->shouldReceive('getStatusFilter')->andReturn([1, 3]);
-        $statusFilter->shouldReceive('getSizePerPage')->andReturn(null);
+        $statusFilter = doSystem()->makeWith(QueryVendorFilterInterface::class, [
+            'name' => null,
+            'status' => [1, 3],
+        ]);
         $statusOutputs = $service->handle($statusFilter);
 
         $this->assertEquals(self::$factory->countStatus(1) + self::$factory->countStatus(3), count($statusOutputs));
 
         // paged
-        $pageFilter = Mockery::mock('QueryVendorFilterPaged', QueryVendorFilterInterface::class);
-        $pageFilter->shouldReceive('getNameFilter')->andReturn(null);
-        $pageFilter->shouldReceive('getStatusFilter')->andReturn(null);
-        $pageFilter->shouldReceive('getSizePerPage')->andReturn(8);
-        $pageFilter->shouldReceive('getPage')->andReturn(3);
+        $pageFilter = doSystem()->makeWith(QueryVendorFilterInterface::class, [
+            'name' => null,
+            'status' => null,
+            'sizePerPage' => 8,
+            'page' => 3,
+        ]);
         $pageOutputs = $service->handle($pageFilter);
 
         $this->assertEquals(4, count($pageOutputs)); // 20 - (8 * 2)
