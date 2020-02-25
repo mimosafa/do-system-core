@@ -93,7 +93,7 @@ class ValueObjectVin implements ValueObjectStringInterface
     /**
      * Serial number pattern e.g. '5555'
      */
-    private static $serialNumberPattern = '0{1}|[1-9][0-9]{1,3}';
+    private static $serialNumberPattern = '0|[1-9][0-9]{0,3}';
 
     /**
      * Constructor
@@ -103,7 +103,7 @@ class ValueObjectVin implements ValueObjectStringInterface
     public function __construct(string $value)
     {
         $pattern = self::getRegexPattern();
-        if (!\preg_match($pattern, $value, $matches)) {
+        if (!\preg_match("/{$pattern}/", $value, $matches)) {
             throw new \Exception();
         }
         $this->transportBureau = $matches[1];
@@ -179,7 +179,7 @@ class ValueObjectVin implements ValueObjectStringInterface
             return false;
         }
         $pattern = self::getRegexPattern();
-        return (bool) \preg_match($pattern, $value);
+        return (bool) \preg_match("/{$pattern}/", $value);
     }
 
     /**
@@ -190,12 +190,12 @@ class ValueObjectVin implements ValueObjectStringInterface
     public static function getRegexPattern(): string
     {
         if (!self::$pattern) {
-            self::$pattern  = '/';
-            self::$pattern .= '^(' . \implode('|', self::$transportBureauList) . ')';
+            self::$pattern  = '^';
+            self::$pattern .= '(' . \implode('|', self::$transportBureauList) . ')';
             self::$pattern .= '(' . self::$classCodePattern . ')';
             self::$pattern .= '(' . \implode('|', self::$characterList) . ')';
             self::$pattern .= '(' . self::$serialNumberPattern . ')';
-            self::$pattern .= '/u';
+            self::$pattern .= '$';
         }
         return self::$pattern;
     }
