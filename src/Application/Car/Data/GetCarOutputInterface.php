@@ -4,8 +4,8 @@ namespace DoSystem\Application\Car\Data;
 
 use DoSystem\Domain\Car\Model\Car;
 use DoSystem\Domain\Car\Model\CarValueId;
-use DoSystem\Domain\Car\Model\CarValueVin;
 use DoSystem\Domain\Car\Model\CarValueName;
+use DoSystem\Domain\Vin\Model\ValueObjectVin;
 
 interface GetCarOutputInterface
 {
@@ -31,9 +31,9 @@ interface GetCarOutputInterface
     // public function belongsTo();
 
     /**
-     * @return CarValueVin
+     * @return ValueObjectVin
      */
-    public function getVin(): CarValueVin;
+    public function getVin(): ValueObjectVin;
 
     /**
      * @return CarValueName

@@ -8,12 +8,12 @@ use DoSystem\Domain\Car\Model\Car;
 use DoSystem\Domain\Car\Model\CarValueId;
 use DoSystem\Domain\Car\Model\CarValueName;
 use DoSystem\Domain\Car\Model\CarValueStatus;
-use DoSystem\Domain\Car\Model\CarValueVin;
 use DoSystem\Domain\Car\Model\CarCollection;
 use DoSystem\Domain\Car\Model\CarRepositoryInterface;
 use DoSystem\Domain\Vendor\Model\Vendor;
 use DoSystem\Domain\Vendor\Model\VendorValueId;
 use DoSystem\Domain\Vendor\Model\VendorRepositoryInterface;
+use DoSystem\Domain\Vin\Model\ValueObjectVin;
 use DoSystem\Exception\NotFoundException;
 
 class CarRepositoryMock implements CarRepositoryInterface
@@ -56,7 +56,7 @@ class CarRepositoryMock implements CarRepositoryInterface
         /** @var Vendor */
         $vendor = $model->belongsTo();
 
-        /** @var CarValueVin */
+        /** @var ValueObjectVin */
         $vin = $model->getVin();
 
         /** @var CarValueStatus */
@@ -106,7 +106,7 @@ class CarRepositoryMock implements CarRepositoryInterface
 
         $id = CarValueId::of($int);
         $vendor = $this->vendorRepository->findById(VendorValueId::of($row['vendor_id']));
-        $vin = CarValueVin::of($row['vin']);
+        $vin = ValueObjectVin::of($row['vin']);
         $status = CarValueStatus::of($row['status']);
         $name = CarValueName::of($row['name']);
 
@@ -153,7 +153,7 @@ class CarRepositoryMock implements CarRepositoryInterface
             $result = \array_map(function ($row) {
                 $id = CarValueId::of($row['id']);
                 $vendor = $this->vendorRepository->findById(VendorValueId::of($row['vendor_id']));
-                $vin = CarValueVin::of($row['vin']);
+                $vin = ValueObjectVin::of($row['vin']);
                 $status = CarValueStatus::of($row['status']);
                 $name = CarValueName::of($row['name']);
                 return new Car($id, $vendor, $vin, $status, $name);

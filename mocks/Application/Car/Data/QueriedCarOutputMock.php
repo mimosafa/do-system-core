@@ -4,7 +4,7 @@ namespace DoSystemMock\Application\Car\Data;
 
 use DoSystem\Application\Car\Data\QueriedCarOutputInterface;
 use DoSystem\Domain\Car\Model\Car;
-use DoSystem\Domain\Car\Model\CarValueVin;
+use DoSystem\Domain\Vin\Model\ValueObjectVin;
 
 class QueriedCarOutputMock implements QueriedCarOutputInterface
 {
@@ -24,9 +24,9 @@ class QueriedCarOutputMock implements QueriedCarOutputInterface
     }
 
     /**
-     * @return CarValueVin
+     * @return ValueObjectVin
      */
-    public function getVin(): CarValueVin
+    public function getVin(): ValueObjectVin
     {
         return $this->model->getVin();
     }

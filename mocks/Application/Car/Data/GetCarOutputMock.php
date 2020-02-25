@@ -5,8 +5,8 @@ namespace DoSystemMock\Application\Car\Data;
 use DoSystem\Application\Car\Data\GetCarOutputInterface;
 use DoSystem\Domain\Car\Model\Car;
 use DoSystem\Domain\Car\Model\CarValueId;
-use DoSystem\Domain\Car\Model\CarValueVin;
 use DoSystem\Domain\Car\Model\CarValueName;
+use DoSystem\Domain\Vin\Model\ValueObjectVin;
 
 class GetCarOutputMock implements GetCarOutputInterface
 {
@@ -21,7 +21,7 @@ class GetCarOutputMock implements GetCarOutputInterface
     public $belongsTo;
 
     /**
-     * @var CarValueVin
+     * @var ValueObjectVin
      */
     public $vin;
 
@@ -50,7 +50,7 @@ class GetCarOutputMock implements GetCarOutputInterface
 
     // public function belongsTo() {}
 
-    public function getVin(): CarValueVin
+    public function getVin(): ValueObjectVin
     {
         return $this->vin;
     }
