@@ -14,29 +14,36 @@ abstract class AbstractValueObjectString
     /**
      * @var int
      */
-    protected $minLength;
+    protected static $minLength;
 
     /**
      * @var int
      */
-    protected $maxLength;
+    protected static $maxLength;
 
     /**
      * The regexp pattern for string
      *
      * @var string
      */
-    protected $pattern;
+    protected static $pattern;
+
+    /**
+     * Acceptable value list
+     *
+     * @var string[]
+     */
+    protected static $list = [];
 
     /**
      * @var bool
      */
-    protected $multibyte = true;
+    protected static $multibyte = true;
 
     /**
      * @var bool
      */
-    protected $allowEmpty = true;
+    protected static $allowEmpty = true;
 
     /**
      * Constructor
@@ -45,7 +52,7 @@ abstract class AbstractValueObjectString
      */
     public function __construct(string $value)
     {
-        if (!$this->isValid($value)) {
+        if (!static::isValid($value)) {
             throw new \Exception();
         }
         $this->value = $value;
@@ -55,25 +62,30 @@ abstract class AbstractValueObjectString
      * @param mixed $value
      * @return bool
      */
-    public function isValid($value): bool
+    public static function isValid($value): bool
     {
         if (!\is_string($value)) {
             return false;
         }
-        if (!$this->allowEmpty && !$value) {
+        if (!static::$allowEmpty && !$value) {
             return false;
         }
-        if (!$this->multibyte && (\strlen($value) !== \mb_strlen($value))) {
+        if (!empty(static::$list) && !\in_array($value, static::$list, true)) {
             return false;
         }
-        if ($this->pattern && !\preg_match($this->pattern, $value)) {
-            return false;
-        }
-        if (isset($this->minLength) && $this->strlen($value) < $this->minLength) {
-            return false;
-        }
-        if (isset($this->maxLength) && $this->strlen($value) > $this->maxLength) {
-            return false;
+        else {
+            if (!static::$multibyte && (\strlen($value) !== \mb_strlen($value))) {
+                return false;
+            }
+            if (static::$pattern && !\preg_match(static::$pattern, $value)) {
+                return false;
+            }
+            if (isset(static::$minLength) && static::strlen($value) < static::$minLength) {
+                return false;
+            }
+            if (isset(static::$maxLength) && static::strlen($value) > static::$maxLength) {
+                return false;
+            }
         }
         return true;
     }
@@ -101,7 +113,7 @@ abstract class AbstractValueObjectString
      * @param string $str
      * @return int
      */
-    protected function strlen(string $str) {
-        return $this->multibyte ? \mb_strlen($str) : \strlen($str);
+    protected static function strlen(string $str) {
+        return static::$multibyte ? \mb_strlen($str) : \strlen($str);
     }
 }

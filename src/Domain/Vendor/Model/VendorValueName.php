@@ -10,5 +10,5 @@ final class VendorValueName extends AbstractValueObjectString implements ValueOb
     /**
      * @var bool
      */
-    protected $allowEmpty = false;
+    protected static $allowEmpty = false;
 }

@@ -10,12 +10,12 @@ final class CarValueName extends AbstractValueObjectString implements ValueObjec
     /**
      * @var int
      */
-    protected $maxLength = 100;
+    protected static $maxLength = 100;
 
     /**
      * @var bool
      */
-    protected $allowEmpty = true;
+    protected static $allowEmpty = true;
 
     /**
      * @return bool
