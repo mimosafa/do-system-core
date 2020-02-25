@@ -3,7 +3,7 @@
 namespace DoSystem\Domain\Vendor\Model;
 
 use DoSystem\Domain\Car\Model\CarCollection;
-use DoSystem\Domain\Car\Model\CarRepositoryInterface;
+use DoSystem\Domain\Vendor\Service\GetCarsService;
 
 class Vendor
 {
@@ -66,8 +66,7 @@ class Vendor
      */
     public function getCars(array $params = []): CarCollection
     {
-        $service = doSystem()->make(CarRepositoryInterface::class);
-        $params['vendor_id'] = [$this->getId()->getValue()];
-        return $service->query($params);
+        $service = doSystem()->make(GetCarsService::class);
+        return $service->handle($this, $params);
     }
 }
