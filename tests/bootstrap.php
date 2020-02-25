@@ -20,6 +20,7 @@ doSystem()->bind(Application\Vendor\Data\GetVendorOutputInterface::class, MockAp
 /**
  * Query service application filters
  */
+doSystem()->bind(Application\Car\Data\QueryCarFilterInterface::class, MockApplication\Car\Data\QueryCarFilterMock::class);
 doSystem()->bind(Application\Vendor\Data\QueryVendorFilterInterface::class, MockApplication\Vendor\Data\QueryVendorFilterMock::class);
 
 /**

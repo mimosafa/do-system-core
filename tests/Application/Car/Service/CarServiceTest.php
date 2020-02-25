@@ -119,39 +119,33 @@ class CarServiceTest extends TestCase
         $service = doSystem()->make(QueryCarService::class);
 
         // all
-        $allFilter = Mockery::mock('QueryCarFilterAll', QueryCarFilterInterface::class);
-        $allFilter->shouldReceive('getVendorIdFilter')->andReturn(null);
-        $allFilter->shouldReceive('getVinFilter')->andReturn(null);
-        $allFilter->shouldReceive('getSizePerPage')->andReturn(null);
+        $allFilter = doSystem()->make(QueryCarFilterInterface::class);
         $allOutputs = $service->handle($allFilter);
 
         $this->assertTrue($allOutputs[0] instanceof QueriedCarOutputInterface);
         $this->assertEquals(count($ids), count($allOutputs));
 
         // filter by vendor
-        $vendorFilter = Mockery::mock('QueryCarFilterVendor', QueryCarFilterInterface::class);
-        $vendorFilter->shouldReceive('getVendorIdFilter')->andReturn([3]); // will be matched 'Crown' & 'Super Car'
-        $vendorFilter->shouldReceive('getVinFilter')->andReturn(null);
-        $vendorFilter->shouldReceive('getSizePerPage')->andReturn(null);
+        $vendorFilter = doSystem()->makeWith(QueryCarFilterInterface::class, [
+            'vendorId' => [3], // will be matched 'Crown' & 'Super Car'
+        ]);
         $vendorOutputs = $service->handle($vendorFilter);
 
         $this->assertEquals(2, count($vendorOutputs));
 
         // filter by vin
-        $vinFilter = Mockery::mock('QueryCarFilterVin', QueryCarFilterInterface::class);
-        $vinFilter->shouldReceive('getVendorIdFilter')->andReturn(null);
-        $vinFilter->shouldReceive('getVinFilter')->andReturn('品川'); // will be matched 'Test Car' & 'Super Car'
-        $vinFilter->shouldReceive('getSizePerPage')->andReturn(null);
+        $vinFilter = doSystem()->makeWith(QueryCarFilterInterface::class, [
+            'vin' => '品川', // will be matched 'Test Car' & 'Super Car'
+        ]);
         $vinOutputs = $service->handle($vinFilter);
 
         $this->assertEquals(2, count($vinOutputs));
 
         // paged
-        $pageFilter = Mockery::mock('QueryCarFilterVin', QueryCarFilterInterface::class);
-        $pageFilter->shouldReceive('getVendorIdFilter')->andReturn(null);
-        $pageFilter->shouldReceive('getVinFilter')->andReturn(null);
-        $pageFilter->shouldReceive('getSizePerPage')->andReturn(4);
-        $pageFilter->shouldReceive('getPage')->andReturn(2);
+        $pageFilter = doSystem()->makeWith(QueryCarFilterInterface::class, [
+            'sizePerPage' => 4,
+            'page' => 2,
+        ]);
         $pageOutputs = $service->handle($pageFilter);
 
         $this->assertEquals(2, count($pageOutputs));

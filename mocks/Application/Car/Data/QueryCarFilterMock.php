@@ -1,38 +1,43 @@
 <?php
 
-namespace DoSystemMock\Application\Vendor\Data;
+namespace DoSystemMock\Application\Car\Data;
 
-use DoSystem\Application\Vendor\Data\QueryVendorFilterInterface;
+use DoSystem\Application\Car\Data\QueryCarFilterInterface;
 
-class QueryVendorFilterMock implements QueryVendorFilterInterface
+class QueryCarFilterMock implements QueryCarFilterInterface
 {
-    private $name;
+    private $vendorId;
+    private $vin;
     private $status;
     private $sizePerPage;
     private $page;
 
     /**
      * Constructor
-     *
-     * @param string|null $name
-     * @param int[]|null $status
-     * @param int|null $sizePerPage
-     * @param int|null $page
      */
-    public function __construct(?string $name = null, ?array $status = null, ?int $sizePerPage = null, ?int $page = null)
+    public function __construct(?array $vendorId = null, ?string $vin = null, ?array $status = null, ?int $sizePerPage = null, ?int $page = null)
     {
-        $this->name = $name;
+        $this->vendorId = $vendorId;
+        $this->vin = $vin;
         $this->status = $status;
         $this->sizePerPage = $sizePerPage;
         $this->page = $page;
     }
 
     /**
+     * @return int[]|null
+     */
+    public function getVendorIdFilter(): ?array
+    {
+        return $this->vendorId;
+    }
+
+    /**
      * @return string|null
      */
-    public function getNameFilter(): ?string
+    public function getVinFilter(): ?string
     {
-        return $this->name;
+        return $this->vin;
     }
 
     /**

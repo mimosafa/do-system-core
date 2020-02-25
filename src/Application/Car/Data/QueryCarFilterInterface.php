@@ -15,6 +15,11 @@ interface QueryCarFilterInterface
     public function getVinFilter(): ?string;
 
     /**
+     * @return int[]|null
+     */
+    public function getStatusFilter(): ?array;
+
+    /**
      * @return int|null
      */
     public function getSizePerPage(): ?int;

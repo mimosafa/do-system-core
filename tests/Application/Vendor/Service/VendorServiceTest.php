@@ -99,10 +99,7 @@ class VendorServiceTest extends TestCase
         $service = doSystem()->make(QueryVendorService::class);
 
         // all
-        $allFilter = doSystem()->makeWith(QueryVendorFilterInterface::class, [
-            'name' => null,
-            'status' => null,
-        ]);
+        $allFilter = doSystem()->make(QueryVendorFilterInterface::class);
         $allOutputs = $service->handle($allFilter);
 
         $this->assertTrue($allOutputs[0] instanceof QueriedVendorOutputInterface);
@@ -111,7 +108,6 @@ class VendorServiceTest extends TestCase
         // filter by name
         $nameFilter = doSystem()->makeWith(QueryVendorFilterInterface::class, [
             'name' => '株式会社',
-            'status' => null,
         ]);
         $nameOutputs = $service->handle($nameFilter);
 
@@ -119,7 +115,6 @@ class VendorServiceTest extends TestCase
 
         // filter by status
         $statusFilter = doSystem()->makeWith(QueryVendorFilterInterface::class, [
-            'name' => null,
             'status' => [1, 3],
         ]);
         $statusOutputs = $service->handle($statusFilter);
@@ -128,8 +123,6 @@ class VendorServiceTest extends TestCase
 
         // paged
         $pageFilter = doSystem()->makeWith(QueryVendorFilterInterface::class, [
-            'name' => null,
-            'status' => null,
             'sizePerPage' => 8,
             'page' => 3,
         ]);
