@@ -1,11 +1,11 @@
 <?php
 
-namespace DoSystem\Domain\Vin\Model;
+namespace DoSystem\Domain\Car\Model;
 
 use DoSystem\Module\Domain\Model\ValueObjectStringInterface;
 use DoSystem\Module\Domain\Model\ValueObjectTrait;
 
-class ValueObjectVin implements ValueObjectStringInterface
+class CarValueVin implements ValueObjectStringInterface
 {
     use ValueObjectTrait;
 

@@ -4,13 +4,13 @@ namespace DoSystem\Application\Car\Service;
 
 use DoSystem\Application\Car\Data\CreateCarInputInterface;
 use DoSystem\Domain\Car\Model\Car;
+use DoSystem\Domain\Car\Model\CarRepositoryInterface;
 use DoSystem\Domain\Car\Model\CarValueId;
 use DoSystem\Domain\Car\Model\CarValueName;
 use DoSystem\Domain\Car\Model\CarValueStatus;
-use DoSystem\Domain\Car\Model\CarRepositoryInterface;
+use DoSystem\Domain\Car\Model\CarValueVin;
 use DoSystem\Domain\Vendor\Model\VendorValueId;
 use DoSystem\Domain\Vendor\Model\VendorRepositoryInterface;
-use DoSystem\Domain\Vin\Model\ValueObjectVin;
 
 class CreateCarService
 {
@@ -45,7 +45,7 @@ class CreateCarService
 
         $vendorId = $input->getVendorId();
         $vendor = $this->vendorRepository->findById(VendorValueId::of($vendorId));
-        $vin = ValueObjectVin::of($input->getVin());
+        $vin = CarValueVin::of($input->getVin());
 
         $status = $input->getStatus();
 

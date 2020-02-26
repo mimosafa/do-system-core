@@ -5,7 +5,7 @@ namespace DoSystemMock\Factory;
 use Faker\Factory;
 use Illuminate\Support\Str;
 use DoSystem\Domain\Car\Model\CarValueStatus;
-use DoSystem\Domain\Vin\Model\ValueObjectVin;
+use DoSystem\Domain\Car\Model\CarValueVin;
 
 class CarsFactory
 {
@@ -106,7 +106,7 @@ class CarsFactory
      */
     private function prepareData(): void
     {
-        $vinPattern = ValueObjectVin::getRegexPattern();
+        $vinPattern = CarValueVin::getRegexPattern();
         $vinPattern = \preg_replace('/^\^\(\W+\)/', '^(品川|足立|練馬)', $vinPattern);
 
         for ($i = 0; $i < $this->numberOfRows; $i++) {

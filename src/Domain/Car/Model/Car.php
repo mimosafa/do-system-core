@@ -3,7 +3,6 @@
 namespace DoSystem\Domain\Car\Model;
 
 use DoSystem\Domain\Vendor\Model\Vendor;
-use DoSystem\Domain\Vin\Model\ValueObjectVin;
 
 class Car
 {
@@ -18,7 +17,7 @@ class Car
     private $vendor;
 
     /**
-     * @var ValueObjectVin
+     * @var CarValueVin
      */
     private $vin;
 
@@ -37,11 +36,11 @@ class Car
      *
      * @param CarValueId $id
      * @param Vendor $vendor
-     * @param ValueObjectVin $vin
+     * @param CarValueVin $vin
      * @param CarValueStatus $status
      * @param CarValueName $name
      */
-    public function __construct(CarValueId $id, Vendor $vendor, ValueObjectVin $vin, CarValueStatus $status, CarValueName $name)
+    public function __construct(CarValueId $id, Vendor $vendor, CarValueVin $vin, CarValueStatus $status, CarValueName $name)
     {
         $this->id     = $id;
         $this->vendor = $vendor;
@@ -67,9 +66,9 @@ class Car
     }
 
     /**
-     * @return ValueObjectVin
+     * @return CarValueVin
      */
-    public function getVin(): ValueObjectVin
+    public function getVin(): CarValueVin
     {
         return $this->vin;
     }
