@@ -131,12 +131,16 @@ class CarRepositoryMock implements CarRepositoryInterface
         if (!empty($result)) {
             $vendorFilter = Arr::pull($params, 'vendor_id');
             $vinFilter = Arr::pull($params, 'vin');
+            $statusFilter = Arr::pull($params, 'status');
 
-            $result = Arr::where($result, function ($row) use ($vendorFilter, $vinFilter) {
+            $result = Arr::where($result, function ($row) use ($vendorFilter, $vinFilter, $statusFilter) {
                 if ($vendorFilter && !\in_array($row['vendor_id'], $vendorFilter, true)) {
                     return false;
                 }
                 if ($vinFilter && !Str::contains($row['vin'], $vinFilter)) {
+                    return false;
+                }
+                if ($statusFilter && !\in_array($row['status'], $statusFilter, true)) {
                     return false;
                 }
                 return true;

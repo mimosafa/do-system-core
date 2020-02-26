@@ -131,6 +131,18 @@ class VendorRepositoryMock implements VendorRepositoryInterface
     }
 
     /**
+     * Ids of stored vendors
+     *
+     * @used-by DoSystemMock\Factory\CarsFactory
+     *
+     * @return int[]
+     */
+    public function getIds(): array
+    {
+        return $this->db ? \array_column($this->db, 'id') : [];
+    }
+
+    /**
      * Flush $db & $lastId for tests
      */
     public function flush()

@@ -111,7 +111,7 @@ class VendorServiceTest extends TestCase
         ]);
         $nameOutputs = $service->handle($nameFilter);
 
-        $this->assertEquals(self::$factory->count株式会社(), count($nameOutputs));
+        $this->assertEquals(self::$factory->countByName株式会社(), count($nameOutputs));
 
         // filter by status
         $statusFilter = doSystem()->makeWith(QueryVendorFilterInterface::class, [
@@ -119,7 +119,7 @@ class VendorServiceTest extends TestCase
         ]);
         $statusOutputs = $service->handle($statusFilter);
 
-        $this->assertEquals(self::$factory->countStatus(1) + self::$factory->countStatus(3), count($statusOutputs));
+        $this->assertEquals(self::$factory->countByStatus(1) + self::$factory->countByStatus(3), count($statusOutputs));
 
         // paged
         $pageFilter = doSystem()->makeWith(QueryVendorFilterInterface::class, [
@@ -128,7 +128,7 @@ class VendorServiceTest extends TestCase
         ]);
         $pageOutputs = $service->handle($pageFilter);
 
-        $this->assertEquals(4, count($pageOutputs)); // 20 - (8 * 2)
+        $this->assertEquals(4, count($pageOutputs)); // 20 - (8 * (3 - 1))
         $this->assertEquals(self::$sampleData[17 - 1]['name'], $pageOutputs[0]->getName()->getValue());
     }
 }

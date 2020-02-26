@@ -11,7 +11,7 @@ class VendorsFactory
     /**
      * @var Factory
      */
-    private $factory;
+    private $faker;
 
     /**
      * @var int
@@ -26,25 +26,20 @@ class VendorsFactory
     private $fakeData = [];
 
     /**
-     * Number of companies whose name contains '株式会社'/'有限会社'
-     *
-     * @see https://github.com/fzaninotto/Faker/blob/v1.9.1/src/Faker/Provider/ja_JP/Company.php
-     * @var int
+     * Generated data counts for tests
      */
-    private $kabushikigaishaNum = 0;
-    private $yuugengaishaNum = 0;
-
-    /**
-     * @var array
-     */
-    private $statusNum = [];
+    private $counts = [
+        'name'   => ['株式会社' => 0, '有限会社' => 0],
+        'status' => [],
+    ];
 
     /**
      * Status int values
      *
+     * @static
      * @var int[]
      */
-    private static $vendorStatusValues;
+    private static $vendorStatusIntValues;
 
     /**
      * Constructor
@@ -53,19 +48,12 @@ class VendorsFactory
      */
     public function __construct(int $numberOfRows)
     {
-        $this->factory = Factory::create('ja_JP');
+        $this->faker = Factory::create('ja_JP');
         $this->numberOfRows = $numberOfRows;
-        if (self::$vendorStatusValues === null) {
-            $valueObjects = VendorValueStatus::values();
-            self::$vendorStatusValues = \array_map(function ($o) {
-                return $o->getValue();
-            }, $valueObjects);
-        }
         $this->prepareData();
     }
 
     /**
-     * @param int $numRow
      * @return array[]
      */
     public function provide(): array
@@ -74,35 +62,23 @@ class VendorsFactory
     }
 
     /**
-     * @return int[]
+     * @return int
      */
-    public function vendorIds(): array
+    public function countByName株式会社(): int
     {
-        return \array_column($this->fakeData, 'id');
+        return $this->counts['name']['株式会社'];
+    }
+    public function countByName有限会社(): int
+    {
+        return $this->counts['name']['有限会社'];
     }
 
     /**
      * @return int
      */
-    public function count株式会社(): int
+    public function countByStatus(int $status): int
     {
-        return $this->kabushikigaishaNum;
-    }
-
-    /**
-     * @return int
-     */
-    public function count有限会社(): int
-    {
-        return $this->yuugengaishaNum;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function countStatus(int $status): ?int
-    {
-        return $this->statusNum[$status] ?? null;
+        return $this->counts['status'][$status] ?? 0;
     }
 
     /**
@@ -111,30 +87,43 @@ class VendorsFactory
     private function prepareData(): void
     {
         for ($i = 0; $i < $this->numberOfRows; $i++) {
-            // id
-            $id = $i + 1;
-
             // name
-            $name = $this->factory->company;
+            $name = $this->faker->company;
+            /**
+             * @see https://github.com/fzaninotto/Faker/blob/v1.9.1/src/Faker/Provider/ja_JP/Company.php
+             */
             if (Str::contains($name, '株式会社')) {
-                $this->kabushikigaishaNum++;
+                $this->counts['name']['株式会社']++;
             }
             else if (Str::contains($name, '有限会社')) {
-                $this->yuugengaishaNum++;
+                $this->counts['name']['有限会社']++;
             }
 
             // status
-            $status = $this->factory->randomElement(self::$vendorStatusValues);
-            if (!isset($this->statusNum[$status])) {
-                $this->statusNum[$status] = 0;
+            $status = $this->faker->randomElement(self::getVendorStatusIntValues());
+            if (!isset($this->counts['status'][$status])) {
+                $this->counts['status'][$status] = 0;
             }
-            $this->statusNum[$status]++;
+            $this->counts['status'][$status]++;
 
             $this->fakeData[] = [
-                'id' => $id,
                 'name' => $name,
                 'status' => $status,
             ];
         }
+    }
+
+    /**
+     * @return int[]
+     */
+    private static function getVendorStatusIntValues(): array
+    {
+        if (self::$vendorStatusIntValues === null) {
+            $valueObjects = VendorValueStatus::values();
+            self::$vendorStatusIntValues = \array_map(function ($o) {
+                return $o->getValue();
+            }, $valueObjects);
+        }
+        return self::$vendorStatusIntValues;
     }
 }

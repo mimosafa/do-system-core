@@ -37,6 +37,9 @@ class QueryCarService
         if ($vinFilter = $filter->getVinFilter()) {
             $params['vin'] = $vinFilter;
         }
+        if ($statusFilter = $filter->getStatusFilter()) {
+            $params['status'] = $statusFilter;
+        }
 
         if ($size = $filter->getSizePerPage()) {
             $params['size_per_page'] = $size;

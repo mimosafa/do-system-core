@@ -16,17 +16,22 @@ use DoSystem\Application\Vendor\Service\CreateVendorService;
 use DoSystem\Domain\Car\Model\CarRepositoryInterface;
 use DoSystem\Domain\Car\Model\CarValueId;
 use DoSystem\Domain\Vendor\Model\VendorRepositoryInterface;
+use DoSystemMock\Factory\CarsFactory;
+use DoSystemMock\Factory\VendorsFactory;
 
 class CarServiceTest extends TestCase
 {
     /**
-     * Sample Vendor data for tests
+     * @var CarsFactory
      */
-    private static $sampleVendorData = [
-        /* 0 => */ [ /*'id' => 1, */ 'name' => 'Test Vendor', 'status' => 4],
-        /* 1 => */ [ /*'id' => 2, */ 'name' => 'McDonald',    'status' => 3],
-        /* 2 => */ [ /*'id' => 3, */ 'name' => 'Mos Buarger', 'status' => 3],
-    ];
+    private static $factory;
+
+    /**
+     * Sample data for tests
+     *
+     * @var array
+     */
+    private static $sampleData;
 
     /**
      * Sample Car data for tests
@@ -45,14 +50,22 @@ class CarServiceTest extends TestCase
      */
     public static function setUpBeforeClass(): void
     {
+        $vendorsFactory = new VendorsFactory(5);
+        $vendorSampleData = $vendorsFactory->provide();
         $service = doSystem()->make(CreateVendorService::class);
 
-        foreach (self::$sampleVendorData as $array) {
+        foreach ($vendorSampleData as $array) {
             $data = Mockery::mock('CreateVendorInput', CreateVendorInputInterface::class);
             $data->shouldReceive('getName')->andReturn($array['name']);
             $data->shouldReceive('getStatus')->andReturn($array['status']);
             $service->handle($data);
         }
+
+        $vendorRepository = doSystem()->make(VendorRepositoryInterface::class);
+        /** @see \DoSystemMock\InMemoryInfrastructure\VendorRepositoryMock::getIds() */
+        $vendorIds = $vendorRepository->getIds();
+        self::$factory = new CarsFactory(20, $vendorIds);
+        self::$sampleData = self::$factory->provide();
     }
 
     /**
@@ -74,7 +87,7 @@ class CarServiceTest extends TestCase
         $service = doSystem()->make(CreateCarService::class);
 
         $ids = [];
-        foreach (self::$sampleCarData as $array) {
+        foreach (self::$sampleData as $array) {
             $data = Mockery::mock('CreateCarInput', CreateCarInputInterface::class);
             $data->shouldReceive('getVendorId')->andReturn($array['vendor_id']);
             $data->shouldReceive('getVin')->andReturn($array['vin']);
@@ -103,8 +116,8 @@ class CarServiceTest extends TestCase
             $output = $service->handle($id);
 
             $this->assertTrue($output instanceof GetCarOutputInterface);
-            $this->assertEquals($output->getVin()->getValue(), self::$sampleCarData[$i]['vin']);
-            $this->assertEquals($output->getName()->getValue(), self::$sampleCarData[$i]['name']);
+            $this->assertEquals($output->getVin()->getValue(), self::$sampleData[$i]['vin']);
+            $this->assertEquals($output->getName()->getValue(), self::$sampleData[$i]['name']);
         }
     }
 
@@ -127,28 +140,36 @@ class CarServiceTest extends TestCase
 
         // filter by vendor
         $vendorFilter = doSystem()->makeWith(QueryCarFilterInterface::class, [
-            'vendorId' => [3], // will be matched 'Crown' & 'Super Car'
+            'vendorId' => [1, 4],
         ]);
         $vendorOutputs = $service->handle($vendorFilter);
 
-        $this->assertEquals(2, count($vendorOutputs));
+        $this->assertEquals(count($vendorOutputs), self::$factory->countByVendorId(1) + self::$factory->countByVendorId(4));
 
         // filter by vin
         $vinFilter = doSystem()->makeWith(QueryCarFilterInterface::class, [
-            'vin' => '品川', // will be matched 'Test Car' & 'Super Car'
+            'vin' => '品川',
         ]);
         $vinOutputs = $service->handle($vinFilter);
 
-        $this->assertEquals(2, count($vinOutputs));
+        $this->assertEquals(count($vinOutputs), self::$factory->countByVin品川());
+
+        // filter by status
+        $statusFilter = doSystem()->makeWith(QueryCarFilterInterface::class, [
+            'status' => [0, 7],
+        ]);
+        $statusOutput = $service->handle($statusFilter);
+
+        $this->assertEquals(count($statusOutput), self::$factory->countByStatus(0) + self::$factory->countByStatus(7));
 
         // paged
         $pageFilter = doSystem()->makeWith(QueryCarFilterInterface::class, [
-            'sizePerPage' => 4,
-            'page' => 2,
+            'sizePerPage' => 6,
+            'page' => 4,
         ]);
         $pageOutputs = $service->handle($pageFilter);
 
-        $this->assertEquals(2, count($pageOutputs));
-        $this->assertEquals('鹿児島480り4649', $pageOutputs[0]->getVin()->getValue());
+        $this->assertEquals(2, count($pageOutputs)); // 20 - (6 * (4 - 1))
+        $this->assertEquals(self::$sampleData[6 * 3 + 1 - 1]['vin'], $pageOutputs[0]->getVin()->getValue());
     }
 }
