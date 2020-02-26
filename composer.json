@@ -19,12 +19,16 @@
     },
     "autoload": {
         "psr-4": {
-            "DoSystem\\": "src/",
-            "DoSystemMock\\": "mocks/"
+            "DoSystem\\": "src/"
         },
         "files": [
             "src/bootstrap.php"
         ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "DoSystemMock\\": "mocks/"
+        }
     },
     "scripts": {
         "phpunit": "phpunit --colors=always --testdox"
