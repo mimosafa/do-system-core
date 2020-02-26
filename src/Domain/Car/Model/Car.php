@@ -3,6 +3,7 @@
 namespace DoSystem\Domain\Car\Model;
 
 use DoSystem\Domain\Vendor\Model\Vendor;
+use DoSystem\Domain\Vin\Model\ValueObjectVin;
 
 class Car
 {
@@ -17,22 +18,36 @@ class Car
     private $vendor;
 
     /**
-     * @var CarValueVin
+     * @var ValueObjectVin
      */
     private $vin;
+
+    /**
+     * @var CarValueStatus
+     */
+    private $status;
+
+    /**
+     * @var CarValueName
+     */
+    private $name;
 
     /**
      * Constructor
      *
      * @param CarValueId $id
      * @param Vendor $vendor
-     * @param CarValueVin $vin
+     * @param ValueObjectVin $vin
+     * @param CarValueStatus $status
+     * @param CarValueName $name
      */
-    public function __construct(CarValueId $id, Vendor $vendor, CarValueVin $vin)
+    public function __construct(CarValueId $id, Vendor $vendor, ValueObjectVin $vin, CarValueStatus $status, CarValueName $name)
     {
-        $this->id = $id;
+        $this->id     = $id;
         $this->vendor = $vendor;
-        $this->vin = $vin;
+        $this->vin    = $vin;
+        $this->status = $status;
+        $this->name   = $name;
     }
 
     /**
@@ -52,10 +67,26 @@ class Car
     }
 
     /**
-     * @return CarValueVin
+     * @return ValueObjectVin
      */
-    public function getVin(): CarValueVin
+    public function getVin(): ValueObjectVin
     {
         return $this->vin;
+    }
+
+    /**
+     * @return CarValueStatus
+     */
+    public function getStatus(): CarValueStatus
+    {
+        return $this->status;
+    }
+
+    /**
+     * @return CarValueName
+     */
+    public function getName(): CarValueName
+    {
+        return $this->name;
     }
 }

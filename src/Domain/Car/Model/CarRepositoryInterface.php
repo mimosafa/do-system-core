@@ -19,8 +19,13 @@ interface CarRepositoryInterface
     public function findById(CarValueId $id): Car;
 
     /**
-     * @param array $params
+     * @param array{
+     *      @type int[]|null  $vendor_id
+     *      @type string|null $vin
+     *      @type int|null    $size_per_page
+     *      @type int|null    $page
+     * } $params
      * @return CarCollection
      */
-    public function find(array $params): CarCollection;
+    public function query(array $params): CarCollection;
 }

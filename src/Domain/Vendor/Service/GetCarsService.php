@@ -1,11 +1,12 @@
 <?php
 
-namespace DoSystem\Domain\Car\Service;
+namespace DoSystem\Domain\Vendor\Service;
 
 use DoSystem\Domain\Car\Model\CarCollection;
 use DoSystem\Domain\Car\Model\CarRepositoryInterface;
+use DoSystem\Domain\Vendor\Model\Vendor;
 
-class FindCarCollection
+class GetCarsService
 {
     /**
      * @var CarRepositoryInterface
@@ -23,10 +24,13 @@ class FindCarCollection
     }
 
     /**
+     * @param Vendor $model
      * @param array $params
+     * @return CarCollection
      */
-    public function handle(array $params = []): CarCollection
+    public function handle(Vendor $model, array $params = []): CarCollection
     {
-        return $this->repository->find($params);
+        $params['vendor_id'] = $model->getId()->getValue();
+        return $this->repository->query($params);
     }
 }

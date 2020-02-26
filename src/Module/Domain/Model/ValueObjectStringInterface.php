@@ -13,5 +13,5 @@ interface ValueObjectStringInterface extends ValueObjectInterface
      * @param mixed $value
      * @return bool
      */
-    public function isValid($value): bool;
+    public static function isValid($value): bool;
 }

@@ -27,25 +27,19 @@ class CreateVendorService
     }
 
     /**
-     * @param CreateVendorInputInterface $data
+     * @param CreateVendorInputInterface $input
      * @return VendorValueId
      */
-    public function handle(CreateVendorInputInterface $data): VendorValueId
+    public function handle(CreateVendorInputInterface $input): VendorValueId
     {
-        // Pseudo Id for creating
-        $id = VendorValueId::of(null);
+        $id = VendorValueId::of(null); // Pseudo Id for creating
+        
+        $name = VendorValueName::of($input->getName());
 
-        $name = $data->getName();
-        $status = $data->getStatus();
-
-        if (!$name) {
-            // $name is required
-            throw new \Exception();
-        }
-        $name = VendorValueName::of($name);
+        $status = $input->getStatus();
 
         // If not set $status, pass default Status
-        $status = isset($status) ? VendorValueStatus::of($status) : VendorValueStatus::defaultStatus();
+        $status = isset($status) ? VendorValueStatus::of($status) : VendorValueStatus::default();
 
         return $this->repository->store(new Vendor($id, $name, $status));
     }
