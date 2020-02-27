@@ -4,14 +4,16 @@ use DoSystem\Application;
 use DoSystem\Domain;
 use DoSystem\Infrastructure;
 use DoSystemMock\Application as MockApplication;
-use DoSystemMock\InMemoryInfrastructure as MockInMemoryInfrastructure;
+use DoSystemMock\InMemoryInfrastructure as MockInfrastructure;
+
+define('DOSYSTEM_TESTS_ROOT_DIR', __DIR__);
 
 /**
  * Repositories
  */
 doSystem()->singleton(
     Domain\Car\Model\CarRepositoryInterface::class,
-    MockInMemoryInfrastructure\Repository\CarRepositoryMock::class
+    MockInfrastructure\Repository\CarRepositoryMock::class
 );
 doSystem()->singleton(
     Domain\Prefecture\Model\PrefectureRepositoryInterface::class,
@@ -19,7 +21,7 @@ doSystem()->singleton(
 );
 doSystem()->singleton(
     Domain\Vendor\Model\VendorRepositoryInterface::class,
-    MockInMemoryInfrastructure\Repository\VendorRepositoryMock::class
+    MockInfrastructure\Repository\VendorRepositoryMock::class
 );
 
 /**
