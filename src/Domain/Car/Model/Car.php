@@ -88,4 +88,43 @@ class Car
     {
         return $this->name;
     }
+
+    /**
+     * @param CarValueVin $vin
+     * @return bool If no change, return false
+     */
+    public function setVin(CarValueVin $vin): bool
+    {
+        if (!$vin->equals($this->vin)) {
+            $this->vin = $vin;
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * @param CarValueStatus $status
+     * @return bool
+     */
+    public function setStatus(CarValueStatus $status): bool
+    {
+        if (!$status->equals($this->status)) {
+            $this->status = $status;
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * @param CarValueName $name
+     * @return bool
+     */
+    public function setName(CarValueName $name): bool
+    {
+        if (!$name->equals($this->name)) {
+            $this->name = $name;
+            return true;
+        }
+        return false;
+    }
 }

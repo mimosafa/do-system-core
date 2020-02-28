@@ -59,3 +59,11 @@ doSystem()->bind(
     Application\Vendor\Data\QueriedVendorOutputInterface::class,
     MockApplication\Vendor\Data\QueriedVendorOutputMock::class
 );
+
+/**
+ * Update service application outputs
+ */
+doSystem()->bind(
+    Application\Car\Data\UpdateCarOutputInterface::class,
+    MockApplication\Car\Data\UpdateCarOutputMock::class
+);
