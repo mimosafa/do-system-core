@@ -4,7 +4,7 @@ use DoSystem\Application;
 use DoSystem\Domain;
 use DoSystem\Infrastructure;
 use DoSystemMock\Application as MockApplication;
-use DoSystemMock\InMemoryInfrastructure as MockInfrastructure;
+use DoSystemMock\Infrastructure as MockInfrastructure;
 
 define('DOSYSTEM_TESTS_ROOT_DIR', __DIR__);
 

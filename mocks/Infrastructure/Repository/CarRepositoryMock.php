@@ -1,6 +1,6 @@
 <?php
 
-namespace DoSystemMock\InMemoryInfrastructure\Repository;
+namespace DoSystemMock\Infrastructure\Repository;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
@@ -65,7 +65,12 @@ class CarRepositoryMock implements CarRepositoryInterface
         /** @var CarValueName */
         $name = $model->getName();
 
-        if ($maybeId->exists()) {
+        if ($maybeId->isPseudo()) {
+            $id = ++$this->lastId;
+            $this->db[] = ['id' => $id];
+            $row =& $this->db[count($this->db) - 1];
+        }
+        else {
             $id = $maybeId->getValue();
             $ids = \array_column($this->db, 'id');
             $i = \array_search($id, $ids, true);
@@ -73,11 +78,6 @@ class CarRepositoryMock implements CarRepositoryInterface
                 throw new NotFoundException('Not Found');
             }
             $row =& $this->db[$i];
-        }
-        else {
-            $id = ++$this->lastId;
-            $this->db[] = ['id' => $id];
-            $row =& $this->db[count($this->db) - 1];
         }
 
         $row['vendor_id'] = $vendor->getId()->getValue();

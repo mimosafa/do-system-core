@@ -1,6 +1,6 @@
 <?php
 
-namespace DoSystemMock\InMemoryInfrastructure\Repository;
+namespace DoSystemMock\Infrastructure\Repository;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
@@ -40,18 +40,18 @@ class VendorRepositoryMock implements VendorRepositoryInterface
         /** @var VendorValueStatus */
         $status = $model->getStatus();
 
-        if ($maybeId->exists()) {
+        if ($maybeId->isPseudo()) {
+            $id = ++$this->lastId;
+            $this->db[] = ['id' => $id];
+            $row =& $this->db[count($this->db) - 1];
+        }
+        else {
             $id = $maybeId->getValue();
             $ids = \array_column($this->db, 'id');
             if (!$i = \array_search($id, $ids, true)) {
                 throw new NotFoundException('Not Found');
             }
             $row =& $this->db[$i];
-        }
-        else {
-            $id = ++$this->lastId;
-            $this->db[] = ['id' => $id];
-            $row =& $this->db[count($this->db) - 1];
         }
 
         $row['name'] = $name->getValue();
