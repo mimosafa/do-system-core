@@ -67,3 +67,7 @@ doSystem()->bind(
     Application\Car\Data\UpdateCarOutputInterface::class,
     MockApplication\Car\Data\UpdateCarOutputMock::class
 );
+doSystem()->bind(
+   Application\Vendor\Data\UpdateVendorOutputInterface::class,
+   MockApplication\Vendor\Data\UpdateVendorOutputMock::class
+);

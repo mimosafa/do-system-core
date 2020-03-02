@@ -2,133 +2,138 @@
 
 namespace DoSystemTest\Application\Vendor\Service;
 
-use Mockery;
+use Illuminate\Support\Str;
 use PHPUnit\Framework\TestCase;
-use DoSystem\Application\Vendor\Data\CreateVendorInputInterface;
-use DoSystem\Application\Vendor\Data\GetVendorOutputInterface;
-use DoSystem\Application\Vendor\Data\QueriedVendorOutputInterface;
-use DoSystem\Application\Vendor\Data\QueryVendorFilterInterface;
-use DoSystem\Application\Vendor\Service\CreateVendorService;
-use DoSystem\Application\Vendor\Service\GetVendorService;
-use DoSystem\Application\Vendor\Service\QueryVendorService;
-use DoSystem\Domain\Vendor\Model\Vendor;
-use DoSystem\Domain\Vendor\Model\VendorCollection;
-use DoSystem\Domain\Vendor\Model\VendorRepositoryInterface;
-use DoSystem\Domain\Vendor\Model\VendorValueId;
-use DoSystem\Domain\Vendor\Model\VendorValueStatus;
-use DoSystemMock\Factory\VendorsFactory;
+use DoSystem\Application\Vendor\Data;
+use DoSystem\Application\Vendor\Service;
+use DoSystem\Domain\Vendor\Model;
+use DoSystemMock\Application\Vendor\Data as MockData;
+use DoSystemMock\Factory\VendorDataFactory;
+use DoSystemMock\Infrastructure\Repository\VendorRepositoryMock;
+use DoSystemMock\Infrastructure\Seeder\VendorsSeeder;
 
 class VendorServiceTest extends TestCase
 {
     /**
-     * @var VendorsFactory
+     * @var VendorRepositoryMock
      */
-    private static $factory;
+    private $repository;
 
-    /**
-     * Sample data for tests
-     *
-     * @var array
-     */
-    private static $sampleData;
-
-    public static function setUpBeforeClass(): void
+    protected function setUp(): void
     {
-        self::$factory = new VendorsFactory(20);
-        self::$sampleData = self::$factory->provide();
+        $this->repository ?? $this->repository = new VendorRepositoryMock();
     }
 
-    /**
-     * Flush VendorRepository
-     */
-    public static function tearDownAfterClass(): void
+    protected function tearDown(): void
     {
-        doSystem()->make(VendorRepositoryInterface::class)->flush();
+        $this->repository->flush();
     }
 
     /**
      * @test
-     *
-     * @return VendorValueId[]
      */
-    public function testCreateVendor(): array
+    public function testCreateVendor()
     {
-        $service = doSystem()->make(CreateVendorService::class);
+        $createService = new Service\CreateVendorService($this->repository);
+        $data = VendorDataFactory::generate();
+        $input = new MockData\CreateVendorInputMock();
+        $input->name = $data['name'];
+        $id = $createService->handle($input);
 
-        $ids = [];
-        foreach (self::$sampleData as $array) {
-            $data = Mockery::mock('CreateVendorInput', CreateVendorInputInterface::class);
-            $data->shouldReceive('getName')->andReturn($array['name']);
-            $data->shouldReceive('getStatus')->andReturn($array['status']);
-            $id = $service->handle($data);
+        $this->assertTrue($id instanceof Model\VendorValueId);
 
-            $this->assertTrue($id instanceof VendorValueId);
+        $model = $this->repository->findById($id);
 
-            $ids[] = $id;
+        $this->assertEquals($model->getName()->getValue(), $data['name']);
+        $this->assertEquals($model->getStatus()->getValue(), Model\VendorValueStatus::default()->getValue());
+    }
+
+    /**
+     * @test
+     */
+    public function testGetVendor()
+    {
+        $getService = new Service\GetVendorService($this->repository);
+        $seeder = new VendorsSeeder(5);
+        $seeder->seed($this->repository);
+        $data = $seeder->getData();
+
+        $id1 = Model\VendorValueId::of($data[0]['id']);
+        $id5 = Model\VendorValueId::of($data[4]['id']);
+
+        $output1 = $getService->handle($id1);
+        $output5 = $getService->handle($id5);
+
+        $this->assertTrue($output1 instanceof Data\GetVendorOutputInterface);
+
+        $this->assertEquals($output1->getName()->getValue(), $data[0]['name']);
+        $this->assertEquals($output1->getStatus()->getValue(), $data[0]['status']);
+        $this->assertEquals($output5->getName()->getValue(), $data[4]['name']);
+        $this->assertEquals($output5->getStatus()->getValue(), $data[4]['status']);
+    }
+
+    /**
+     * @test
+     */
+    public function testUpdateVendor()
+    {
+        $createService = new Service\CreateVendorService($this->repository);
+        $updateService = new Service\UpdateVendorService($this->repository);
+        $data = VendorDataFactory::generate();
+        $createInput = new MockData\CreateVendorInputMock();
+        $createInput->name = $data['name'];
+        $id = $createService->handle($createInput);
+        $model = $this->repository->findById($id);
+        $newName = 'New Vendor Name';
+
+        $this->assertNotEquals($model->getName()->getValue(), $newName);
+
+        $updateInput = new MockData\UpdateVendorInputMock();
+        $updateInput->id = $id->getValue();
+        $updateInput->name = $newName;
+        $updateOutput = $updateService->handle($updateInput);
+
+        $this->assertTrue($updateOutput->model->getId()->equals($id));
+        $this->assertEquals(count($updateOutput->modified), 1);
+        $this->assertEquals($updateOutput->modified[0], Model\VendorValueName::class);
+        $this->assertEquals($updateOutput->model->getName()->getValue(), $newName);
+    }
+
+    /**
+     * @test
+     */
+    public function testQueryVendor()
+    {
+        $queryService = new Service\QueryVendorService($this->repository);
+        $seeder = new VendorsSeeder(20);
+        $seeder->seed($this->repository);
+        $data = $seeder->getData();
+
+        $filterAll = new MockData\QueryVendorFilterMock();
+        $resultAll = $queryService->handle($filterAll);
+
+        $this->assertEquals(count($resultAll), 20);
+        $this->assertTrue($resultAll[0] instanceof Data\QueriedVendorOutputInterface);
+
+        $filterName = new MockData\QueryVendorFilterMock();
+        $filterName->name = '株式会社';
+        $resultName = $queryService->handle($filterName);
+
+        $filterStatus = new MockData\QueryVendorFilterMock();
+        $filterStatus->status = [0, 3, 7,];
+        $resultStatus = $queryService->handle($filterStatus);
+
+        $kabushikigaishaNum = 0;
+        $status037Num = 0;
+        foreach ($data as $arr) {
+            if (Str::contains($arr['name'], '株式会社')) {
+                $kabushikigaishaNum++;
+            }
+            if (\in_array($arr['status'], [0, 3, 7,], true)) {
+                $status037Num++;
+            }
         }
-        return $ids;
-    }
-
-    /**
-     * @test
-     * @depends testCreateVendor
-     *
-     * @param VendorValueId[] $ids
-     */
-    public function testGetVendor(array $ids)
-    {
-        $service = doSystem()->make(GetVendorService::class);
-
-        foreach ($ids as $i => $id) {
-            $output = $service->handle($id);
-
-            $this->assertTrue($output instanceof GetVendorOutputInterface);
-            $this->assertEquals($output->getName()->getValue(), self::$sampleData[$i]['name']);
-            $this->assertEquals($output->getStatus()->getValue(), self::$sampleData[$i]['status']);
-        }
-    }
-
-    /**
-     * @test
-     * @depends testCreateVendor
-     *
-     * @param VendorValueId[] $ids
-     */
-    public function testQueryVendor(array $ids)
-    {
-        $service = doSystem()->make(QueryVendorService::class);
-
-        // all
-        $allFilter = doSystem()->make(QueryVendorFilterInterface::class);
-        $allOutputs = $service->handle($allFilter);
-
-        $this->assertTrue($allOutputs[0] instanceof QueriedVendorOutputInterface);
-        $this->assertEquals(count($ids), count($allOutputs));
-
-        // filter by name
-        $nameFilter = doSystem()->makeWith(QueryVendorFilterInterface::class, [
-            'name' => '株式会社',
-        ]);
-        $nameOutputs = $service->handle($nameFilter);
-
-        $this->assertEquals(self::$factory->countByName株式会社(), count($nameOutputs));
-
-        // filter by status
-        $statusFilter = doSystem()->makeWith(QueryVendorFilterInterface::class, [
-            'status' => [1, 3],
-        ]);
-        $statusOutputs = $service->handle($statusFilter);
-
-        $this->assertEquals(self::$factory->countByStatus(1) + self::$factory->countByStatus(3), count($statusOutputs));
-
-        // paged
-        $pageFilter = doSystem()->makeWith(QueryVendorFilterInterface::class, [
-            'sizePerPage' => 8,
-            'page' => 3,
-        ]);
-        $pageOutputs = $service->handle($pageFilter);
-
-        $this->assertEquals(4, count($pageOutputs)); // 20 - (8 * (3 - 1))
-        $this->assertEquals(self::$sampleData[17 - 1]['name'], $pageOutputs[0]->getName()->getValue());
+        $this->assertEquals(count($resultName), $kabushikigaishaNum);
+        $this->assertEquals(count($resultStatus), $status037Num);
     }
 }

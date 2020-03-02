@@ -6,26 +6,25 @@ use DoSystem\Application\Vendor\Data\QueryVendorFilterInterface;
 
 class QueryVendorFilterMock implements QueryVendorFilterInterface
 {
-    private $name;
-    private $status;
-    private $sizePerPage;
-    private $page;
+    /**
+     * @var string|null
+     */
+    public $name;
 
     /**
-     * Constructor
-     *
-     * @param string|null $name
-     * @param int[]|null $status
-     * @param int|null $sizePerPage
-     * @param int|null $page
+     * @var int[]|null
      */
-    public function __construct(?string $name = null, ?array $status = null, ?int $sizePerPage = null, ?int $page = null)
-    {
-        $this->name = $name;
-        $this->status = $status;
-        $this->sizePerPage = $sizePerPage;
-        $this->page = $page;
-    }
+    public $status;
+
+    /**
+     * @var int|null
+     */
+    public $sizePerPage;
+
+    /**
+     * @var int|null
+     */
+    public $page;
 
     /**
      * @return string|null

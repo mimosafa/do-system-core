@@ -69,4 +69,17 @@ class Vendor
         $service = doSystem()->make(GetCarsService::class);
         return $service->handle($this, $params);
     }
+
+    /**
+     * @param VendorValueName $name
+     * @return bool
+     */
+    public function setName(VendorValueName $name): bool
+    {
+        if (!$name->equals($this->name)) {
+            $this->name = $name;
+            return true;
+        }
+        return false;
+    }
 }

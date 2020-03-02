@@ -48,7 +48,8 @@ class VendorRepositoryMock implements VendorRepositoryInterface
         else {
             $id = $maybeId->getValue();
             $ids = \array_column($this->db, 'id');
-            if (!$i = \array_search($id, $ids, true)) {
+            $i = \array_search($id, $ids, true);
+            if ($i === false) {
                 throw new NotFoundException('Not Found');
             }
             $row =& $this->db[$i];
