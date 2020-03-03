@@ -10,7 +10,7 @@ use DoSystem\Application\Car\Service;
 use DoSystem\Domain\Car\Model;
 use DoSystem\Domain\Car\Service as DomainService;
 use DoSystemMock\Application\Car\Data as MockData;
-use DoSystemMock\Factory;
+use DoSystemMock\Factory\CarDataFactory;
 use DoSystemMock\Infrastructure\Repository;
 use DoSystemMock\Infrastructure\Seeder;
 
@@ -53,7 +53,7 @@ class CarServiceTest extends TestCase
         $vendorsData = $vendorsSeeder->getData();
         $vendorId = $vendorsData[0]['id'];
 
-        $data = Factory\CarDataFactory::generate($vendorId);
+        $data = CarDataFactory::generate($vendorId);
         $input = new MockData\CreateCarInputMock();
         $input->vendorId = $data['vendor_id'];
         $input->vin = $data['vin'];

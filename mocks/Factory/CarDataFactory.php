@@ -37,6 +37,8 @@ class CarDataFactory
      * Singleton
      *
      * @access private
+     *
+     * @return self
      */
     private static function instance(): self
     {

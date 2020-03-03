@@ -44,8 +44,8 @@ class CarsSeeder
     }
 
     /**
-     * @param CarRepositoryInterface $repository
-     * @param VendorRepositoryInterface $repository
+     * @param CarRepositoryInterface $carRepository
+     * @param VendorRepositoryInterface $vendorRepository
      * @return void
      */
     public function seed(CarRepositoryInterface $carRepository, VendorRepositoryInterface $vendorRepository): void

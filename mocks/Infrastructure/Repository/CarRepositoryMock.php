@@ -99,8 +99,10 @@ class CarRepositoryMock implements CarRepositoryInterface
         $int = $id->getValue();
 
         $ids = \array_column($this->db, 'id');
-        $row = $this->db[\array_search($int, $ids, true)] ?? null;
-
+        $i = \array_search($int, $ids, true);
+        if ($i !== false) {
+            $row = $this->db[$i];
+        }
         if (!isset($row)) {
             throw new NotFoundException('Not found');
         }
