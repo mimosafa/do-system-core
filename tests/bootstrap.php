@@ -28,8 +28,12 @@ doSystem()->singleton(
  * Get service application outputs
  */
 doSystem()->bind(
-    Application\Car\Data\GetCarOutputInterface::class,
-    MockApplication\Car\Data\GetCarOutputMock::class
+    Application\Brand\Data\GetBrandOutputInterface::class,
+    MockApplication\Brand\Data\GetBrandOutputMock::class
+);
+doSystem()->bind(
+   Application\Car\Data\GetCarOutputInterface::class,
+   MockApplication\Car\Data\GetCarOutputMock::class
 );
 doSystem()->bind(
     Application\Vendor\Data\GetVendorOutputInterface::class,

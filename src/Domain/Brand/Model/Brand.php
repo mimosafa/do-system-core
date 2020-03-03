@@ -2,6 +2,8 @@
 
 namespace DoSystem\Domain\Brand\Model;
 
+use DoSystem\Domain\Vendor\Model\Vendor;
+
 class Brand
 {
     /**
@@ -20,17 +22,24 @@ class Brand
     private $name;
 
     /**
+     * @var BrandValueStatus
+     */
+    private $status;
+
+    /**
      * Constructor
      *
      * @param BrandValueId $id
      * @param Vendor $vendor
      * @param BrandValueName $name
+     * @param BrandValueStatus $status
      */
-    public function __construct(BrandValueId $id, Vendor $vendor, BrandValueName $name)
+    public function __construct(BrandValueId $id, Vendor $vendor, BrandValueName $name, BrandValueStatus $status)
     {
         $this->id = $id;
         $this->vendor = $vendor;
         $this->name = $name;
+        $this->status = $status;
     }
 
     /**
@@ -47,5 +56,21 @@ class Brand
     public function belongsTo(): Vendor
     {
         return $this->vendor;
+    }
+
+    /**
+     * @return BrandValueName
+     */
+    public function getName(): BrandValueName
+    {
+        return $this->name;
+    }
+
+    /**
+     * @return BrandValueStatus
+     */
+    public function getStatus(): BrandValueStatus
+    {
+        return $this->status;
     }
 }
