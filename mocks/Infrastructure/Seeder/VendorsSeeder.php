@@ -2,19 +2,19 @@
 
 namespace DoSystemMock\Infrastructure\Seeder;
 
-use DoSystemMock\Factory\VendorDataFactory;
 use DoSystem\Domain\Vendor\Model\Vendor;
 use DoSystem\Domain\Vendor\Model\VendorRepositoryInterface;
 use DoSystem\Domain\Vendor\Model\VendorValueId;
 use DoSystem\Domain\Vendor\Model\VendorValueName;
 use DoSystem\Domain\Vendor\Model\VendorValueStatus;
+use DoSystemMock\Factory\VendorDataFactory;
 
 class VendorsSeeder
 {
     /**
      * @var int
      */
-    private $numberOfVendors;
+    private $numberOfRows;
 
     /**
      * @var array[]
@@ -22,19 +22,18 @@ class VendorsSeeder
     private $fakeData = [];
 
     /**
-     * @var VendorRepositoryInterface
+     * @var bool
      */
-    private $repository;
+    private $done = false;
 
     /**
      * Constructor
      *
-     * @param int $numberOfVendors
+     * @param int $numberOfRows
      */
-    public function __construct(int $numberOfVendors)
+    public function __construct(int $numberOfRows)
     {
-        $this->numberOfVendors = $numberOfVendors;
-        $this->prepareData();
+        $this->numberOfRows = $numberOfRows;
     }
 
     /**
@@ -43,17 +42,23 @@ class VendorsSeeder
      */
     public function seed(VendorRepositoryInterface $repository): void
     {
-        $this->repository = $repository;
+        if ($this->done) {
+            return;
+        }
 
-        foreach ($this->fakeData as &$data) {
+        for ($i = 0; $i < $this->numberOfRows; $i++) {
+            $data = VendorDataFactory::generate();
             $model = new Vendor(
                 VendorValueId::of(null),
                 VendorValueName::of($data['name']),
                 VendorValueStatus::of($data['status'])
             );
-            $id = $this->repository->store($model);
+            $id = $repository->store($model);
             $data['id'] = $id->getValue();
+            $this->fakeData[] = $data;
         }
+
+        $this->done = true;
     }
 
     /**
@@ -62,15 +67,5 @@ class VendorsSeeder
     public function getData(): array
     {
         return $this->fakeData;
-    }
-
-    /**
-     * @return void
-     */
-    private function prepareData(): void
-    {
-        for ($i = 0; $i < $this->numberOfVendors; $i++) {
-            $this->fakeData[] = VendorDataFactory::generate();
-        }
     }
 }

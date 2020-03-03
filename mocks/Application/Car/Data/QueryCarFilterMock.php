@@ -6,23 +6,30 @@ use DoSystem\Application\Car\Data\QueryCarFilterInterface;
 
 class QueryCarFilterMock implements QueryCarFilterInterface
 {
-    private $vendorId;
-    private $vin;
-    private $status;
-    private $sizePerPage;
-    private $page;
+    /**
+     * @var int[]|null
+     */
+    public $vendorId;
 
     /**
-     * Constructor
+     * @var string|null
      */
-    public function __construct(?array $vendorId = null, ?string $vin = null, ?array $status = null, ?int $sizePerPage = null, ?int $page = null)
-    {
-        $this->vendorId = $vendorId;
-        $this->vin = $vin;
-        $this->status = $status;
-        $this->sizePerPage = $sizePerPage;
-        $this->page = $page;
-    }
+    public $vin;
+
+    /**
+     * @var int[]|null
+     */
+    public $status;
+
+    /**
+     * @var int|null
+     */
+    public $sizePerPage;
+
+    /**
+     * @var int|null
+     */
+    public $page;
 
     /**
      * @return int[]|null

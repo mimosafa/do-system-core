@@ -3,9 +3,10 @@
 namespace DoSystemMock\Factory;
 
 use Faker\Factory;
-use DoSystem\Domain\Vendor\Model\VendorValueStatus;
+use DoSystem\Domain\Car\Model\CarValueStatus;
+use DoSystem\Domain\Car\Model\CarValueVin;
 
-class VendorDataFactory
+class CarDataFactory
 {
     /**
      * @var \Faker\Generator
@@ -29,7 +30,7 @@ class VendorDataFactory
         $this->faker = Factory::create('ja_JP');
         $this->statusIntValues = \array_map(function ($vo) {
             return $vo->getValue();
-        }, VendorValueStatus::values());
+        }, CarValueStatus::values());
     }
 
     /**
@@ -47,19 +48,24 @@ class VendorDataFactory
     }
 
     /**
-     * Generate fake data array for creating vendor
+     * Generate fake data array for creating car
      *
      * @access public
      *
+     * @param int $vendorId
      * @return array
      */
-    public static function generate(): array
+    public static function generate(int $vendorId): array
     {
         $instance = self::instance();
+        $vinPattern = CarValueVin::getRegexPattern();
+        $nameSafix = $instance->faker->randomElement(['', '号', '車']);
 
         $data = [];
-        $data['name'] = $instance->faker->company;
+        $data['vendor_id'] = $vendorId;
+        $data['vin'] = $instance->faker->regexify($vinPattern);
         $data['status'] = $instance->faker->randomElement($instance->statusIntValues);
+        $data['name'] = $nameSafix ? $instance->faker->lastName . $nameSafix : '';
 
         return $data;
     }
