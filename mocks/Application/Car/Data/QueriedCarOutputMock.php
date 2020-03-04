@@ -11,7 +11,7 @@ class QueriedCarOutputMock implements QueriedCarOutputInterface
     /**
      * @var Car
      */
-    private $model;
+    public $model;
 
     /**
      * Constructor

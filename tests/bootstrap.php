@@ -56,8 +56,12 @@ doSystem()->bind(
  * Query service application outputs
  */
 doSystem()->bind(
-    Application\Car\Data\QueriedCarOutputInterface::class,
-    MockApplication\Car\Data\QueriedCarOutputMock::class
+    Application\Brand\Data\QueriedBrandOutputInterface::class,
+    MockApplication\Brand\Data\QueriedBrandOutputMock::class
+);
+doSystem()->bind(
+   Application\Car\Data\QueriedCarOutputInterface::class,
+   MockApplication\Car\Data\QueriedCarOutputMock::class
 );
 doSystem()->bind(
     Application\Vendor\Data\QueriedVendorOutputInterface::class,

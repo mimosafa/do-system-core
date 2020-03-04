@@ -208,5 +208,13 @@ class CarServiceTest extends TestCase
         $this->assertEquals(count($resultVendorId), $vendorId1514Num);
         $this->assertEquals(count($resultVin), $vinContains9Num);
         $this->assertEquals(count($resultStatus), $status467Num);
+
+        $filterPage = new MockData\QueryCarFilterMock();
+        $filterPage->sizePerPage = 7;
+        $filterPage->page = 5;
+        $resultPage = $queryService->handle($filterPage);
+
+        $this->assertEquals(count($resultPage), 30 - (7 * (5 - 1)));
+        $this->assertEquals($resultPage[0]->getVin()->getValue(), $data[28]['vin']);
     }
 }

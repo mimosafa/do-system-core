@@ -2,7 +2,10 @@
 
 namespace DoSystemMock\Infrastructure\Repository;
 
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use DoSystem\Domain\Brand\Model\Brand;
+use DoSystem\Domain\Brand\Model\BrandCollection;
 use DoSystem\Domain\Brand\Model\BrandRepositoryInterface;
 use DoSystem\Domain\Brand\Model\BrandValueId;
 use DoSystem\Domain\Brand\Model\BrandValueName;
@@ -93,6 +96,59 @@ class BrandRepositoryMock implements BrandRepositoryInterface
             BrandValueName::of($row['name']),
             BrandValueStatus::of($row['status'])
         );
+    }
+
+    /**
+     * @param array{
+     *      @type int[]|null  $vendor_id
+     *      @type string|null $name
+     *      @type int[]|null  $status
+     *      @type int|null    $size_per_page
+     *      @type int|null    $page
+     * } $params
+     * @return BrandCollection
+     */
+    public function query(array $params): BrandCollection
+    {
+        $result = $this->db;
+
+        if (!empty($result)) {
+            $vendorFilter = Arr::pull($params, 'vendor_id');
+            $nameFilter = Arr::pull($params, 'name');
+            $statusFilter = Arr::pull($params, 'status');
+
+            $result = Arr::where($result, function ($row) use ($vendorFilter, $nameFilter, $statusFilter) {
+                if ($vendorFilter && !\in_array($row['vendor_id'], $vendorFilter, true)) {
+                    return false;
+                }
+                if ($nameFilter && !Str::contains($row['name'], $nameFilter)) {
+                    return false;
+                }
+                if ($statusFilter && !\in_array($row['status'], $statusFilter, true)) {
+                    return false;
+                }
+                return true;
+            });
+        }
+
+        if (!empty($result) && $size = Arr::pull($params, 'size_per_page')) {
+            $page = Arr::pull($params, 'page', 1);
+            $start = ($page - 1) * $size;
+            $result = \array_slice($result, $start, $size);
+        }
+
+        if (!empty($result)) {
+            $result = \array_map(function ($row) {
+                return new Brand(
+                    BrandValueId::of($row['id']),
+                    $this->vendorRepository->findById(VendorValueId::of($row['vendor_id'])),
+                    BrandValueName::of($row['name']),
+                    BrandValueStatus::of($row['status'])
+                );
+            }, $result);
+        }
+
+        return new BrandCollection($result);
     }
 
     /**

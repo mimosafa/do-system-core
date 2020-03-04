@@ -3,6 +3,7 @@
 namespace DoSystemTest\Application\Brand\Service;
 
 use Faker\Provider\Base as Faker;
+use Illuminate\Support\Str;
 use PHPUnit\Framework\TestCase;
 use DoSystem\Application\Brand\Data;
 use DoSystem\Application\Brand\Service;
@@ -111,5 +112,60 @@ class BrandServiceTest extends TestCase
         $this->assertEquals(count($outputName->modified), 1);
         $this->assertEquals($outputName->modified[0], Model\BrandValueName::class);
         $this->assertEquals($this->brandRepository->findById($idName)->getName()->getValue(), $nameAfter);
+    }
+
+    /**
+     * @test
+     */
+    public function testQueryBrand()
+    {
+        $queryService = new Service\QueryBrandService($this->brandRepository);
+        $seeder = new Seeder\BrandsSeeder(25, 8);
+        $seeder->seed($this->brandRepository, $this->vendorRepository);
+        $data = $seeder->getData();
+
+        $filterAll = new MockData\QueryBrandFilterMock();
+        $resultAll = $queryService->handle($filterAll);
+
+        $this->assertEquals(count($resultAll), 25);
+        $this->assertTrue($resultAll[0] instanceof Data\QueriedBrandOutputInterface);
+
+        $filterVendor = new MockData\QueryBrandFilterMock();
+        $filterVendor->vendorId = [6, 7, 9];
+        $resultVendor = $queryService->handle($filterVendor);
+
+        $filterName = new MockData\QueryBrandFilterMock();
+        $filterName->name = '亭';
+        $resultName = $queryService->handle($filterName);
+
+        $filterStatus = new MockData\QueryBrandFilterMock();
+        $filterStatus->status = [0, 1, 8, 9];
+        $resultStatus = $queryService->handle($filterStatus);
+
+        $vendorId679Num = 0;
+        $nameContains亭 = 0;
+        $status0189Num = 0;
+        foreach ($data as $arr) {
+            if (\in_array($arr['vendor_id'], [6, 7, 9], true)) {
+                $vendorId679Num++;
+            }
+            if (Str::contains($arr['name'], '亭')) {
+                $nameContains亭++;
+            }
+            if (\in_array($arr['status'], [0, 1, 8, 9], true)) {
+                $status0189Num++;
+            }
+        }
+        $this->assertEquals(count($resultVendor), $vendorId679Num);
+        $this->assertEquals(count($resultName), $nameContains亭);
+        $this->assertEquals(count($resultStatus), $status0189Num);
+
+        $filterPage = new MockData\QueryBrandFilterMock();
+        $filterPage->sizePerPage = 7;
+        $filterPage->page = 4;
+        $resultPage = $queryService->handle($filterPage);
+
+        $this->assertEquals(count($resultPage), 25 - (7 * (4 - 1)));
+        $this->assertEquals($resultPage[0]->model->getId()->getValue(), $data[21]['id']);
     }
 }
