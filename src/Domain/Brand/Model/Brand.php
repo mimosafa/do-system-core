@@ -73,4 +73,17 @@ class Brand
     {
         return $this->status;
     }
+
+    /**
+     * @param BrandValueName $name
+     * @return bool
+     */
+    public function setName(BrandValueName $name): bool
+    {
+        if (!$name->equals($this->name)) {
+            $this->name = $name;
+            return true;
+        }
+        return false;
+    }
 }

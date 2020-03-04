@@ -68,8 +68,12 @@ doSystem()->bind(
  * Update service application outputs
  */
 doSystem()->bind(
-    Application\Car\Data\UpdateCarOutputInterface::class,
-    MockApplication\Car\Data\UpdateCarOutputMock::class
+    Application\Brand\Data\UpdateBrandOutputInterface::class,
+    MockApplication\Brand\Data\UpdateBrandOutputMock::class
+);
+doSystem()->bind(
+   Application\Car\Data\UpdateCarOutputInterface::class,
+   MockApplication\Car\Data\UpdateCarOutputMock::class
 );
 doSystem()->bind(
    Application\Vendor\Data\UpdateVendorOutputInterface::class,

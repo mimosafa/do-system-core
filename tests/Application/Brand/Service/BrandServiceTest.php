@@ -2,6 +2,7 @@
 
 namespace DoSystemTest\Application\Brand\Service;
 
+use Faker\Provider\Base as Faker;
 use PHPUnit\Framework\TestCase;
 use DoSystem\Application\Brand\Data;
 use DoSystem\Application\Brand\Service;
@@ -80,5 +81,35 @@ class BrandServiceTest extends TestCase
         $this->assertTrue($output3 instanceof Data\GetBrandOutputInterface);
 
         $this->assertEquals($output3->name->getValue(), $data[2]['name']);
+    }
+
+    /**
+     * @test
+     */
+    public function testUpdateBrand()
+    {
+        $updateService = new Service\UpdateBrandService($this->brandRepository);
+        $seeder = new Seeder\BrandsSeeder(5, 2);
+        $seeder->seed($this->brandRepository, $this->vendorRepository);
+        $data = $seeder->getData();
+        $ids = Faker::randomElements(\array_column($data, 'id'), 2);
+
+        // Update name
+        $idName = Model\BrandValueId::of($ids[0]);
+        $modelName = $this->brandRepository->findById($idName);
+        $nameBefore = $modelName->getName()->getValue();
+        $nameAfter = 'Awesome Restaurant';
+
+        $this->assertNotEquals($nameBefore, $nameAfter);
+
+        $inputName = new MockData\UpdateBrandInputMock();
+        $inputName->id = $idName->getValue();
+        $inputName->name = $nameAfter;
+        $outputName = $updateService->handle($inputName);
+
+        $this->assertTrue($outputName instanceof Data\UpdateBrandOutputInterface);
+        $this->assertEquals(count($outputName->modified), 1);
+        $this->assertEquals($outputName->modified[0], Model\BrandValueName::class);
+        $this->assertEquals($this->brandRepository->findById($idName)->getName()->getValue(), $nameAfter);
     }
 }
