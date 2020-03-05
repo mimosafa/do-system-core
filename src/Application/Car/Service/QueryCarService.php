@@ -46,6 +46,11 @@ class QueryCarService
             $params['page'] = $filter->getPage() ?? 1;
         }
 
+        if ($orderBy = $filter->getOrderBy()) {
+            $params['order_by'] = $orderBy;
+            $params['order'] = $filter->getOrder() ?? 'asc';
+        }
+
         $collection = $this->repository->query($params);
 
         return $collection->map(function ($model) {

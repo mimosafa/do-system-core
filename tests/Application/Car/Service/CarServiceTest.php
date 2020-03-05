@@ -216,5 +216,24 @@ class CarServiceTest extends TestCase
 
         $this->assertEquals(count($resultPage), 30 - (7 * (5 - 1)));
         $this->assertEquals($resultPage[0]->getVin()->getValue(), $data[28]['vin']);
+
+        $filterOrder = new MockData\QueryCarFilterMock();
+        $filterOrder->orderBy = 'status';
+        $filterOrder->order = 'DESC';
+        $resultOrder = $queryService->handle($filterOrder);
+        $statusCache = 9;
+        $c = 0;
+        foreach ($resultOrder as $output) {
+            $status = $output->model->getStatus()->getValue();
+            if ($status > $statusCache) {
+                break;
+            }
+            $c++;
+            if ($status < $statusCache) {
+                $statusCache = $status;
+            }
+        }
+
+        $this->assertEquals($c, 30);
     }
 }

@@ -32,6 +32,16 @@ class QueryCarFilterMock implements QueryCarFilterInterface
     public $page;
 
     /**
+     * @var string|null
+     */
+    public $orderBy;
+
+    /**
+     * @var string|null
+     */
+    public $order;
+
+    /**
      * @return int[]|null
      */
     public function getVendorIdFilter(): ?array
@@ -69,5 +79,21 @@ class QueryCarFilterMock implements QueryCarFilterInterface
     public function getPage(): ?int
     {
         return $this->page;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getOrderBy(): ?string
+    {
+        return $this->orderBy;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getOrder(): ?string
+    {
+        return $this->order;
     }
 }

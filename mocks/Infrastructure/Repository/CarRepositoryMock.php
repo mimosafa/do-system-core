@@ -123,12 +123,13 @@ class CarRepositoryMock implements CarRepositoryInterface
 
     /**
      * @param array{
-     *      @type int $vendor_id
-     *      @type string $vin
-     *      @type int $status
-     *      @type string|null $name
-     *      @type int $size_per_page
-     *      @type int $page
+     *      @type int[]|null  $vendor_id
+     *      @type string|null $vin
+     *      @type int[]|null  $status
+     *      @type int|null    $size_per_page
+     *      @type int|null    $page
+     *      @type string|null $order_by  'id'|'status'|'order'
+     *      @type string|null $order  'ASC'|'DESC'
      * } $params
      * @return CarCollection
      */
@@ -161,17 +162,31 @@ class CarRepositoryMock implements CarRepositoryInterface
             $result = \array_slice($result, $start, $size);
         }
 
-        if (!empty($result)) {
-            $result = \array_map(function ($row) {
-                $id = CarValueId::of($row['id']);
-                $vendor = $this->vendorRepository->findById(VendorValueId::of($row['vendor_id']));
-                $vin = CarValueVin::of($row['vin']);
-                $status = CarValueStatus::of($row['status']);
-                $name = CarValueName::of($row['name']);
-                $order = CarValueOrder::of($row['order']);
-                return new Car($id, $vendor, $vin, $status, $name, $order);
-            }, $result);
+        if (empty($result)) {
+            return new CarCollection($result);
         }
+
+        if ($orderBy = Arr::pull($params, 'order_by')) {
+            if (\in_array($orderBy, ['status', 'order'], true)) {
+                $result = Arr::sort($result, function ($row) use ($orderBy) {
+                    return $row[$orderBy];
+                });
+                $order = \strtolower(Arr::pull($params, 'order', 'asc'));
+                if ($order === 'desc') {
+                    $result = \array_reverse($result);
+                }
+            }
+        }
+
+        $result = \array_map(function ($row) {
+            $id = CarValueId::of($row['id']);
+            $vendor = $this->vendorRepository->findById(VendorValueId::of($row['vendor_id']));
+            $vin = CarValueVin::of($row['vin']);
+            $status = CarValueStatus::of($row['status']);
+            $name = CarValueName::of($row['name']);
+            $order = CarValueOrder::of($row['order']);
+            return new Car($id, $vendor, $vin, $status, $name, $order);
+        }, $result);
 
         return new CarCollection($result);
     }

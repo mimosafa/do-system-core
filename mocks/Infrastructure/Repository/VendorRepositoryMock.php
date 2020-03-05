@@ -130,7 +130,7 @@ class VendorRepositoryMock implements VendorRepositoryInterface
                 $result = Arr::sort($result, function ($row) use ($orderBy) {
                     return $row[$orderBy];
                 });
-                $order = \strtolower(Arr::pull($params, 'order'));
+                $order = \strtolower(Arr::pull($params, 'order', 'asc'));
                 if ($order === 'desc') {
                     $result = \array_reverse($result);
                 }
