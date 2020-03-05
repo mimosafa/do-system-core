@@ -2,6 +2,7 @@
 
 namespace DoSystemMock\Infrastructure\Repository;
 
+use PHP_INT_MAX;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use DoSystem\Domain\Car\Model\Car;
@@ -169,7 +170,7 @@ class CarRepositoryMock implements CarRepositoryInterface
         if ($orderBy = Arr::pull($params, 'order_by')) {
             if (\in_array($orderBy, ['status', 'order'], true)) {
                 $result = Arr::sort($result, function ($row) use ($orderBy) {
-                    return $row[$orderBy];
+                    return $row[$orderBy] === null ? PHP_INT_MAX : $row[$orderBy];
                 });
                 $order = \strtolower(Arr::pull($params, 'order', 'asc'));
                 if ($order === 'desc') {

@@ -44,6 +44,7 @@ class VendorGetCars
     public static function exec(Vendor $model, array $params = []): CarCollection
     {
         $params['vendor_id'] = [$model->getId()->getValue()];
+        $params['order_by'] ?? $params['order_by'] = 'order';
         return self::instance()->repository->query($params);
     }
 }

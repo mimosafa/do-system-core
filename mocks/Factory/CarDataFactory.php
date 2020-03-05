@@ -68,7 +68,7 @@ class CarDataFactory
         $data['vin'] = $instance->faker->regexify($vinPattern);
         $data['status'] = $instance->faker->randomElement($instance->statusIntValues);
         $data['name'] = $nameSafix ? $instance->faker->lastName . $nameSafix : '';
-        $data['order'] = 0;
+        $data['order'] = $instance->faker->randomElement([null, 0, 1, 2, 3]);
 
         return $data;
     }

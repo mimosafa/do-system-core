@@ -141,4 +141,17 @@ class Car
         }
         return false;
     }
+
+    /**
+     * @param CarValueOrder $order
+     * @return bool
+     */
+    public function setOrder(CarValueOrder $order): bool
+    {
+        if (!$order->equals($this->order)) {
+            $this->order = $order;
+            return true;
+        }
+        return false;
+    }
 }
