@@ -18,9 +18,4 @@ class Administrator
      * @var AdministratorValueEmail
      */
     private $email;
-
-    /**
-     * @var AdministratorValueRole
-     */
-    private $role;
 }
