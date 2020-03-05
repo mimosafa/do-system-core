@@ -2,8 +2,8 @@
 
 namespace DoSystem\Domain\Vendor\Model;
 
+use DoSystem\Domain\Brand\Model\BrandCollection;
 use DoSystem\Domain\Car\Model\CarCollection;
-use DoSystem\Domain\Vendor\Service\GetCarsService;
 
 class Vendor
 {
@@ -62,12 +62,20 @@ class Vendor
 
     /**
      * @param array $params
+     * @return BrandCollection
+     */
+    public function getBrands(array $params = []): BrandCollection
+    {
+        return VendorGetBrands::exec($this, $params);
+    }
+
+    /**
+     * @param array $params
      * @return CarCollection
      */
     public function getCars(array $params = []): CarCollection
     {
-        $service = doSystem()->make(GetCarsService::class);
-        return $service->handle($this, $params);
+        return VendorGetCars::exec($this, $params);
     }
 
     /**

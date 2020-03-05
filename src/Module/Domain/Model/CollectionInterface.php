@@ -14,6 +14,11 @@ interface CollectionInterface extends ArrayAccess, Countable, IteratorAggregate
     public function all();
 
     /**
+     * @return int
+     */
+    public function count();
+
+    /**
      * @param callable $callback
      * @return self
      */
