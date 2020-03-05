@@ -23,4 +23,9 @@ interface CreateCarInputInterface
      * @return string|null
      */
     public function getName(): ?string;
+
+    /**
+     * @return int|null
+     */
+    public function getOrder(): ?int;
 }

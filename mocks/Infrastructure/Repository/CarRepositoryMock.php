@@ -9,6 +9,7 @@ use DoSystem\Domain\Car\Model\CarCollection;
 use DoSystem\Domain\Car\Model\CarRepositoryInterface;
 use DoSystem\Domain\Car\Model\CarValueId;
 use DoSystem\Domain\Car\Model\CarValueName;
+use DoSystem\Domain\Car\Model\CarValueOrder;
 use DoSystem\Domain\Car\Model\CarValueStatus;
 use DoSystem\Domain\Car\Model\CarValueVin;
 use DoSystem\Domain\Vendor\Model\Vendor;
@@ -65,6 +66,8 @@ class CarRepositoryMock implements CarRepositoryInterface
         /** @var CarValueName */
         $name = $model->getName();
 
+        $order = $model->getOrder();
+
         if ($maybeId->isPseudo()) {
             $id = ++$this->lastId;
             $this->db[] = ['id' => $id];
@@ -84,6 +87,7 @@ class CarRepositoryMock implements CarRepositoryInterface
         $row['vin'] = $vin->getValue();
         $row['status'] = $status->getValue();
         $row['name'] = $name->getValue();
+        $row['order'] = $order->getValue();
 
         return CarValueId::of($id);
     }
@@ -112,8 +116,9 @@ class CarRepositoryMock implements CarRepositoryInterface
         $vin = CarValueVin::of($row['vin']);
         $status = CarValueStatus::of($row['status']);
         $name = CarValueName::of($row['name']);
+        $order = CarValueOrder::of($row['order']);
 
-        return new Car($id, $vendor, $vin, $status, $name);
+        return new Car($id, $vendor, $vin, $status, $name, $order);
     }
 
     /**
@@ -163,7 +168,8 @@ class CarRepositoryMock implements CarRepositoryInterface
                 $vin = CarValueVin::of($row['vin']);
                 $status = CarValueStatus::of($row['status']);
                 $name = CarValueName::of($row['name']);
-                return new Car($id, $vendor, $vin, $status, $name);
+                $order = CarValueOrder::of($row['order']);
+                return new Car($id, $vendor, $vin, $status, $name, $order);
             }, $result);
         }
 

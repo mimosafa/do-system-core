@@ -32,6 +32,11 @@ class Car
     private $name;
 
     /**
+     * @var CarValueOrder
+     */
+    private $order;
+
+    /**
      * Constructor
      *
      * @param CarValueId $id
@@ -40,13 +45,14 @@ class Car
      * @param CarValueStatus $status
      * @param CarValueName $name
      */
-    public function __construct(CarValueId $id, Vendor $vendor, CarValueVin $vin, CarValueStatus $status, CarValueName $name)
+    public function __construct(CarValueId $id, Vendor $vendor, CarValueVin $vin, CarValueStatus $status, CarValueName $name, CarValueOrder $order)
     {
         $this->id     = $id;
         $this->vendor = $vendor;
         $this->vin    = $vin;
         $this->status = $status;
         $this->name   = $name;
+        $this->order  = $order;
     }
 
     /**
@@ -87,6 +93,14 @@ class Car
     public function getName(): CarValueName
     {
         return $this->name;
+    }
+
+    /**
+     * @return CarValueOrder
+     */
+    public function getOrder(): CarValueOrder
+    {
+        return $this->order;
     }
 
     /**

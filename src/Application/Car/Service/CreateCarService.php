@@ -7,6 +7,7 @@ use DoSystem\Domain\Car\Model\Car;
 use DoSystem\Domain\Car\Model\CarRepositoryInterface;
 use DoSystem\Domain\Car\Model\CarValueId;
 use DoSystem\Domain\Car\Model\CarValueName;
+use DoSystem\Domain\Car\Model\CarValueOrder;
 use DoSystem\Domain\Car\Model\CarValueStatus;
 use DoSystem\Domain\Car\Model\CarValueVin;
 use DoSystem\Domain\Car\Service\CarService;
@@ -68,9 +69,13 @@ class CreateCarService
         // Name
         $name = CarValueName::of($input->getName());
 
+        // Order
+        $orderInt = $input->getOrder();
+        $order = isset($orderInt) ? CarValueOrder::of($orderInt) : CarValueOrder::of(0);
+
         // Pseudo Id for createing
         $id = CarValueId::of(null);
 
-        return $this->carRepository->store(new Car($id, $vendor, $vin, $status, $name));
+        return $this->carRepository->store(new Car($id, $vendor, $vin, $status, $name, $order));
     }
 }

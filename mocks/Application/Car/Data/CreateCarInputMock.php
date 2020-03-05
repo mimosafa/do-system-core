@@ -27,6 +27,11 @@ class CreateCarInputMock implements CreateCarInputInterface
     public $name;
 
     /**
+     * @var int|null
+     */
+    public $order;
+
+    /**
      * @return int
      */
     public function getVendorId(): int
@@ -56,5 +61,13 @@ class CreateCarInputMock implements CreateCarInputInterface
     public function getName(): ?string
     {
         return $this->name;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getOrder(): ?int
+    {
+        return $this->order;
     }
 }

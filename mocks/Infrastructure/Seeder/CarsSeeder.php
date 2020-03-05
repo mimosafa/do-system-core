@@ -7,6 +7,7 @@ use DoSystem\Domain\Car\Model\Car;
 use DoSystem\Domain\Car\Model\CarRepositoryInterface;
 use DoSystem\Domain\Car\Model\CarValueId;
 use DoSystem\Domain\Car\Model\CarValueName;
+use DoSystem\Domain\Car\Model\CarValueOrder;
 use DoSystem\Domain\Car\Model\CarValueStatus;
 use DoSystem\Domain\Car\Model\CarValueVin;
 use DoSystem\Domain\Vendor\Model\VendorRepositoryInterface;
@@ -66,7 +67,8 @@ class CarsSeeder
                 $vendorRepository->findById(VendorValueId::of($data['vendor_id'])),
                 CarValueVin::of($data['vin']),
                 CarValueStatus::of($data['status']),
-                CarValueName::of($data['name'])
+                CarValueName::of($data['name']),
+                CarValueOrder::of($data['order'])
             );
             $id = $carRepository->store($model);
             $data['id'] = $id->getValue();
