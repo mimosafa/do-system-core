@@ -44,6 +44,7 @@ class VendorGetBrands
     public static function exec(Vendor $model, array $params = []): BrandCollection
     {
         $params['vendor_id'] = [$model->getId()->getValue()];
+        $params['order_by'] ?? $params['order_by'] = 'order';
         return self::instance()->repository->query($params);
     }
 }

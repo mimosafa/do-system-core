@@ -27,19 +27,26 @@ class Brand
     private $status;
 
     /**
+     * @var BrandValueOrder
+     */
+    private $order;
+
+    /**
      * Constructor
      *
      * @param BrandValueId $id
      * @param Vendor $vendor
      * @param BrandValueName $name
      * @param BrandValueStatus $status
+     * @param BrandValueOrder $order
      */
-    public function __construct(BrandValueId $id, Vendor $vendor, BrandValueName $name, BrandValueStatus $status)
+    public function __construct(BrandValueId $id, Vendor $vendor, BrandValueName $name, BrandValueStatus $status, BrandValueOrder $order)
     {
         $this->id = $id;
         $this->vendor = $vendor;
         $this->name = $name;
         $this->status = $status;
+        $this->order = $order;
     }
 
     /**
@@ -75,6 +82,14 @@ class Brand
     }
 
     /**
+     * @return BrandValueOrder
+     */
+    public function getOrder(): BrandValueOrder
+    {
+        return $this->order;
+    }
+
+    /**
      * @param BrandValueName $name
      * @return bool
      */
@@ -82,6 +97,19 @@ class Brand
     {
         if (!$name->equals($this->name)) {
             $this->name = $name;
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * @param BrandValueOrder $order
+     * @return bool
+     */
+    public function setOrder(BrandValueOrder $order): bool
+    {
+        if (!$order->equals($this->order)) {
+            $this->order = $order;
             return true;
         }
         return false;

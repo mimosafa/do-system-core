@@ -167,5 +167,24 @@ class BrandServiceTest extends TestCase
 
         $this->assertEquals(count($resultPage), 25 - (7 * (4 - 1)));
         $this->assertEquals($resultPage[0]->model->getId()->getValue(), $data[21]['id']);
+
+        $filterOrder = new MockData\QueryBrandFilterMock();
+        $filterOrder->orderBy = 'status';
+        $filterOrder->order = 'desc';
+        $resultOrder = $queryService->handle($filterOrder);
+        $statusCache = 9;
+        $c = 0;
+        foreach ($resultOrder as $output) {
+            $status = $output->model->getStatus()->getValue();
+            if ($status > $statusCache) {
+                break;
+            }
+            $c++;
+            if ($status < $statusCache) {
+                $statusCache = $status;
+            }
+        }
+
+        $this->assertEquals($c, 25);
     }
 }

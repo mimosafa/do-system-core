@@ -18,4 +18,9 @@ interface CreateBrandInputInterface
      * @return int|null
      */
     public function getStatus(): ?int;
+
+    /**
+     * @return int|null
+     */
+    public function getOrder(): ?int;
 }

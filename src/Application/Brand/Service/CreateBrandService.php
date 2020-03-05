@@ -7,6 +7,7 @@ use DoSystem\Domain\Brand\Model\Brand;
 use DoSystem\Domain\Brand\Model\BrandRepositoryInterface;
 use DoSystem\Domain\Brand\Model\BrandValueId;
 use DoSystem\Domain\Brand\Model\BrandValueName;
+use DoSystem\Domain\Brand\Model\BrandValueOrder;
 use DoSystem\Domain\Brand\Model\BrandValueStatus;
 use DoSystem\Domain\Vendor\Model\VendorRepositoryInterface;
 use DoSystem\Domain\Vendor\Model\VendorValueId;
@@ -48,8 +49,10 @@ class CreateBrandService
         $statusInt = $input->getStatus();
         $status = isset($statusInt) ? BrandValueStatus::of($statusInt) : BrandValueStatus::default();
 
+        $order = BrandValueOrder::of($input->getOrder());
+
         $id = BrandValueId::of(null);
 
-        return $this->brandRepository->store(new Brand($id, $vendor, $name, $status));
+        return $this->brandRepository->store(new Brand($id, $vendor, $name, $status, $order));
     }
 }

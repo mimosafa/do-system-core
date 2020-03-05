@@ -64,6 +64,7 @@ class BrandDataFactory
         $data['vendor_id'] = $vendorId;
         $data['name'] = $instance->faker->lastName . $instance->faker->randomElement(['屋', '亭', '庵']);
         $data['status'] = $instance->faker->randomElement($instance->statusIntValues);
+        $data['order'] = $instance->faker->randomElement([null, 1, 2, 3]);
 
         return $data;
     }

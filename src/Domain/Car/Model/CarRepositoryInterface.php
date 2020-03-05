@@ -25,7 +25,7 @@ interface CarRepositoryInterface
      *      @type int[]|null  $status
      *      @type int|null    $size_per_page
      *      @type int|null    $page
-     *      @type string|null $order_by  'id'|'status'|'order'
+     *      @type string|null $order_by  'status'|'order'
      *      @type string|null $order  'ASC'|'DESC'
      * } $params
      * @return CarCollection

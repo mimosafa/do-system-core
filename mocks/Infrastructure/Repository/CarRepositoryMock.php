@@ -187,7 +187,7 @@ class CarRepositoryMock implements CarRepositoryInterface
             $name = CarValueName::of($row['name']);
             $order = CarValueOrder::of($row['order']);
             return new Car($id, $vendor, $vin, $status, $name, $order);
-        }, $result);
+        }, $result, []); // 2nd empty array for reassign keys
 
         return new CarCollection($result);
     }

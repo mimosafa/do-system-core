@@ -2,6 +2,7 @@
 
 namespace DoSystemMock\Infrastructure\Repository;
 
+use PHP_INT_MAX;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use DoSystem\Domain\Brand\Model\Brand;
@@ -9,6 +10,7 @@ use DoSystem\Domain\Brand\Model\BrandCollection;
 use DoSystem\Domain\Brand\Model\BrandRepositoryInterface;
 use DoSystem\Domain\Brand\Model\BrandValueId;
 use DoSystem\Domain\Brand\Model\BrandValueName;
+use DoSystem\Domain\Brand\Model\BrandValueOrder;
 use DoSystem\Domain\Brand\Model\BrandValueStatus;
 use DoSystem\Domain\Vendor\Model\VendorRepositoryInterface;
 use DoSystem\Domain\Vendor\Model\VendorValueId;
@@ -51,6 +53,7 @@ class BrandRepositoryMock implements BrandRepositoryInterface
         $vendor = $model->belongsTo();
         $name = $model->getName();
         $status = $model->getStatus();
+        $order = $model->getOrder();
 
         if ($maybeId->isPseudo()) {
             $id = ++$this->lastId;
@@ -70,6 +73,7 @@ class BrandRepositoryMock implements BrandRepositoryInterface
         $row['vendor_id'] = $vendor->getId()->getValue();
         $row['name'] = $name->getValue();
         $row['status'] = $status->getValue();
+        $row['order'] = $order->getValue();
 
         return BrandValueId::of($id);
     }
@@ -94,7 +98,8 @@ class BrandRepositoryMock implements BrandRepositoryInterface
             BrandValueId::of($int),
             $this->vendorRepository->findById(VendorValueId::of($row['vendor_id'])),
             BrandValueName::of($row['name']),
-            BrandValueStatus::of($row['status'])
+            BrandValueStatus::of($row['status']),
+            BrandValueOrder::of($row['order'])
         );
     }
 
@@ -105,6 +110,8 @@ class BrandRepositoryMock implements BrandRepositoryInterface
      *      @type int[]|null  $status
      *      @type int|null    $size_per_page
      *      @type int|null    $page
+     *      @type string|null $order_by  'name'|'status'|'order'
+     *      @type string|null $order  'ASC'|'DESC'
      * } $params
      * @return BrandCollection
      */
@@ -137,16 +144,31 @@ class BrandRepositoryMock implements BrandRepositoryInterface
             $result = \array_slice($result, $start, $size);
         }
 
-        if (!empty($result)) {
-            $result = \array_map(function ($row) {
-                return new Brand(
-                    BrandValueId::of($row['id']),
-                    $this->vendorRepository->findById(VendorValueId::of($row['vendor_id'])),
-                    BrandValueName::of($row['name']),
-                    BrandValueStatus::of($row['status'])
-                );
-            }, $result);
+        if (empty($result)) {
+            return new BrandCollection($result);
         }
+
+        if ($orderBy = Arr::pull($params, 'order_by')) {
+            if (\in_array($orderBy, ['name', 'status', 'order'], true)) {
+                $result = Arr::sort($result, function ($row) use ($orderBy) {
+                    return $row[$orderBy] === null ? PHP_INT_MAX : $row[$orderBy];
+                });
+                $order = \strtolower(Arr::pull($params, 'order', 'asc'));
+                if ($order === 'desc') {
+                    $result = \array_reverse($result);
+                }
+            }
+        }
+
+        $result = \array_map(function ($row) {
+            return new Brand(
+                BrandValueId::of($row['id']),
+                $this->vendorRepository->findById(VendorValueId::of($row['vendor_id'])),
+                BrandValueName::of($row['name']),
+                BrandValueStatus::of($row['status']),
+                BrandValueOrder::of($row['order'])
+            );
+        }, $result, []); // 2nd empty array for reassign keys
 
         return new BrandCollection($result);
     }

@@ -22,6 +22,11 @@ class CreateBrandInputMock implements CreateBrandInputInterface
     public $status;
 
     /**
+     * @var int|null
+     */
+    public $order;
+
+    /**
      * @return int
      */
     public function getVendorId(): int
@@ -43,5 +48,13 @@ class CreateBrandInputMock implements CreateBrandInputInterface
     public function getStatus(): ?int
     {
         return $this->status;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getOrder(): ?int
+    {
+        return $this->order;
     }
 }

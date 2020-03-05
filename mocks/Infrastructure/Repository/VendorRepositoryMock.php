@@ -142,7 +142,7 @@ class VendorRepositoryMock implements VendorRepositoryInterface
             $name = VendorValueName::of($row['name']);
             $status = VendorValueStatus::of($row['status']);
             return new Vendor($id, $name, $status);
-        }, $result);
+        }, $result, []); // 2nd empty array for reassign keys
 
         return new VendorCollection($result);
     }

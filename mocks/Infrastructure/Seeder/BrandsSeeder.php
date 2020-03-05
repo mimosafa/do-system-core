@@ -7,6 +7,7 @@ use DoSystem\Domain\Brand\Model\Brand;
 use DoSystem\Domain\Brand\Model\BrandRepositoryInterface;
 use DoSystem\Domain\Brand\Model\BrandValueId;
 use DoSystem\Domain\Brand\Model\BrandValueName;
+use DoSystem\Domain\Brand\Model\BrandValueOrder;
 use DoSystem\Domain\Brand\Model\BrandValueStatus;
 use DoSystem\Domain\Vendor\Model\Vendor;
 use DoSystem\Domain\Vendor\Model\VendorRepositoryInterface;
@@ -65,7 +66,8 @@ class BrandsSeeder
                 BrandValueId::of(null),
                 $vendorRepository->findById(VendorValueId::of($data['vendor_id'])),
                 BrandValueName::of($data['name']),
-                BrandValueStatus::of($data['status'])
+                BrandValueStatus::of($data['status']),
+                BrandValueOrder::of($data['order'])
             );
             $id = $brandRepository->store($model);
             $data['id'] = $id->getValue();

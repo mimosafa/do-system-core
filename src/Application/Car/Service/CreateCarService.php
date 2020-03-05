@@ -70,8 +70,7 @@ class CreateCarService
         $name = CarValueName::of($input->getName());
 
         // Order
-        $orderInt = $input->getOrder();
-        $order = isset($orderInt) ? CarValueOrder::of($orderInt) : CarValueOrder::of(0);
+        $order = CarValueOrder::of($input->getOrder());
 
         // Pseudo Id for createing
         $id = CarValueId::of(null);
