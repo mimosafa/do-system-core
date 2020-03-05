@@ -87,10 +87,12 @@ class VendorRepositoryMock implements VendorRepositoryInterface
 
     /**
      * @param array{
-     *      @type string $name
-     *      @type int $status
-     *      @type int $size_per_page
-     *      @type int $page
+     *      @type string|null $name
+     *      @type int[]|null  $status
+     *      @type int|null    $size_per_page
+     *      @type int|null    $page
+     *      @type string|null $order_by  'id'|'name'|'status'
+     *      @type string|null $order  'ASC'|'DESC'
      * } $params
      * @return VendorCollection
      */
@@ -119,14 +121,28 @@ class VendorRepositoryMock implements VendorRepositoryInterface
             $result = \array_slice($result, $start, $size);
         }
 
-        if (!empty($result)) {
-            $result = \array_map(function ($row) {
-                $id = VendorValueId::of($row['id']);
-                $name = VendorValueName::of($row['name']);
-                $status = VendorValueStatus::of($row['status']);
-                return new Vendor($id, $name, $status);
-            }, $result);
+        if (empty($result)) {
+            return new VendorCollection($result);
         }
+
+        if ($orderBy = Arr::pull($params, 'order_by')) {
+            if (\in_array($orderBy, ['name', 'status'], true)) {
+                $result = Arr::sort($result, function ($row) use ($orderBy) {
+                    return $row[$orderBy];
+                });
+                $order = \strtolower(Arr::pull($params, 'order'));
+                if ($order === 'desc') {
+                    $result = \array_reverse($result);
+                }
+            }
+        }
+
+        $result = \array_map(function ($row) {
+            $id = VendorValueId::of($row['id']);
+            $name = VendorValueName::of($row['name']);
+            $status = VendorValueStatus::of($row['status']);
+            return new Vendor($id, $name, $status);
+        }, $result);
 
         return new VendorCollection($result);
     }

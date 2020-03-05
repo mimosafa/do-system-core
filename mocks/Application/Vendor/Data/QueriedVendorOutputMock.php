@@ -11,7 +11,7 @@ class QueriedVendorOutputMock implements QueriedVendorOutputInterface
     /**
      * @var Vendor
      */
-    private $model;
+    public $model;
 
     /**
      * Constructor

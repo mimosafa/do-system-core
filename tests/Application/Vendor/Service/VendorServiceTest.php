@@ -135,5 +135,24 @@ class VendorServiceTest extends TestCase
         }
         $this->assertEquals(count($resultName), $kabushikigaishaNum);
         $this->assertEquals(count($resultStatus), $status037Num);
+
+        $filterOrder = new MockData\QueryVendorFilterMock();
+        $filterOrder->orderBy = 'status';
+        $filterOrder->order = 'DESC';
+        $resultOrder = $queryService->handle($filterOrder);
+        $statusCache = 9;
+        $c = 0;
+        foreach ($resultOrder as $output) {
+            $status = $output->model->getStatus()->getValue();
+            if ($status > $statusCache) {
+                break;
+            }
+            $c++;
+            if ($status < $statusCache) {
+                $statusCache = $status;
+            }
+        }
+
+        $this->assertEquals($c, 20);
     }
 }

@@ -27,6 +27,16 @@ class QueryVendorFilterMock implements QueryVendorFilterInterface
     public $page;
 
     /**
+     * @var string|null
+     */
+    public $orderBy;
+
+    /**
+     * @var string|null
+     */
+    public $order;
+
+    /**
      * @return string|null
      */
     public function getNameFilter(): ?string
@@ -56,5 +66,21 @@ class QueryVendorFilterMock implements QueryVendorFilterInterface
     public function getPage(): ?int
     {
         return $this->page;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getOrderBy(): ?string
+    {
+        return $this->orderBy;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getOrder(): ?string
+    {
+        return $this->order;
     }
 }
