@@ -2,6 +2,7 @@
 
 namespace DoSystem\Domain\Brand\Model;
 
+use DoSystem\Domain\Car\Model\CarCollection;
 use DoSystem\Domain\Vendor\Model\Vendor;
 
 class Brand
@@ -87,6 +88,15 @@ class Brand
     public function getOrder(): BrandValueOrder
     {
         return $this->order;
+    }
+
+    /**
+     * @param array $params
+     * @return CarCollection
+     */
+    public function getAvailableCars(array $params = []): CarCollection
+    {
+        return BrandGetAvailableCars::exec($this, $params);
     }
 
     /**

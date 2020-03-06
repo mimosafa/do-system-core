@@ -4,6 +4,7 @@ namespace DoSystem\Domain\Vendor\Model;
 
 use DoSystem\Domain\Brand\Model\BrandCollection;
 use DoSystem\Domain\Car\Model\CarCollection;
+use DoSystem\Domain\Kitchencar\Model\KitchencarCollection;
 
 class Vendor
 {
@@ -79,6 +80,15 @@ class Vendor
     }
 
     /**
+     * @param array $params
+     * @return KitchencarCollection
+     */
+    public function getKitchencars(array $params = []): KitchencarCollection
+    {
+        return VendorGetKitchencars::exec($this, $params);
+    }
+
+    /**
      * @param VendorValueName $name
      * @return bool
      */
@@ -89,5 +99,14 @@ class Vendor
             return true;
         }
         return false;
+    }
+
+    /**
+     * @param mixed $model
+     * @return bool
+     */
+    public function equals($model): bool
+    {
+        return $model instanceof self && $model->getId()->equals($this->getId());
     }
 }
