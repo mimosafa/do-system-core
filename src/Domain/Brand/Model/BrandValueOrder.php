@@ -10,7 +10,7 @@ class BrandValueOrder implements ValueObjectInterface
     use ValueObjectTrait;
 
     /**
-     * @var int
+     * @var int|null
      */
     private $value;
 

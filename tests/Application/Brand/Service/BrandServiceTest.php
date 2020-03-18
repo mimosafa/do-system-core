@@ -16,19 +16,19 @@ use DoSystemMock\Infrastructure\Seeder;
 class BrandServiceTest extends TestCase
 {
     /**
-     * @var Repository\BrandRepositoryMock
+     * @var Repository\InMemoryBrandRepository
      */
     private $brandRepository;
 
     /**
-     * @var Repository\VendorRepositoryMock
+     * @var Repository\InMemoryVendorRepository
      */
     private $vendorRepository;
 
     protected function setUp(): void
     {
-        $this->vendorRepository ?? $this->vendorRepository = new Repository\VendorRepositoryMock();
-        $this->brandRepository ?? $this->brandRepository = new Repository\BrandRepositoryMock($this->vendorRepository);
+        $this->vendorRepository ?? $this->vendorRepository = new Repository\InMemoryVendorRepository();
+        $this->brandRepository ?? $this->brandRepository = new Repository\InMemoryBrandRepository($this->vendorRepository);
     }
 
     protected function tearDown(): void

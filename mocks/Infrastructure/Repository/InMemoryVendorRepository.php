@@ -15,10 +15,10 @@ use PseudoDatabase\Database;
 class InMemoryVendorRepository implements VendorRepositoryInterface
 {
     /**
-     * Vendor table definition
+     * Vendors table definition
      */
     private $definitions = [
-        'id'     => ['primary_key' => true],
+        'id'     => ['primary' => true],
         'name'   => [],
         'status' => [],
     ];
@@ -55,6 +55,7 @@ class InMemoryVendorRepository implements VendorRepositoryInterface
     /**
      * @param VendorValueId $id
      * @return Vendor
+     * @throws NotFoundException
      */
     public function findById(VendorValueId $id): Vendor
     {
@@ -91,15 +92,14 @@ class InMemoryVendorRepository implements VendorRepositoryInterface
             if ($status = Arr::pull($params, 'status')) {
                 $table->where('status', 'IN', $status);
             }
+            if ($size = Arr::pull($params, 'size_per_page')) {
+                $page = Arr::pull($params, 'page', 1);
+                $start = ($page - 1) * $size;
+                $table->offset($start)->limit($size);
+            }
         }
 
         $results = $table->get();
-
-        if (!empty($results) && $size = Arr::pull($params, 'size_per_page')) {
-            $page = Arr::pull($params, 'page', 1);
-            $start = ($page - 1) * $size;
-            $results = \array_slice($results, $start, $size);
-        }
 
         if (empty($results)) {
             return new VendorCollection($results);

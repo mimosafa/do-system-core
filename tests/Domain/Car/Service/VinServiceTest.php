@@ -5,8 +5,8 @@ namespace DoSystemTest\Domain\Car\Service;
 use PHPUnit\Framework\TestCase;
 use DoSystem\Domain\Car\Model\CarRepositoryInterface;
 use DoSystem\Domain\Car\Service\VinService;
-use DoSystemMock\Infrastructure\Repository\CarRepositoryMock;
-use DoSystemMock\Infrastructure\Repository\VendorRepositoryMock;
+use DoSystemMock\Infrastructure\Repository\InMemoryCarRepository;
+use DoSystemMock\Infrastructure\Repository\InMemoryVendorRepository;
 use DoSystemMock\Infrastructure\Seeder\CarsSeeder;
 
 class VinServiceTest extends TestCase
@@ -16,8 +16,8 @@ class VinServiceTest extends TestCase
      */
     public function testExists()
     {
-        $vendorRepository = new VendorRepositoryMock();
-        $carRepository = new CarRepositoryMock($vendorRepository);
+        $vendorRepository = new InMemoryVendorRepository();
+        $carRepository = new InMemoryCarRepository($vendorRepository);
 
         $seeder = new CarsSeeder(1);
         $seeder->seed($carRepository, $vendorRepository);

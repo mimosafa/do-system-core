@@ -17,19 +17,19 @@ use DoSystemMock\Infrastructure\Seeder;
 class CarServiceTest extends TestCase
 {
     /**
-     * @var Repository\CarRepositoryMock
+     * @var Repository\InMemoryCarRepository
      */
     private $carRepository;
 
     /**
-     * @var Repository\VendorRepositoryMock
+     * @var Repository\InMemoryVendorRepository
      */
     private $vendorRepository;
 
     protected function setUp(): void
     {
-        $this->vendorRepository ?? $this->vendorRepository = new Repository\VendorRepositoryMock();
-        $this->carRepository ?? $this->carRepository = new Repository\CarRepositoryMock($this->vendorRepository);
+        $this->vendorRepository ?? $this->vendorRepository = new Repository\InMemoryVendorRepository();
+        $this->carRepository ?? $this->carRepository = new Repository\InMemoryCarRepository($this->vendorRepository);
     }
 
     protected function tearDown(): void

@@ -13,11 +13,11 @@ define('DOSYSTEM_TESTS_ROOT_DIR', __DIR__);
  */
 doSystem()->singleton(
     Domain\Brand\Model\BrandRepositoryInterface::class,
-    MockInfrastructure\Repository\BrandRepositoryMock::class
+    MockInfrastructure\Repository\InMemoryBrandRepository::class
 );
 doSystem()->singleton(
    Domain\Car\Model\CarRepositoryInterface::class,
-   MockInfrastructure\Repository\CarRepositoryMock::class
+   MockInfrastructure\Repository\InMemoryCarRepository::class
 );
 doSystem()->singleton(
     Domain\Prefecture\Model\PrefectureRepositoryInterface::class,
@@ -25,7 +25,7 @@ doSystem()->singleton(
 );
 doSystem()->singleton(
     Domain\Vendor\Model\VendorRepositoryInterface::class,
-    MockInfrastructure\Repository\VendorRepositoryMock::class
+    MockInfrastructure\Repository\InMemoryVendorRepository::class
 );
 
 /**

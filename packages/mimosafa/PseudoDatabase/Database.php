@@ -40,6 +40,20 @@ class Database
     private $primary;
 
     /**
+     * Unique keys
+     *
+     * @var string[]
+     */
+    private $uniques = [];
+
+    /**
+     * Index caches
+     *
+     * @var array
+     */
+    private $indexes = [];
+
+    /**
      * Nullable keys
      *
      * @var string[]
@@ -52,6 +66,27 @@ class Database
      * @var array[]
      */
     private $wheres = [];
+
+    /**
+     * Requested order (by)
+     *
+     * @var array
+     */
+    private $orderBy = [];
+
+    /**
+     * Requested limit results
+     *
+     * @var int
+     */
+    private $limit = 0;
+
+    /**
+     * Requested offset results
+     *
+     * @var int
+     */
+    private $offset = 0;
 
     /**
      * Tables
@@ -75,11 +110,15 @@ class Database
         foreach ($definitions as $key => $definition) {
             $this->keys[] = $key;
 
-            if (isset($definition['primary_key']) && $definition['primary_key'] === true) {
+            if (isset($definition['primary']) && $definition['primary'] === true) {
                 $this->primary = $key;
+                $this->indexes[$key] = [];
             }
-
-            if (isset($definition['nullable']) && $definition['nullable'] === true) {
+            else if (isset($definition['unique']) && $definition['unique'] === true) {
+                $this->uniques[] = $key;
+                $this->indexes[$key] = [];
+            }
+            else if (isset($definition['nullable']) && $definition['nullable'] === true) {
                 $this->nullables[] = $key;
             }
         }
@@ -211,6 +250,50 @@ class Database
                 }
             }
         }
+
+        $this->initRequests();
+    }
+
+    /**
+     * Limit results
+     *
+     * @param int $num
+     * @return self
+     */
+    public function limit(int $num): self
+    {
+        if ($num > 0) {
+            $this->limit = $num;
+        }
+        return $this;
+    }
+
+    /**
+     * Offset results
+     *
+     * @param int $offset
+     * @return self
+     */
+    public function offset(int $offset): self
+    {
+        if ($offset > 0) {
+            $this->offset = $offset;
+        }
+        return $this;
+    }
+
+    /**
+     * Order by
+     *
+     * @param string $key
+     * @param string $order
+     * @return self
+     */
+    public function orderBy(string $key, string $order = 'asc'): self
+    {
+        //
+
+        return $this;
     }
 
     /**
@@ -232,16 +315,29 @@ class Database
     public function get(): array
     {
         if (empty($this->wheres)) {
-            return $this->rows;
+            $results = $this->rows;
         }
-
-        $results = [];
-        foreach ($this->rows as $index => $row) {
-            if ($row = $this->rowFilter($index, $row)) {
-                $results[] = $row;
+        else {
+            $results = [];
+            foreach ($this->rows as $index => $row) {
+                if ($row = $this->rowFilter($index, $row)) {
+                    $results[] = $row;
+                }
             }
         }
-        $this->wheres = []; // Initialize where parameters
+
+        if (!empty($results)) {
+            if (($this->offset > 0) || ($this->limit > 0)) {
+                $limit = $this->limit ?: null;
+                $results = \array_slice($results, $this->offset, $limit);
+            }
+        }
+
+        if (!empty($results) && !empty($this->orderBy)) {
+            //
+        }
+
+        $this->initRequests();
 
         return $results;
     }
@@ -343,6 +439,22 @@ class Database
     {
         $this->rows = [];
         $this->total = 0;
+        foreach ($this->indexes as &$indexes) {
+            $indexes = [];
+        }
+        $this->initRequests();
+    }
+
+    /**
+     * Initialize requests
+     *
+     * @return void
+     */
+    public function initRequests(): void
+    {
         $this->wheres = [];
+        $this->orderBy = [];
+        $this->limit = 0;
+        $this->offset = 0;
     }
 }
