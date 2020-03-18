@@ -9,19 +9,19 @@ use DoSystem\Application\Vendor\Service;
 use DoSystem\Domain\Vendor\Model;
 use DoSystemMock\Application\Vendor\Data as MockData;
 use DoSystemMock\Factory\VendorDataFactory;
-use DoSystemMock\Infrastructure\Repository\VendorRepositoryMock;
+use DoSystemMock\Infrastructure\Repository\InMemoryVendorRepository;
 use DoSystemMock\Infrastructure\Seeder\VendorsSeeder;
 
 class VendorServiceTest extends TestCase
 {
     /**
-     * @var VendorRepositoryMock
+     * @var InMemoryVendorRepository
      */
     private $repository;
 
     protected function setUp(): void
     {
-        $this->repository ?? $this->repository = new VendorRepositoryMock();
+        $this->repository ?? $this->repository = new InMemoryVendorRepository();
     }
 
     protected function tearDown(): void
@@ -35,16 +35,16 @@ class VendorServiceTest extends TestCase
     public function testCreateVendor()
     {
         $createService = new Service\CreateVendorService($this->repository);
-        $data = VendorDataFactory::generate();
+
         $input = new MockData\CreateVendorInputMock();
-        $input->name = $data['name'];
+        $input->name = 'Tokyo Do';
         $id = $createService->handle($input);
 
         $this->assertTrue($id instanceof Model\VendorValueId);
 
         $model = $this->repository->findById($id);
 
-        $this->assertEquals($model->getName()->getValue(), $data['name']);
+        $this->assertEquals($model->getName()->getValue(), 'Tokyo Do');
         $this->assertEquals($model->getStatus()->getValue(), Model\VendorValueStatus::default()->getValue());
     }
 

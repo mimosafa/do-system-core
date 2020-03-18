@@ -27,7 +27,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "DoSystemMock\\": "mocks/"
+            "DoSystemMock\\": "mocks/",
+            "PseudoDatabase\\": "packages/mimosafa/PseudoDatabase/"
         }
     },
     "scripts": {
