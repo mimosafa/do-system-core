@@ -9,9 +9,9 @@ use DoSystem\Application\Brand\Data;
 use DoSystem\Application\Brand\Service;
 use DoSystem\Domain\Brand\Model;
 use DoSystemMock\Application\Brand\Data as MockData;
-use DoSystemMock\Factory\BrandDataFactory;
+use DoSystemMock\Database\Factory\BrandDataFactory;
+use DoSystemMock\Database\Seeder;
 use DoSystemMock\Infrastructure\Repository;
-use DoSystemMock\Infrastructure\Seeder;
 
 class BrandServiceTest extends TestCase
 {
@@ -44,12 +44,10 @@ class BrandServiceTest extends TestCase
     {
         $createService = new Service\CreateBrandService($this->brandRepository, $this->vendorRepository);
 
-        $vendorsSeeder = new Seeder\VendorsSeeder(1);
-        $vendorsSeeder->seed($this->vendorRepository);
-        $vendorsData = $vendorsSeeder->getData();
-        $vendorId = $vendorsData[0]['id'];
+        $vendorData = (new Seeder\VendorsSeeder(1))->seed($this->vendorRepository)->get();
+        $vendorIds = \array_column($vendorData, 'id');
 
-        $data = BrandDataFactory::generate($vendorId);
+        $data = BrandDataFactory::generate($vendorIds);
         $input = new MockData\CreateBrandInputMock();
         $input->vendorId = $data['vendor_id'];
         $input->name = $data['name'];
@@ -71,9 +69,9 @@ class BrandServiceTest extends TestCase
     public function testGetBrand()
     {
         $getService = new Service\GetBrandService($this->brandRepository);
-        $seeder = new Seeder\BrandsSeeder(6, 2);
-        $seeder->seed($this->brandRepository, $this->vendorRepository);
-        $data = $seeder->getData();
+
+        $seeder = new Seeder\BrandsSeeder(6, (new Seeder\VendorsSeeder(2))->seed($this->vendorRepository));
+        $data = $seeder->seed($this->brandRepository, $this->vendorRepository)->get();
 
         $id3 = Model\BrandValueId::of($data[2]['id']);
 
@@ -90,9 +88,9 @@ class BrandServiceTest extends TestCase
     public function testUpdateBrand()
     {
         $updateService = new Service\UpdateBrandService($this->brandRepository);
-        $seeder = new Seeder\BrandsSeeder(5, 2);
-        $seeder->seed($this->brandRepository, $this->vendorRepository);
-        $data = $seeder->getData();
+
+        $seeder = new Seeder\BrandsSeeder(5, (new Seeder\VendorsSeeder(2))->seed($this->vendorRepository));
+        $data = $seeder->seed($this->brandRepository, $this->vendorRepository)->get();
         $ids = Faker::randomElements(\array_column($data, 'id'), 2);
 
         // Update name
@@ -120,9 +118,9 @@ class BrandServiceTest extends TestCase
     public function testQueryBrand()
     {
         $queryService = new Service\QueryBrandService($this->brandRepository);
-        $seeder = new Seeder\BrandsSeeder(25, 8);
-        $seeder->seed($this->brandRepository, $this->vendorRepository);
-        $data = $seeder->getData();
+
+        $seeder = new Seeder\BrandsSeeder(25,  (new Seeder\VendorsSeeder(8))->seed($this->vendorRepository));
+        $data = $seeder->seed($this->brandRepository, $this->vendorRepository)->get();
 
         $filterAll = new MockData\QueryBrandFilterMock();
         $resultAll = $queryService->handle($filterAll);

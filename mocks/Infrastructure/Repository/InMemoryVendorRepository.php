@@ -23,6 +23,9 @@ class InMemoryVendorRepository implements VendorRepositoryInterface
         'status' => [],
     ];
 
+    /**
+     * Constructor
+     */
     public function __construct()
     {
         if (Database::exists('vendors')) {
@@ -127,6 +130,11 @@ class InMemoryVendorRepository implements VendorRepositoryInterface
         return new VendorCollection($results);
     }
 
+    /**
+     * Delete all stored data
+     *
+     * @return void
+     */
     public function flush(): void
     {
         Database::table('vendors')->refresh();

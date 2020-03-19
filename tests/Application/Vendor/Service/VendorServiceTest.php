@@ -8,9 +8,9 @@ use DoSystem\Application\Vendor\Data;
 use DoSystem\Application\Vendor\Service;
 use DoSystem\Domain\Vendor\Model;
 use DoSystemMock\Application\Vendor\Data as MockData;
-use DoSystemMock\Factory\VendorDataFactory;
+use DoSystemMock\Database\Factory\VendorDataFactory;
+use DoSystemMock\Database\Seeder\VendorsSeeder;
 use DoSystemMock\Infrastructure\Repository\InMemoryVendorRepository;
-use DoSystemMock\Infrastructure\Seeder\VendorsSeeder;
 
 class VendorServiceTest extends TestCase
 {
@@ -56,7 +56,7 @@ class VendorServiceTest extends TestCase
         $getService = new Service\GetVendorService($this->repository);
         $seeder = new VendorsSeeder(5);
         $seeder->seed($this->repository);
-        $data = $seeder->getData();
+        $data = $seeder->get();
 
         $id1 = Model\VendorValueId::of($data[0]['id']);
         $id5 = Model\VendorValueId::of($data[4]['id']);
@@ -107,7 +107,7 @@ class VendorServiceTest extends TestCase
         $queryService = new Service\QueryVendorService($this->repository);
         $seeder = new VendorsSeeder(20);
         $seeder->seed($this->repository);
-        $data = $seeder->getData();
+        $data = $seeder->get();
 
         $filterAll = new MockData\QueryVendorFilterMock();
         $resultAll = $queryService->handle($filterAll);

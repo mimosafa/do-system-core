@@ -3,11 +3,11 @@
 namespace DoSystemTest\Domain\Car\Service;
 
 use PHPUnit\Framework\TestCase;
-use DoSystem\Domain\Car\Model\CarRepositoryInterface;
 use DoSystem\Domain\Car\Service\VinService;
 use DoSystemMock\Infrastructure\Repository\InMemoryCarRepository;
 use DoSystemMock\Infrastructure\Repository\InMemoryVendorRepository;
-use DoSystemMock\Infrastructure\Seeder\CarsSeeder;
+use DoSystemMock\Database\Seeder\CarsSeeder;
+use DoSystemMock\Database\Seeder\VendorsSeeder;
 
 class VinServiceTest extends TestCase
 {
@@ -19,9 +19,8 @@ class VinServiceTest extends TestCase
         $vendorRepository = new InMemoryVendorRepository();
         $carRepository = new InMemoryCarRepository($vendorRepository);
 
-        $seeder = new CarsSeeder(1);
-        $seeder->seed($carRepository, $vendorRepository);
-        $data = $seeder->getData();
+        $seeder = new CarsSeeder(1, (new VendorsSeeder(1))->seed($vendorRepository));
+        $data = $seeder->seed($carRepository, $vendorRepository)->get();
         $existsVin = $data[0]['vin'];
 
         $vinService = new VinService($carRepository);

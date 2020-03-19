@@ -10,9 +10,9 @@ use DoSystem\Application\Car\Service;
 use DoSystem\Domain\Car\Model;
 use DoSystem\Domain\Car\Service as DomainService;
 use DoSystemMock\Application\Car\Data as MockData;
-use DoSystemMock\Factory\CarDataFactory;
+use DoSystemMock\Database\Factory\CarDataFactory;
+use DoSystemMock\Database\Seeder;
 use DoSystemMock\Infrastructure\Repository;
-use DoSystemMock\Infrastructure\Seeder;
 
 class CarServiceTest extends TestCase
 {
@@ -48,12 +48,10 @@ class CarServiceTest extends TestCase
             $this->carRepository, $this->vendorRepository, $domainCarService
         );
 
-        $vendorsSeeder = new Seeder\VendorsSeeder(1);
-        $vendorsSeeder->seed($this->vendorRepository);
-        $vendorsData = $vendorsSeeder->getData();
-        $vendorId = $vendorsData[0]['id'];
+        $vendorData = (new Seeder\VendorsSeeder(1))->seed($this->vendorRepository)->get();
+        $vendorIds = \array_column($vendorData, 'id');
 
-        $data = CarDataFactory::generate($vendorId);
+        $data = CarDataFactory::generate($vendorIds);
         $input = new MockData\CreateCarInputMock();
         $input->vendorId = $data['vendor_id'];
         $input->vin = $data['vin'];
@@ -77,9 +75,9 @@ class CarServiceTest extends TestCase
     public function testGetCar()
     {
         $getService = new Service\GetCarService($this->carRepository);
-        $seeder = new Seeder\CarsSeeder(7, 3);
-        $seeder->seed($this->carRepository, $this->vendorRepository);
-        $data = $seeder->getData();
+
+        $seeder = new Seeder\CarsSeeder(7, (new Seeder\VendorsSeeder(3))->seed($this->vendorRepository));
+        $data = $seeder->seed($this->carRepository, $this->vendorRepository)->get();
 
         $id2 = Model\CarValueId::of($data[1]['id']);
         $id6 = Model\CarValueId::of($data[5]['id']);
@@ -96,13 +94,13 @@ class CarServiceTest extends TestCase
     /**
      * @test
      */
-    public function testUpdate()
+    public function testUpdateCar()
     {
         $domainCarService = new DomainService\CarService($this->carRepository);
         $updateService = new Service\UpdateCarService($this->carRepository, $domainCarService);
-        $seeder = new Seeder\CarsSeeder(5, 2);
-        $seeder->seed($this->carRepository, $this->vendorRepository);
-        $data = $seeder->getData();
+
+        $seeder = new Seeder\CarsSeeder(5, (new Seeder\VendorsSeeder(2))->seed($this->vendorRepository));
+        $data = $seeder->seed($this->carRepository, $this->vendorRepository)->get();
         $ids = Faker::randomElements(\array_column($data, 'id'), 3);
 
         // Update vin
@@ -169,9 +167,9 @@ class CarServiceTest extends TestCase
     public function testQueryCar()
     {
         $queryService = new Service\QueryCarService($this->carRepository);
-        $seeder = new Seeder\CarsSeeder(30, 15);
-        $seeder->seed($this->carRepository, $this->vendorRepository);
-        $data = $seeder->getData();
+
+        $seeder = new Seeder\CarsSeeder(30, (new Seeder\VendorsSeeder(15))->seed($this->vendorRepository));
+        $data = $seeder->seed($this->carRepository, $this->vendorRepository)->get();
 
         $filterAll = new MockData\QueryCarFilterMock();
         $resultAll = $queryService->handle($filterAll);

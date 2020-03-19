@@ -4,12 +4,13 @@ namespace DoSystemTest\Domain\Vendor\Model;
 
 use PHPUnit\Framework\TestCase;
 use DoSystem\Domain\Brand\Model\BrandCollection;
-use DoSystem\Domain\Brand\Model\BrandRepositoryInterface;
 use DoSystem\Domain\Car\Model\CarCollection;
-use DoSystem\Domain\Car\Model\CarRepositoryInterface;
-use DoSystem\Domain\Vendor\Model\VendorRepositoryInterface;
-use DoSystemMock\Infrastructure\Seeder\BrandsSeeder;
-use DoSystemMock\Infrastructure\Seeder\CarsSeeder;
+use DoSystemMock\Infrastructure\Repository\InMemoryBrandRepository;
+use DoSystemMock\Infrastructure\Repository\InMemoryCarRepository;
+use DoSystemMock\Infrastructure\Repository\InMemoryVendorRepository;
+use DoSystemMock\Database\Seeder\BrandsSeeder;
+use DoSystemMock\Database\Seeder\VendorsSeeder;
+use DoSystemMock\Database\Seeder\CarsSeeder;
 
 class VendorTest extends TestCase
 {
@@ -20,7 +21,7 @@ class VendorTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->repository ?? $this->repository = doSystem()->make(VendorRepositoryInterface::class);
+        $this->repository ?? $this->repository = new InMemoryVendorRepository();
     }
 
     protected function tearDown(): void
@@ -33,12 +34,11 @@ class VendorTest extends TestCase
      */
     public function testGetBrands()
     {
-        $repository = doSystem()->make(BrandRepositoryInterface::class);
-        $seeder = new BrandsSeeder(8, 2);
-        $seeder->seed($repository, $this->repository);
-        $data = $seeder->getData();
-        $vendors = $this->repository->query([]);
+        $repository = new InMemoryBrandRepository($this->repository);
+        $seeder = new BrandsSeeder(8, (new VendorsSeeder(2))->seed($this->repository));
+        $data = $seeder->seed($repository, $this->repository)->get();
 
+        $vendors = $this->repository->query([]);
         $vendor1 = $vendors[0];
         $brandCollection = $vendor1->getBrands();
 
@@ -62,12 +62,11 @@ class VendorTest extends TestCase
      */
     public function testGetCars()
     {
-        $repository = doSystem()->make(CarRepositoryInterface::class);
-        $seeder = new CarsSeeder(11, 3);
-        $seeder->seed($repository, $this->repository);
-        $data = $seeder->getData();
-        $vendors = $this->repository->query([]);
+        $repository = new InMemoryCarRepository($this->repository);
+        $seeder = new CarsSeeder(11, (new VendorsSeeder(3))->seed($this->repository));
+        $data = $seeder->seed($repository, $this->repository)->get();
 
+        $vendors = $this->repository->query([]);
         $vendor1 = $vendors[0];
         $carCollection = $vendor1->getCars();
 
