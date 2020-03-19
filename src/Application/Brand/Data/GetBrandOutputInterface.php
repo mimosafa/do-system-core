@@ -11,7 +11,7 @@ interface GetBrandOutputInterface
      *
      * ** note **
      * Parameter must be named '$model'
-     * @see DoSystem\Application\Brand\Service\GetBrandService::handle(int $id)
+     * @see DoSystem\Application\Brand\Service\GetBrandService::handle($id)
      *
      * @param Brand $model
      */

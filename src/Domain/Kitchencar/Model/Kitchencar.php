@@ -38,7 +38,7 @@ class Kitchencar
      */
     public function __construct(KitchencarValueId $id, Brand $brand, Car $car, KitchencarValueOrder $order)
     {
-        if (!$brands->belongsTo()->equals($car->belongsTo())) {
+        if (!$brand->belongsTo()->equals($car->belongsTo())) {
             throw new \Exception();
         }
         $this->id    = $id;

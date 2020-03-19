@@ -33,7 +33,7 @@ interface KitchencarRepositoryInterface
      * @param array $params
      * @return CarCollection
      */
-    public function findCarsByBrand(Brand $brand, array $params): CarCollection:
+    public function findCarsByBrand(Brand $brand, array $params): CarCollection;
 
     /**
      * @param array{

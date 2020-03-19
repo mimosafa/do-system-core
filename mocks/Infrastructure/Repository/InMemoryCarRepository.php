@@ -161,6 +161,11 @@ class InMemoryCarRepository implements CarRepositoryInterface
         return new CarCollection($results);
     }
 
+    /**
+     * Delete all stored data
+     *
+     * @return void
+     */
     public function flush(): void
     {
         Database::table('cars')->refresh();

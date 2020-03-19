@@ -156,6 +156,11 @@ class InMemoryBrandRepository implements BrandRepositoryInterface
         return new BrandCollection($results);
     }
 
+    /**
+     * Delete all stored data
+     *
+     * @return void
+     */
     public function flush(): void
     {
         Database::table('brands')->refresh();
