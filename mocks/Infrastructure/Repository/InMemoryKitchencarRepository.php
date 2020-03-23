@@ -14,6 +14,8 @@ use DoSystem\Domain\Kitchencar\Model\Kitchencar;
 use DoSystem\Domain\Kitchencar\Model\KitchencarCollection;
 use DoSystem\Domain\Kitchencar\Model\KitchencarRepositoryInterface;
 use DoSystem\Domain\Kitchencar\Model\KitchencarValueId;
+use DoSystem\Domain\Vendor\Model\VendorRepositoryInterface;
+use DoSystem\Domain\Vendor\Model\VendorValueId;
 use DoSystem\Exception\NotFoundException;
 use PseudoDatabase\Database;
 
@@ -40,15 +42,22 @@ class InMemoryKitchencarRepository implements KitchencarRepositoryInterface
     private $carRepository;
 
     /**
+     * @var VendorRepositoryInterface
+     */
+    private $vendorRepository;
+
+    /**
      * Constructor
      *
      * @param BrandRepositoryInterface $brandRepository
      * @param CarRepositoryInterface $carRepository
+     * @param VendorRepositoryInterface $vendorRepository
      */
-    public function __construct(BrandRepositoryInterface $brandRepository, CarRepositoryInterface $carRepository)
+    public function __construct(BrandRepositoryInterface $brandRepository, CarRepositoryInterface $carRepository, VendorRepositoryInterface $vendorRepository)
     {
         $this->brandRepository = $brandRepository;
         $this->carRepository = $carRepository;
+        $this->vendorRepository = $vendorRepository;
 
         if (Database::exists('kitchencars')) {
             return;

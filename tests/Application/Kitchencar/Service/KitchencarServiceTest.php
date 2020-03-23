@@ -37,7 +37,7 @@ class KitchencarServiceTest extends TestCase
         $this->vendorRepository ?? $this->vendorRepository = new Repository\InMemoryVendorRepository();
         $this->brandRepository ?? $this->brandRepository = new Repository\InMemoryBrandRepository($this->vendorRepository);
         $this->carRepository ?? $this->carRepository = new Repository\InMemoryCarRepository($this->vendorRepository);
-        $this->repository ?? $this->repository = new Repository\InMemoryKitchencarRepository($this->brandRepository, $this->carRepository);
+        $this->repository ?? $this->repository = new Repository\InMemoryKitchencarRepository($this->brandRepository, $this->carRepository, $this->vendorRepository);
     }
 
     protected function tearDown(): void

@@ -23,10 +23,10 @@ class InMemoryBrandRepository implements BrandRepositoryInterface
      */
     private $definitions = [
         'id'        => ['primary' => true],
-        'vendor_id' => [],
-        'name'      => [],
-        'status'    => [],
-        'order'     => ['nullable' => true],
+        'vendor_id' => ['type' => 'integer'],
+        'name'      => ['type' => 'string'],
+        'status'    => ['type' => 'integer'],
+        'order'     => ['nullable' => true, 'type' => 'integer'],
     ];
 
     /**

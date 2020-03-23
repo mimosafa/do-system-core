@@ -24,11 +24,11 @@ class InMemoryCarRepository implements CarRepositoryInterface
      */
     private $definitions = [
         'id'        => ['primary' => true],
-        'vendor_id' => [],
-        'vin'       => ['unique' => true],
-        'status'    => [],
-        'name'      => ['nullable' => true],
-        'order'     => ['nullable' => true],
+        'vendor_id' => ['type' => 'integer'],
+        'vin'       => ['unique' => true, 'type' => 'string'],
+        'status'    => ['type' => 'integer'],
+        'name'      => ['nullable' => true, 'type' => 'string'],
+        'order'     => ['nullable' => true, 'type' => 'integer'],
     ];
 
     /**

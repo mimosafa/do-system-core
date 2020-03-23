@@ -19,8 +19,8 @@ class InMemoryVendorRepository implements VendorRepositoryInterface
      */
     private $definitions = [
         'id'     => ['primary' => true],
-        'name'   => [],
-        'status' => [],
+        'name'   => ['type' => 'string'],
+        'status' => ['type' => 'integer'],
     ];
 
     /**

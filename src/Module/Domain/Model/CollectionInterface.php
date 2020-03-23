@@ -14,6 +14,16 @@ interface CollectionInterface extends ArrayAccess, Countable, IteratorAggregate
     public function all();
 
     /**
+     * @return bool
+     */
+    public function isEmpty();
+
+    /**
+     * @return bool
+     */
+    public function isNotEmpty();
+
+    /**
      * @return int
      */
     public function count();
