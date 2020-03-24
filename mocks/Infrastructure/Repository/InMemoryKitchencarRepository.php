@@ -14,6 +14,7 @@ use DoSystem\Domain\Kitchencar\Model\Kitchencar;
 use DoSystem\Domain\Kitchencar\Model\KitchencarCollection;
 use DoSystem\Domain\Kitchencar\Model\KitchencarRepositoryInterface;
 use DoSystem\Domain\Kitchencar\Model\KitchencarValueId;
+use DoSystem\Domain\Kitchencar\Model\KitchencarValueOrder;
 use DoSystem\Domain\Vendor\Model\VendorRepositoryInterface;
 use DoSystem\Domain\Vendor\Model\VendorValueId;
 use DoSystem\Exception\NotFoundException;
@@ -26,9 +27,9 @@ class InMemoryKitchencarRepository implements KitchencarRepositoryInterface
      */
     private $definitions = [
         'id'       => ['primary' => true],
-        'brand_id' => [],
-        'car_id'   => [],
-        'order'    => ['nullable' => true],
+        'brand_id' => ['type' => 'integer'],
+        'car_id'   => ['type' => 'integer'],
+        'order'    => ['nullable' => true, 'type' => 'integer'],
     ];
 
     /**

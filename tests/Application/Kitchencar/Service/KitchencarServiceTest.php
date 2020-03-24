@@ -102,4 +102,23 @@ class KitchencarServiceTest extends TestCase
 
         $this->assertTrue($id instanceof Model\KitchencarValueId);
     }
+
+    /**
+     * @test
+     */
+    public function testGetKitchencar()
+    {
+        $service = new Service\GetKitchencarService($this->repository);
+
+        $data = $this->seed(8, 5, 3, 4);
+        $kitchencarData4 = $data['kitchencars'][4];
+        $id4 = $kitchencarData4['id'];
+
+        $output = $service->handle(Model\KitchencarValueId::of($id4));
+
+        $this->assertTrue($output instanceof Data\GetKitchencarOutputInterface);
+        $this->assertEquals($kitchencarData4['brand_id'], $output->model->getBrand()->getId()->getValue());
+        $this->assertEquals($kitchencarData4['car_id'], $output->model->getCar()->getId()->getValue());
+        $this->assertEquals($kitchencarData4['order'], $output->model->getOrder()->getValue());
+    }
 }

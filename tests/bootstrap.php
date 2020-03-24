@@ -40,6 +40,10 @@ doSystem()->bind(
    MockApplication\Car\Data\GetCarOutputMock::class
 );
 doSystem()->bind(
+   Application\Kitchencar\Data\GetKitchencarOutputInterface::class,
+   MockApplication\Kitchencar\Data\GetKitchencarOutputMock::class
+);
+doSystem()->bind(
     Application\Vendor\Data\GetVendorOutputInterface::class,
     MockApplication\Vendor\Data\GetVendorOutputMock::class
 );
