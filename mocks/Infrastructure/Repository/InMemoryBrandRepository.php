@@ -125,11 +125,11 @@ class InMemoryBrandRepository implements BrandRepositoryInterface
             if ($orderBy = Arr::pull($params, 'order_by')) {
                 if (\in_array($orderBy, ['name', 'status', 'order'], true)) {
                     $order = Arr::pull($params, 'order');
-                }
-                $table->orderBy($orderBy, $order);
-                if ($orderBy === 'order') {
-                    // Nullable key
-                    $table->isNull('asc');
+                    $table->orderBy($orderBy, $order);
+                    if ($orderBy === 'order') {
+                        // Nullable key
+                        $table->isNull('asc');
+                    }
                 }
             }
         }

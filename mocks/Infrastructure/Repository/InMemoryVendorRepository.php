@@ -103,8 +103,8 @@ class InMemoryVendorRepository implements VendorRepositoryInterface
             if ($orderBy = Arr::pull($params, 'order_by')) {
                 if (\in_array($orderBy, ['name', 'status'], true)) {
                     $order = Arr::pull($params, 'order');
+                    $table->orderBy($orderBy, $order);
                 }
-                $table->orderBy($orderBy, $order);
             }
         }
 
