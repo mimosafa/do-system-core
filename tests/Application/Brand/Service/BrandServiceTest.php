@@ -183,6 +183,6 @@ class BrandServiceTest extends TestCase
             }
         }
 
-        $this->assertEquals($c, 25);
+        $this->assertEquals(25, $c);
     }
 }

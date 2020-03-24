@@ -2,7 +2,6 @@
 
 namespace DoSystemMock\Infrastructure\Repository;
 
-use PHP_INT_MAX;
 use Illuminate\Support\Arr;
 use DoSystem\Domain\Brand\Model\Brand;
 use DoSystem\Domain\Brand\Model\BrandCollection;
@@ -123,24 +122,22 @@ class InMemoryBrandRepository implements BrandRepositoryInterface
                 $start = ($page - 1) * $size;
                 $table->offset($start)->limit($size);
             }
+            if ($orderBy = Arr::pull($params, 'order_by')) {
+                if (\in_array($orderBy, ['name', 'status', 'order'], true)) {
+                    $order = Arr::pull($params, 'order');
+                }
+                $table->orderBy($orderBy, $order);
+                if ($orderBy === 'order') {
+                    // Nullable key
+                    $table->isNull('asc');
+                }
+            }
         }
 
         $results = $table->get();
 
         if (empty($results)) {
             return new BrandCollection($results);
-        }
-
-        if ($orderBy = Arr::pull($params, 'order_by')) {
-            if (\in_array($orderBy, ['name', 'status', 'order'], true)) {
-                $results = Arr::sort($results, function ($row) use ($orderBy) {
-                    return $row[$orderBy] === null ? PHP_INT_MAX : $row[$orderBy];
-                });
-                $order = \strtolower(Arr::pull($params, 'order', 'asc'));
-                if ($order === 'desc') {
-                    $results = \array_reverse($results);
-                }
-            }
         }
 
         $results = \array_map(function ($row) {

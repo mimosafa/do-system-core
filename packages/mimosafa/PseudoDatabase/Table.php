@@ -86,6 +86,15 @@ class Table
     private $orderBy = [];
 
     /**
+     * Is null order
+     * If 'asc', last. If 'desc', first.
+     * If not set depends system.
+     *
+     * @var string|null
+     */
+    private $isNullOrder;
+
+    /**
      * Requested limit results
      *
      * @var int
@@ -148,8 +157,8 @@ class Table
                     $value = null;
                 }
                 else {
-                throw new \Exception('Required value of `' . $key .'` does not exist.');
-            }
+                    throw new \Exception('Required value of `' . $key .'` does not exist.');
+                }
             }
             else {
                 $value = $this->validate($key, $data[$key]);
@@ -219,8 +228,8 @@ class Table
 
                     if ($value === null) {
                         if (!\in_array($key, $this->nullables, true)) {
-                        throw new \Exception('Required value of `' . $key .'` does not exist.');
-                    }
+                            throw new \Exception('Required value of `' . $key .'` does not exist.');
+                        }
                     }
                     else {
                         $value = $this->validate($key, $value);
@@ -291,13 +300,34 @@ class Table
      * Order by
      *
      * @param string $key
-     * @param string $order
+     * @param string[] ...$params
      * @return self
      */
-    public function orderBy(string $key, string $order = 'asc'): self
+    public function orderBy(string $key, ...$params): self
     {
-        //
+        $arguments = \array_merge([$key], $params);
+        for ($i = 0; $i < count($arguments); $i = $i + 2) {
+            $key = $arguments[$i];
+            $order = \strtolower($arguments[$i + 1] ?? 'asc');
+            if (\in_array($key, $this->keys, true) && \in_array($order, ['asc', 'desc'], true)) {
+                $this->orderBy[] = [$key, $order];
+            }
+        }
+        return $this;
+    }
 
+    /**
+     * Is null order
+     *
+     * @param string $order asc|desc
+     * @return self
+     */
+    public function isNull(string $order): self
+    {
+        $order = \strtolower($order);
+        if (\in_array($order, ['asc', 'desc'], true)) {
+            $this->isNullOrder = $order;
+        }
         return $this;
     }
 
@@ -339,7 +369,42 @@ class Table
         }
 
         if (!empty($results) && !empty($this->orderBy)) {
-            //
+            $orderBys = \array_reverse($this->orderBy);
+            foreach ($orderBys as $orderBy) {
+                $key = $orderBy[0];
+                $order = \strtolower($orderBy[1]);
+                if (!\in_array($order, ['asc', 'desc'], true)) {
+                    continue;
+                }
+                $valueType = $this->types[$key];
+                $sortNull = \in_array($key, $this->nullables, true) && isset($this->isNullOrder);
+                // var_dump(\array_column($results, $key));
+                \usort($results, function ($result1, $result2) use ($key, $order, $valueType, $sortNull) {
+                    $value1 = $result1[$key];
+                    $value2 = $result2[$key];
+                    if ($sortNull) {
+                        if ($value1 === null) {
+                            return $this->isNullOrder === 'asc' ? 1 : -1;
+                        }
+                        else if ($value2 === null) {
+                            return $this->isNullOrder === 'asc' ? -1 : 1;
+                        }
+                    }
+                    if ($valueType === 'integer') {
+                        $cmp = $value1 - $value2;
+                        return $order === 'asc' ? $cmp : $cmp * -1;
+                    }
+                    else if ($valueType === 'string') {
+                        /**
+                         * @todo No test yet
+                         */
+                        $cmp = \strnatcmp($value1, $value2);
+                        return $order === 'asc' ? $cmp : $cmp * -1;
+                    }
+                    return 0;
+                });
+                // var_dump(\array_column($results, $key));
+            }
         }
 
         $this->initRequests();
@@ -459,6 +524,7 @@ class Table
     {
         $this->wheres = [];
         $this->orderBy = [];
+        $this->isNullOrder = null;
         $this->limit = 0;
         $this->offset = 0;
     }

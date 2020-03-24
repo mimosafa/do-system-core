@@ -100,24 +100,18 @@ class InMemoryVendorRepository implements VendorRepositoryInterface
                 $start = ($page - 1) * $size;
                 $table->offset($start)->limit($size);
             }
+            if ($orderBy = Arr::pull($params, 'order_by')) {
+                if (\in_array($orderBy, ['name', 'status'], true)) {
+                    $order = Arr::pull($params, 'order');
+                }
+                $table->orderBy($orderBy, $order);
+            }
         }
 
         $results = $table->get();
 
         if (empty($results)) {
             return new VendorCollection($results);
-        }
-
-        if ($orderBy = Arr::pull($params, 'order_by')) {
-            if (\in_array($orderBy, ['name', 'status'], true)) {
-                $results = Arr::sort($results, function ($row) use ($orderBy) {
-                    return $row[$orderBy];
-                });
-                $order = \strtolower(Arr::pull($params, 'order', 'asc'));
-                if ($order === 'desc') {
-                    $results = \array_reverse($results);
-                }
-            }
         }
 
         $results = \array_map(function ($row) {
