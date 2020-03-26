@@ -7,7 +7,7 @@ class KitchencarDataFactory extends AbstractDataFactory
     /**
      * @var array
      */
-    private $orders = [null, 1, 2, 3];
+    private $orders = [null, 0, 1, 2, 3];
 
     /**
      * Generate fake data
@@ -20,9 +20,25 @@ class KitchencarDataFactory extends AbstractDataFactory
         $instance = self::instance();
 
         $vendorIds = \array_keys($idsMap);
-        $vendorId  = $instance->faker->randomElement($vendorIds);
-        $brandId   = $instance->faker->randomElement($idsMap[$vendorId]['brand']);
-        $carId     = $instance->faker->randomElement($idsMap[$vendorId]['car']);
+        $done = false;
+
+        // While loop for undefined index error
+        // No idea why it occurs ...
+        while (!$done) {
+            $vendorId  = $instance->faker->randomElement($vendorIds);
+
+            if (!isset($idsMap[$vendorId]['brand']) || empty($idsMap[$vendorId]['brand'])) {
+                continue;
+            }
+            $brandId = $instance->faker->randomElement($idsMap[$vendorId]['brand']);
+
+            if (!isset($idsMap[$vendorId]['car']) || empty($idsMap[$vendorId]['car'])) {
+                continue;
+            }
+            $carId = $instance->faker->randomElement($idsMap[$vendorId]['car']);
+
+            $done = true;
+        }
 
         return [
             'brand_id' => $brandId,
