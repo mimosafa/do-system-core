@@ -14,7 +14,14 @@ class Table
     /**
      * Table definitions
      *
-     * @var array
+     * @var array{
+     *      @type array{
+     *          @type string $type   string|integer
+     *          @type bool $primary  (optional)
+     *          @type bool $unique   (optional)
+     *          @type bool $nullable (optional)
+     *      }[] ${...$column}
+     * }
      */
     private $definitions;
 
@@ -45,7 +52,7 @@ class Table
      * @see Table::validate($key, $value)
      *
      * @var array{
-     *      @type string ${$key} integer|string..
+     *      @type string ${...$key} integer|string
      * }
      */
     private $types = [];
@@ -81,21 +88,30 @@ class Table
     /**
      * Requesed where
      *
-     * @var array[]
+     * @var array[
+     *      @type string [0]  key of here
+     *      @type string [1]  compare here and there
+     *      @type mixed  [2]  key(s) of there
+     * ][]
      */
     private $wheres = [];
 
     /**
      * Requested select
      *
-     * @var mixed[]
+     * @var array{
+     *      @type string ${...$keyAlias}  Exists key in $keys
+     * }
      */
     private $selects = [];
 
     /**
      * Requested order (by)
      *
-     * @var array
+     * @var array[
+     *      @type string [0]  Key used for sort order
+     *      @type string [1]  asc|desc
+     * ][]
      */
     private $orderBy = [];
 
@@ -105,10 +121,22 @@ class Table
      * If not set depends system.
      *
      * @var array{
-     *      @type string ${$key}
+     *      @type string ${...$key}
      * }
      */
     private $isNullOrder = [];
+
+    /**
+     * Temporary parameters to sort rows
+     *
+     * @var array{
+     *      @type strin $key
+     *      @type strin $order
+     *      @type strin $type
+     *      @type int|null $null_value_compare
+     * }[]
+     */
+    private $tempParamsForSort = [];
 
     /**
      * Requested limit results
@@ -134,7 +162,7 @@ class Table
      *          @type string $here
      *          @type string $compare
      *          @type string $there
-     *      } ${tableName}
+     *      } ${...tableName}
      * }
      */
     private $tablesToJoin = [];
@@ -503,55 +531,29 @@ class Table
         }
 
         if (!empty($results)) {
+
+            if ($this->initTempParamsForSort()) {
+
+                $prev = '';
+
+                while (!empty($this->tempParamsForSort)) {
+                    $param = \array_shift($this->tempParamsForSort);
+
+                    $key     = $param['key'];
+                    $asc     = $param['order'] === 'asc';
+                    $type    = $param['type'];
+                    $nullCmp = $param['null_value_compare'];
+
+                    self::sortRows($results, $key, $type, $asc, $nullCmp, $prev);
+
+                    $prev = $key;
+                }
+
+            }
+
             if (($this->offset > 0) || ($this->limit > 0)) {
                 $limit = $this->limit ?: null;
                 $results = \array_slice($results, $this->offset, $limit);
-            }
-        }
-
-        if (!empty($results) && !empty($this->orderBy)) {
-            $orderBys = \array_reverse($this->orderBy);
-            /**
-             * @todo Not work later than 2nd
-             */
-            foreach ($orderBys as $orderBy) {
-                $key = $orderBy[0];
-                if (!\in_array($key, $this->keys, true) && !$key = $this->selects[$key] ?? false) {
-                    continue;
-                }
-                $order = \strtolower($orderBy[1]);
-                if (!\in_array($order, ['asc', 'desc'], true)) {
-                    continue;
-                }
-                $valueType = $this->types[$key];
-                $sortNull = \in_array($key, $this->nullables, true) && isset($this->isNullOrder[$key]);
-                // var_dump(\array_column($results, $key));
-                \usort($results, function ($result1, $result2) use ($key, $order, $valueType, $sortNull) {
-                    $value1 = $result1[$key];
-                    $value2 = $result2[$key];
-                    if ($sortNull) {
-                        $asc = ($order === 'asc') && ($this->isNullOrder[$key] === 'asc');
-                        if ($value1 === null) {
-                            return $asc ? 1 : -1;
-                        }
-                        else if ($value2 === null) {
-                            return $asc ? -1 : 1;
-                        }
-                    }
-                    if ($valueType === 'integer') {
-                        $cmp = $value1 - $value2;
-                        return $order === 'asc' ? $cmp : $cmp * -1;
-                    }
-                    else if ($valueType === 'string') {
-                        /**
-                         * @todo No test yet
-                         */
-                        $cmp = \strnatcmp($value1, $value2);
-                        return $order === 'asc' ? $cmp : $cmp * -1;
-                    }
-                    return 0;
-                });
-                // var_dump(\array_column($results, $key));
             }
         }
 
@@ -562,6 +564,141 @@ class Table
         $this->initRequests();
 
         return $results;
+    }
+
+    /**
+     * Sort rows
+     *
+     * @static
+     * @access private
+     *
+     * @param array[]  &$rows
+     * @param string   $key
+     * @param string   $type
+     * @param bool     $asc
+     * @param int|null $nullCmp
+     * @param string   $prev
+     * @return void
+     */
+    private static function sortRows(array &$rows, string $key, string $type, bool $asc, ?int $nullCmp, string $prev = ''): void
+    {
+        $rowsCache = $rows;
+        $rows = [];
+
+        $values = \array_column($rowsCache, $key);
+
+        \uasort($values, function ($val1, $val2) use ($type, $asc, $nullCmp) {
+            $cmp = 0;
+
+            if ($val1 === $val2) {
+                return $cmp;
+            }
+
+            if (\is_null($val1) && isset($nullCmp)) {
+                return $asc ? $nullCmp : $nullCmp * -1;
+            }
+            if (\is_null($val2) && isset($nullCmp)) {
+                return $asc ? $nullCmp * -1 : $nullCmp;
+            }
+
+            if ($type === 'integer') {
+                $cmp = $val1 - $val2;
+            }
+            else if ($type === 'string') {
+                /**
+                 * @todo No tests yet
+                 */
+                $cmp = \strnatcmp($val1, $val2);
+            }
+
+            return $asc ? $cmp : $cmp * -1;
+        });
+
+        if ($prev) {
+            $index = [];
+
+            $valueKeys = \array_keys($values);
+
+            $prevValues = \array_column($rowsCache, $prev);
+            $lastIOfPrevValue = \count($prevValues) - 1;
+
+            $prevValueCache = null;
+            $iCache = [];
+
+            for ($iOfPrevValue = 0; $iOfPrevValue <= $lastIOfPrevValue; $iOfPrevValue++) {
+                $prevValue = $prevValues[$iOfPrevValue];
+
+                if (($iOfPrevValue > 0) && (($prevValue !== $prevValueCache) || ($iOfPrevValue === $lastIOfPrevValue))) {
+                    if ($iOfPrevValue === $lastIOfPrevValue) {
+                        $iCache[] = $iOfPrevValue;
+                    }
+                    if (\count($iCache) > 1) {
+                        foreach ($valueKeys as $iOfValueKey => $valueKey) {
+                            if (\in_array($valueKey, $iCache, true)) {
+                                $index[] = $valueKey;
+                                unset($valueKeys[$iOfValueKey]);
+                            }
+                        }
+                    }
+                    else {
+                        $index[] = $iCache[0];
+                    }
+
+                    $iCache = [];
+                }
+
+                $iCache[] = $iOfPrevValue;
+                $prevValueCache = $prevValue;
+            }
+        }
+        else {
+            $index = \array_keys($values);
+        }
+
+        foreach ($index as $i) {
+            $rows[] = $rowsCache[$i];
+        }
+    }
+
+    /**
+     * Initialize temporary parameters for sort
+     *
+     * @access private
+     *
+     * @return bool
+     */
+    private function initTempParamsForSort(): bool
+    {
+        if (!empty($this->orderBy)) {
+            foreach ($this->orderBy as $orderBy) {
+                $key = $orderBy[0];
+                if (!\in_array($key, $this->keys, true) && !$key = $this->selects[$key] ?? false) {
+                    continue;
+                }
+                $order = $orderBy[1];
+                if (!\in_array($order, ['asc', 'desc'], true)) {
+                    continue;
+                }
+                $type = $this->types[$key];
+                $nullValueCompare = null;
+                if (isset($this->isNullOrder[$key])) {
+                    if ($order === $this->isNullOrder[$key]) {
+                        $nullValueCompare = 1;
+                    }
+                    else {
+                        $nullValueCompare = -1;
+                    }
+                }
+                $this->tempParamsForSort[] = [
+                    'key' => $key,
+                    'order' => $order,
+                    'type' => $type,
+                    'null_value_compare' => $nullValueCompare
+                ];
+            }
+        }
+
+        return !empty($this->tempParamsForSort);
     }
 
     /**
@@ -667,7 +804,7 @@ class Table
      *
      * @return self
      */
-    public function joinedTable(): self
+    private function joinedTable(): self
     {
         $name = $this->name;
         $definitions = $this->definitions;
