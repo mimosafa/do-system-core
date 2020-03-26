@@ -121,4 +121,32 @@ class KitchencarServiceTest extends TestCase
         $this->assertEquals($kitchencarData4['car_id'], $output->model->getCar()->getId()->getValue());
         $this->assertEquals($kitchencarData4['order'], $output->model->getOrder()->getValue());
     }
+
+    /**
+     * @test
+     */
+    /*
+    public function testUpdateKitchencar()
+    {
+        $data = $this->seed(30, 20, 20, 20);
+        $table = \PseudoDatabase\Database::table('kitchencars')
+            ->join('cars', 'car_id', '=', 'cars.id')
+            ->select('id', 'cars.vendor_id as vendor_id', 'brand_id', 'car_id', 'order')
+            ->orderBy('vendor_id', 'asc')
+            ->orderBy('order', 'asc')->isNull('asc')
+            ->orderBy('car_id')
+        ;
+        $results = $table->get();
+
+        var_dump($results);
+    }
+    */
+
+    /**
+     * @test
+     */
+    public function testQueryKitchencar()
+    {
+        //
+    }
 }

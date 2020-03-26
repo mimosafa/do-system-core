@@ -2,6 +2,7 @@
 
 namespace DoSystemMock\Infrastructure\Repository;
 
+use Illuminate\Support\Arr;
 use DoSystem\Domain\Brand\Model\Brand;
 use DoSystem\Domain\Brand\Model\BrandCollection;
 use DoSystem\Domain\Brand\Model\BrandRepositoryInterface;
@@ -140,7 +141,66 @@ class InMemoryKitchencarRepository implements KitchencarRepositoryInterface
      */
     public function query(array $params): KitchencarCollection
     {
-        //
+        $table = Database::table('kitchencars');
+
+        if (!empty($params)) {
+            $brandIds = Arr::pull($params, 'brand_id', []);
+            $carIds = Arr::pull($params, 'car_id', []);
+            if ($vendorIds = Arr::pull($params, 'vendor_id')) {
+                foreach ($vendorIds as $vendorId) {
+                    $vendor = $this->vendorRepository->findById(VendorValueId::of($vendorId));
+                    $brands = $vendor->getBrands();
+                    if ($brands->isNotEmpty()) {
+                        foreach ($brands as $brand) {
+                            $brandIds[] = $brand->getId()->getValue();
+                        }
+                    }
+                    $car = $vendor->getCars();
+                    if ($cars->isNotEmpty()) {
+                        foreach ($cars as $car) {
+                            $carIds[] = $car->getId()->getValue();
+                        }
+                    }
+                }
+            }
+            if (!empty($brandIds)) {
+                $table->where('brand_id', 'IN', \array_unique($brandIds));
+            }
+            if (!empty($carIds)) {
+                $table->where('car_id', 'IN', \array_filter($carIds));
+            }
+            if ($size = Arr::pull($params, 'size_per_page')) {
+                $page = Arr::pull($params, 'page', 1);
+                $start = ($page - 1) * $size;
+                $table->offset($start)->limit($size);
+            }
+            if ($orderBy = Arr::pull($params, 'order_by')) {
+                if ($orderBy === 'order') {
+                    $table->orderBy($orderBy, Arr::pull($params, 'order'))->isNull('asc');
+                }
+                else if ($orderBy === 'vendor_id') {
+                    $table = $table->join('cars', 'car_id', '=', 'cars.id');
+                    $table->orderBy('cars.vendor_id', Arr::pull($params, 'order'));
+                }
+            }
+        }
+
+        $results = $table->get();
+
+        if (empty($results)) {
+            return new KitchencarCollection($results);
+        }
+
+        $results = \array_map(function ($row) {
+            return new Kitchencar(
+                KitchencarValueId::of($row['id']),
+                $this->brandRepository->findById(BrandValueId::of($row['brand_id'])),
+                $this->carRepository->findById(CarValueId::of($row['car_id'])),
+                KitchencarValueOrder::of($row['order'])
+            );
+        }, $results, []); // 2nd empty array for reassign keys
+
+        return new KitchencarCollection($results);
     }
 
     /**
