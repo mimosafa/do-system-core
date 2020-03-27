@@ -668,11 +668,11 @@ class Table
                     if ($iOfPrevValue === $lastIOfPrevValue) {
                         if ($prevValue === $prevValueCache) {
                             $iCache[] = $iOfPrevValue;
-                            $needSubSort = true;
                         }
                         else {
                             $needAddLast = true;
                         }
+                        $needSubSort = true;
                     }
                     else {
                         $needSubSort = $prevValue !== $prevValueCache;
