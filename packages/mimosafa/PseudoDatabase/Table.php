@@ -20,7 +20,7 @@ class Table
      *          @type bool $primary  (optional)
      *          @type bool $unique   (optional)
      *          @type bool $nullable (optional)
-     *      }[] ${...$column}
+     *      } ${...$column}
      * }
      */
     private $definitions;
@@ -74,7 +74,9 @@ class Table
     /**
      * Index caches
      *
-     * @var array
+     * @var array{
+     *      @type mixed[] ${...$key}
+     * }
      */
     private $indexes = [];
 
@@ -89,9 +91,9 @@ class Table
      * Requesed where
      *
      * @var array[
-     *      @type string [0]  key of here
-     *      @type string [1]  compare here and there
-     *      @type mixed  [2]  key(s) of there
+     *      @type string [0]  key
+     *      @type string [1]  compare
+     *      @type mixed  [2]  value(s)
      * ][]
      */
     private $wheres = [];
@@ -121,7 +123,7 @@ class Table
      * If not set depends system.
      *
      * @var array{
-     *      @type string ${...$key}
+     *      @type string ${...$key}  asc|desc
      * }
      */
     private $isNullOrder = [];
@@ -158,7 +160,7 @@ class Table
      * @var array{
      *      @type array{
      *          @type Table  $table
-     *          @type string $join  inner|left|right
+     *          @type string $join  inner @todo left|right
      *          @type string $here
      *          @type string $compare
      *          @type string $there
@@ -192,11 +194,10 @@ class Table
 
             if (isset($definition['primary']) && $definition['primary'] === true) {
                 $this->primary = $key;
-                $this->indexes[$key] = [];
+                $this->uniques[] = $key;
             }
             else if (isset($definition['unique']) && $definition['unique'] === true) {
                 $this->uniques[] = $key;
-                $this->indexes[$key] = [];
             }
             else if (isset($definition['nullable']) && $definition['nullable'] === true) {
                 $this->nullables[] = $key;
@@ -245,7 +246,72 @@ class Table
         if (isset($this->primary)) {
             $row[$this->primary] = $this->total;
         }
+
+        $this->initIndexes();
+
         return $this->rows[] = $row;
+    }
+
+    /**
+     * Update
+     *
+     * @param array $data
+     * @return void
+     * @throws \Exception
+     */
+    public function update(array $data): void
+    {
+        if (empty($this->wheres)) {
+            throw new \Exception('To exec ' . __METHOD__ . ', need to limit target by `where` method.');
+        }
+
+        foreach ($this->rows as $index => &$row) {
+            if ($this->execWhere($index, $row)) {
+                foreach ($data as $key => $value) {
+                    if ($key === $this->primary) {
+                        continue;
+                    }
+
+                    if ($value === null) {
+                        if (!\in_array($key, $this->nullables, true)) {
+                            throw new \Exception('Required value of `' . $key .'` does not exist.');
+                        }
+                    }
+                    else {
+                        $value = $this->validate($key, $value);
+                        if ($value === null) {
+                            throw new \Exception('value of `' . $key . '` must be ' . $this->types[$key] . '. Given value: ' . var_export($data[$key], true));
+                        }
+                    }
+
+                    $row[$key] = $value;
+                }
+            }
+        }
+
+        $this->initRequests();
+        $this->initIndexes();
+    }
+
+    /**
+     * Initialize indexes of key
+     *
+     * @access private
+     *
+     * @return void
+     */
+    private function initIndexes(): void
+    {
+        if (empty($this->uniques)) {
+            return;
+        }
+
+        $this->indexes = [];
+        foreach ($this->uniques as $key) {
+            $values = \array_column($this->rows, $key);
+            $values = \array_map('json_encode', $values);
+            $this->indexes[$key] = \array_flip($values);
+        }
     }
 
     /**
@@ -304,46 +370,6 @@ class Table
     }
 
     /**
-     * Update
-     *
-     * @param array $data
-     * @return void
-     * @throws \Exception
-     */
-    public function update(array $data): void
-    {
-        if (empty($this->wheres)) {
-            throw new \Exception('To exec ' . __METHOD__ . ', need to limit target by `where` method.');
-        }
-
-        foreach ($this->rows as $index => &$row) {
-            if ($this->execWhere($index, $row)) {
-                foreach ($data as $key => $value) {
-                    if ($key === $this->primary) {
-                        continue;
-                    }
-
-                    if ($value === null) {
-                        if (!\in_array($key, $this->nullables, true)) {
-                            throw new \Exception('Required value of `' . $key .'` does not exist.');
-                        }
-                    }
-                    else {
-                        $value = $this->validate($key, $value);
-                        if ($value === null) {
-                            throw new \Exception('value of `' . $key . '` must be ' . $this->types[$key] . '. Given value: ' . var_export($data[$key], true));
-                        }
-                    }
-
-                    $row[$key] = $value;
-                }
-            }
-        }
-
-        $this->initRequests();
-    }
-
-    /**
      * Validate given value
      *
      * @param string $key
@@ -352,6 +378,13 @@ class Table
      */
     private function validate(string $key, $value)
     {
+        if (\in_array($key, $this->uniques, true)) {
+            $_value = \json_encode($value);
+            if (isset($this->indexes[$_value])) {
+                return null;
+            }
+        }
+
         $type = $this->types[$key];
         if ($type === 'string') {
             $value = \filter_var($value);
@@ -485,11 +518,11 @@ class Table
     public function on(string $here, string $compare, string $there): self
     {
         $theres = explode('.', $there);
-        if (\in_array($here, $this->keys, true) && \in_array($compare, self::$acceptableCompareStrings, true) && count($theres) === 2) {
+        if (\in_array($compare, self::$acceptableCompareStrings, true) && count($theres) === 2) {
             [$name, $key] = $theres;
             if (isset($this->tablesToJoin[$name]) && $table = $this->tablesToJoin[$name]['table']) {
                 if (\in_array($key, $table->keys, true)) {
-                    $this->tablesToJoin[$name]['here']    = $here;
+                    $this->tablesToJoin[$name]['here'] = $here;
                     /**
                      * @todo Supported only `=`
                      */
@@ -626,12 +659,27 @@ class Table
             $iCache = [];
 
             for ($iOfPrevValue = 0; $iOfPrevValue <= $lastIOfPrevValue; $iOfPrevValue++) {
+                $needSubSort = false;
+                $needAddLast = false;
+
                 $prevValue = $prevValues[$iOfPrevValue];
 
-                if (($iOfPrevValue > 0) && (($prevValue !== $prevValueCache) || ($iOfPrevValue === $lastIOfPrevValue))) {
+                if ($iOfPrevValue !== 0) {
                     if ($iOfPrevValue === $lastIOfPrevValue) {
-                        $iCache[] = $iOfPrevValue;
+                        if ($prevValue === $prevValueCache) {
+                            $iCache[] = $iOfPrevValue;
+                            $needSubSort = true;
+                        }
+                        else {
+                            $needAddLast = true;
+                        }
                     }
+                    else {
+                        $needSubSort = $prevValue !== $prevValueCache;
+                    }
+                }
+
+                if ($needSubSort) {
                     if (\count($iCache) > 1) {
                         foreach ($valueKeys as $iOfValueKey => $valueKey) {
                             if (\in_array($valueKey, $iCache, true)) {
@@ -649,6 +697,10 @@ class Table
 
                 $iCache[] = $iOfPrevValue;
                 $prevValueCache = $prevValue;
+
+                if ($needAddLast) {
+                    $index[] = $iOfPrevValue;
+                }
             }
         }
         else {
@@ -806,13 +858,13 @@ class Table
      */
     private function joinedTable(): self
     {
-        $name = $this->name;
-        $definitions = $this->definitions;
-        $rows = $this->rows;
+        $tableInstance = clone $this;
 
-        $joinedRows = [];
+        foreach ($tableInstance->tablesToJoin as $tableName => $array) {
+            $name = $tableInstance->name;
+            $definitions = $tableInstance->definitions;
+            $rows = $tableInstance->rows;
 
-        foreach ($this->tablesToJoin as $tableName => $array) {
             $table = $array['table'];
 
             $hereKey = $array['here'];
@@ -822,11 +874,7 @@ class Table
             if (\is_null($hereKey) || \is_null($compare) || \is_null($thereKey)) {
                 continue;
             }
-
-            if ($compare !== '=') {
-                /**
-                 * @todo
-                 */
+            if (!\in_array($hereKey, $tableInstance->keys,true)) {
                 continue;
             }
 
@@ -845,6 +893,8 @@ class Table
             $join = $array['join'];
             $tableRows = $table->rows;
             $tableIndexes = \array_column($tableRows, $thereKey);
+
+            $joinedRows = [];
 
             if ($join === 'inner') {
                 foreach ($rows as $row) {
@@ -865,19 +915,21 @@ class Table
                     }
                 }
             }
-        }
 
-        $joinedTable = new self($name, $definitions);
-        // Recover primary key
-        $joinedTable->primary = $this->primary;
-        $joinedTable->rows = $joinedRows;
-        $joinedTable->total = count($joinedTable->rows);
-        $joinedTable->wheres = $this->wheres;
-        $joinedTable->selects = $this->selects;
-        $joinedTable->orderBy = $this->orderBy;
-        $joinedTable->isNullOrder = $this->isNullOrder;
-        $joinedTable->limit = $this->limit;
-        $joinedTable->offset = $this->offset;
+            $joinedTable = new self($name, $definitions);
+            $joinedTable->primary = $tableInstance->primary; // Recover primary key
+            $joinedTable->rows = $joinedRows;
+            $joinedTable->initIndexes();
+            $joinedTable->total = count($joinedTable->rows);
+            $joinedTable->wheres = $tableInstance->wheres;
+            $joinedTable->selects = $tableInstance->selects;
+            $joinedTable->orderBy = $tableInstance->orderBy;
+            $joinedTable->isNullOrder = $tableInstance->isNullOrder;
+            $joinedTable->limit = $tableInstance->limit;
+            $joinedTable->offset = $tableInstance->offset;
+
+            $tableInstance = clone $joinedTable;
+        }
 
         $this->initRequests();
 
@@ -895,9 +947,7 @@ class Table
     {
         $this->rows = [];
         $this->total = 0;
-        foreach ($this->indexes as &$indexes) {
-            $indexes = [];
-        }
+        $this->indexes = [];
         $this->initRequests();
     }
 
@@ -908,11 +958,11 @@ class Table
      */
     public function initRequests(): void
     {
-        $this->wheres = [];
+        $this->wheres  = [];
         $this->selects = [];
         $this->orderBy = [];
         $this->isNullOrder = [];
-        $this->limit = 0;
+        $this->limit  = 0;
         $this->offset = 0;
         $this->tablesToJoin = [];
     }
