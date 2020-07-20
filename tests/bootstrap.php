@@ -2,7 +2,7 @@
 
 use DoSystem\Core\Application;
 use DoSystem\Core\Domain;
-use DoSystem\Infrastructure;
+use DoSystem\Core\Infrastructure;
 use DoSystemMock\Application as MockApplication;
 use DoSystemMock\Infrastructure as MockInfrastructure;
 

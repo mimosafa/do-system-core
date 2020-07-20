@@ -1,6 +1,6 @@
 <?php
 
-namespace DoSystem\Infrastructure\Repository;
+namespace DoSystem\Core\Infrastructure\Repository;
 
 use DoSystem\Core\Domain\Prefecture\Prefecture;
 use DoSystem\Core\Domain\Prefecture\PrefectureRepositoryInterface;
