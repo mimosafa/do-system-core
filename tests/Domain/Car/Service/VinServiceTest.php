@@ -3,7 +3,7 @@
 namespace DoSystemTest\Domain\Car\Service;
 
 use PHPUnit\Framework\TestCase;
-use DoSystem\Domain\Car\Service\VinService;
+use DoSystem\Core\Domain\Car\Service\VinService;
 use DoSystemMock\Infrastructure\Repository\InMemoryCarRepository;
 use DoSystemMock\Infrastructure\Repository\InMemoryVendorRepository;
 use DoSystemMock\Database\Seeder\CarsSeeder;

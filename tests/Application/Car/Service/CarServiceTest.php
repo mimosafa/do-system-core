@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 use DoSystem\Core\Application\Car\Data;
 use DoSystem\Core\Application\Car\Service;
 use DoSystem\Core\Domain\Car;
-use DoSystem\Domain\Car\Service as DomainService;
+use DoSystem\Core\Domain\Car\Service as DomainService;
 use DoSystemMock\Application\Car\Data as MockData;
 use DoSystemMock\Database\Factory\CarDataFactory;
 use DoSystemMock\Database\Seeder;

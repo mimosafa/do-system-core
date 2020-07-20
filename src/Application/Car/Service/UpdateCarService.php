@@ -9,7 +9,7 @@ use DoSystem\Core\Domain\Car\CarValueId;
 use DoSystem\Core\Domain\Car\CarValueName;
 use DoSystem\Core\Domain\Car\CarValueStatus;
 use DoSystem\Core\Domain\Car\CarValueVin;
-use DoSystem\Domain\Car\Service\CarService;
+use DoSystem\Core\Domain\Car\Service\CarService;
 use DoSystem\Core\Domain\Vendor\VendorRepositoryInterface;
 
 class UpdateCarService

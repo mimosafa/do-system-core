@@ -19,8 +19,7 @@
     },
     "autoload": {
         "psr-4": {
-            "DoSystem\\Core\\": "src/",
-            "DoSystem\\": "src"
+            "DoSystem\\Core\\": "src/"
         },
         "files": [
             "src/bootstrap.php"

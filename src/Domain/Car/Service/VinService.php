@@ -1,6 +1,6 @@
 <?php
 
-namespace DoSystem\Domain\Car\Service;
+namespace DoSystem\Core\Domain\Car\Service;
 
 use DoSystem\Core\Domain\Car\CarRepositoryInterface;
 use DoSystem\Core\Domain\Car\CarValueVin;

@@ -10,7 +10,7 @@ use DoSystem\Core\Domain\Car\CarValueName;
 use DoSystem\Core\Domain\Car\CarValueOrder;
 use DoSystem\Core\Domain\Car\CarValueStatus;
 use DoSystem\Core\Domain\Car\CarValueVin;
-use DoSystem\Domain\Car\Service\CarService;
+use DoSystem\Core\Domain\Car\Service\CarService;
 use DoSystem\Core\Domain\Vendor\VendorValueId;
 use DoSystem\Core\Domain\Vendor\VendorRepositoryInterface;
 
