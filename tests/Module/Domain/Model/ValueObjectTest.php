@@ -3,7 +3,7 @@
 namespace DoSystemTests\Module\Domain\Model;
 
 use PHPUnit\Framework\TestCase;
-use DoSystem\Module\Domain\Model\ValueObjectInterface;
+use DoSystem\Core\Module\Domain\ValueObjectInterface;
 use DoSystemMock\Module\Domain\Model\SampleValueObject;
 use DoSystemMock\Module\Domain\Model\SampleValueObjectInherited;
 

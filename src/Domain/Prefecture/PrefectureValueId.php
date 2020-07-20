@@ -2,8 +2,8 @@
 
 namespace DoSystem\Core\Domain\Prefecture;
 
-use DoSystem\Module\Domain\Model\ValueObjectInterface;
-use DoSystem\Module\Domain\Model\ValueObjectTrait;
+use DoSystem\Core\Module\Domain\ValueObjectInterface;
+use DoSystem\Core\Module\Domain\ValueObjectTrait;
 
 final class PrefectureValueId implements ValueObjectInterface
 {

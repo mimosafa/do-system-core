@@ -2,8 +2,8 @@
 
 namespace DoSystemMock\Module\Domain\Model;
 
-use DoSystem\Module\Domain\Model\AbstractValueObjectFile;
-use DoSystem\Module\Domain\Model\ValueObjectFileInterface;
+use DoSystem\Core\Module\Domain\AbstractValueObjectFile;
+use DoSystem\Core\Module\Domain\ValueObjectFileInterface;
 
 class SampleValueObjectFile extends AbstractValueObjectFile implements ValueObjectFileInterface
 {

@@ -2,7 +2,7 @@
 
 namespace DoSystemMock\Module\Domain\Model;
 
-use DoSystem\Module\Domain\Model\ValueObjectEnumInterface;
+use DoSystem\Core\Module\Domain\ValueObjectEnumInterface;
 
 class SampleValueObjectEnumInherited extends SampleValueObjectEnum implements ValueObjectEnumInterface
 {

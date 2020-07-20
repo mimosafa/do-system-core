@@ -2,8 +2,8 @@
 
 namespace DoSystem\Core\Domain\Prefecture;
 
-use DoSystem\Module\Domain\Model\AbstractValueObjectString;
-use DoSystem\Module\Domain\Model\ValueObjectStringInterface;
+use DoSystem\Core\Module\Domain\AbstractValueObjectString;
+use DoSystem\Core\Module\Domain\ValueObjectStringInterface;
 
 final class PrefectureValueName extends AbstractValueObjectString implements ValueObjectStringInterface
 {

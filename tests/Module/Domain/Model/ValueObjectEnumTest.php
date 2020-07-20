@@ -3,7 +3,7 @@
 namespace DoSystemTests\Module\Domain\Model;
 
 use PHPUnit\Framework\TestCase;
-use DoSystem\Module\Domain\Model\ValueObjectEnumInterface;
+use DoSystem\Core\Module\Domain\ValueObjectEnumInterface;
 use DoSystemMock\Module\Domain\Model\SampleValueObjectEnum;
 use DoSystemMock\Module\Domain\Model\SampleValueObjectEnumInherited;
 

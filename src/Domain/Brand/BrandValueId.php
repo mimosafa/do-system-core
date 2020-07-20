@@ -2,8 +2,8 @@
 
 namespace DoSystem\Core\Domain\Brand;
 
-use DoSystem\Module\Domain\Model\ValueObjectIdInterface;
-use DoSystem\Module\Domain\Model\AbstractValueObjectIntForId;
+use DoSystem\Core\Module\Domain\ValueObjectIdInterface;
+use DoSystem\Core\Module\Domain\AbstractValueObjectIntForId;
 
 final class BrandValueId extends AbstractValueObjectIntForId implements ValueObjectIdInterface
 {

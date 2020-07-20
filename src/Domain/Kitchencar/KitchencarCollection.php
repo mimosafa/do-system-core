@@ -3,7 +3,7 @@
 namespace DoSystem\Core\Domain\Kitchencar;
 
 use Illuminate\Support\Collection;
-use DoSystem\Module\Domain\Model\CollectionInterface;
+use DoSystem\Core\Module\Domain\CollectionInterface;
 
 class KitchencarCollection extends Collection implements CollectionInterface
 {

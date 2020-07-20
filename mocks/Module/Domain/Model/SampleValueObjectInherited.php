@@ -2,7 +2,7 @@
 
 namespace DoSystemMock\Module\Domain\Model;
 
-use DoSystem\Module\Domain\Model\ValueObjectInterface;
+use DoSystem\Core\Module\Domain\ValueObjectInterface;
 
 class SampleValueObjectInherited extends SampleValueObject implements ValueObjectInterface
 {

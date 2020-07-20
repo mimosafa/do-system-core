@@ -2,8 +2,8 @@
 
 namespace DoSystem\Core\Domain\Kitchencar;
 
-use DoSystem\Module\Domain\Model\ValueObjectInterface;
-use DoSystem\Module\Domain\Model\ValueObjectTrait;
+use DoSystem\Core\Module\Domain\ValueObjectInterface;
+use DoSystem\Core\Module\Domain\ValueObjectTrait;
 
 class KitchencarValueOrder implements ValueObjectInterface
 {

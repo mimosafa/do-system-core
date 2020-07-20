@@ -2,8 +2,8 @@
 
 namespace DoSystem\Core\Domain\Car;
 
-use DoSystem\Module\Domain\Model\ValueObjectStringInterface;
-use DoSystem\Module\Domain\Model\ValueObjectTrait;
+use DoSystem\Core\Module\Domain\ValueObjectStringInterface;
+use DoSystem\Core\Module\Domain\ValueObjectTrait;
 
 class CarValueVin implements ValueObjectStringInterface
 {

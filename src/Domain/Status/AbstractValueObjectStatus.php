@@ -2,7 +2,7 @@
 
 namespace DoSystem\Core\Domain\Status;
 
-use DoSystem\Module\Domain\Model\AbstractValueObjectEnum;
+use DoSystem\Core\Module\Domain\AbstractValueObjectEnum;
 
 /**
  * Common status value object for 'Vendor', 'Car', and 'Brand'

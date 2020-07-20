@@ -1,6 +1,6 @@
 <?php
 
-namespace DoSystem\Module\Domain\Model;
+namespace DoSystem\Core\Module\Domain;
 
 use BadMethodCallException;
 use Illuminate\Support\Str;
