@@ -1,6 +1,6 @@
 <?php
 
-namespace DoSystemCoreTest\Domain\Prefecture\Model;
+namespace DoSystemCoreTest\Domain\Prefecture;
 
 use PHPUnit\Framework\TestCase;
 use DoSystem\Core\Domain\Prefecture\Prefecture;

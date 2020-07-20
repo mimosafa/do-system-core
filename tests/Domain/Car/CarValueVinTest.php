@@ -1,6 +1,6 @@
 <?php
 
-namespace DoSystemCoreTest\Domain\Car\Model;
+namespace DoSystemCoreTest\Domain\Car;
 
 use PHPUnit\Framework\TestCase;
 use DoSystem\Core\Domain\Car\CarValueVin;

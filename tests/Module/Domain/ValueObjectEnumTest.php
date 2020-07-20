@@ -1,6 +1,6 @@
 <?php
 
-namespace DoSystemCoreTests\Module\Domain\Model;
+namespace DoSystemCoreTests\Module\Domain;
 
 use PHPUnit\Framework\TestCase;
 use DoSystem\Core\Module\Domain\ValueObjectEnumInterface;

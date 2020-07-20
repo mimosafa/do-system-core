@@ -1,6 +1,6 @@
 <?php
 
-namespace DoSystemCoreTest\Domain\Vendor\Model;
+namespace DoSystemCoreTest\Domain\Vendor;
 
 use PHPUnit\Framework\TestCase;
 use DoSystem\Core\Domain\Brand\BrandCollection;
