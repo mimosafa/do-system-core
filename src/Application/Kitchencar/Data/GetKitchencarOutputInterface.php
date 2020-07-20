@@ -2,7 +2,7 @@
 
 namespace DoSystem\Application\Kitchencar\Data;
 
-use DoSystem\Domain\Kitchencar\Model\Kitchencar;
+use DoSystem\Core\Domain\Kitchencar\Kitchencar;
 
 interface GetKitchencarOutputInterface
 {

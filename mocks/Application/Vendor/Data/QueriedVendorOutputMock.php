@@ -3,8 +3,8 @@
 namespace DoSystemMock\Application\Vendor\Data;
 
 use DoSystem\Application\Vendor\Data\QueriedVendorOutputInterface;
-use DoSystem\Domain\Vendor\Model\Vendor;
-use DoSystem\Domain\Vendor\Model\VendorValueName;
+use DoSystem\Core\Domain\Vendor\Vendor;
+use DoSystem\Core\Domain\Vendor\VendorValueName;
 
 class QueriedVendorOutputMock implements QueriedVendorOutputInterface
 {

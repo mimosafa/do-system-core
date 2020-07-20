@@ -2,10 +2,10 @@
 
 namespace DoSystem\Application\Vendor\Data;
 
-use DoSystem\Domain\Vendor\Model\Vendor;
-use DoSystem\Domain\Vendor\Model\VendorValueId;
-use DoSystem\Domain\Vendor\Model\VendorValueName;
-use DoSystem\Domain\Vendor\Model\VendorValueStatus;
+use DoSystem\Core\Domain\Vendor\Vendor;
+use DoSystem\Core\Domain\Vendor\VendorValueId;
+use DoSystem\Core\Domain\Vendor\VendorValueName;
+use DoSystem\Core\Domain\Vendor\VendorValueStatus;
 
 interface GetVendorOutputInterface
 {

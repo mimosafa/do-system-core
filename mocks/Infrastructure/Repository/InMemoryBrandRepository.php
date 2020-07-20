@@ -3,15 +3,15 @@
 namespace DoSystemMock\Infrastructure\Repository;
 
 use Illuminate\Support\Arr;
-use DoSystem\Domain\Brand\Model\Brand;
-use DoSystem\Domain\Brand\Model\BrandCollection;
-use DoSystem\Domain\Brand\Model\BrandRepositoryInterface;
-use DoSystem\Domain\Brand\Model\BrandValueId;
-use DoSystem\Domain\Brand\Model\BrandValueName;
-use DoSystem\Domain\Brand\Model\BrandValueOrder;
-use DoSystem\Domain\Brand\Model\BrandValueStatus;
-use DoSystem\Domain\Vendor\Model\VendorRepositoryInterface;
-use DoSystem\Domain\Vendor\Model\VendorValueId;
+use DoSystem\Core\Domain\Brand\Brand;
+use DoSystem\Core\Domain\Brand\BrandCollection;
+use DoSystem\Core\Domain\Brand\BrandRepositoryInterface;
+use DoSystem\Core\Domain\Brand\BrandValueId;
+use DoSystem\Core\Domain\Brand\BrandValueName;
+use DoSystem\Core\Domain\Brand\BrandValueOrder;
+use DoSystem\Core\Domain\Brand\BrandValueStatus;
+use DoSystem\Core\Domain\Vendor\VendorRepositoryInterface;
+use DoSystem\Core\Domain\Vendor\VendorValueId;
 use DoSystem\Exception\NotFoundException;
 use PseudoDatabase\Database;
 

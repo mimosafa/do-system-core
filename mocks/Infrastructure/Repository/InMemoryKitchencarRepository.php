@@ -2,21 +2,21 @@
 
 namespace DoSystemMock\Infrastructure\Repository;
 
-use DoSystem\Domain\Brand\Model\Brand;
-use DoSystem\Domain\Brand\Model\BrandCollection;
-use DoSystem\Domain\Brand\Model\BrandRepositoryInterface;
-use DoSystem\Domain\Brand\Model\BrandValueId;
-use DoSystem\Domain\Car\Model\Car;
-use DoSystem\Domain\Car\Model\CarCollection;
-use DoSystem\Domain\Car\Model\CarRepositoryInterface;
-use DoSystem\Domain\Car\Model\CarValueId;
-use DoSystem\Domain\Kitchencar\Model\Kitchencar;
-use DoSystem\Domain\Kitchencar\Model\KitchencarCollection;
-use DoSystem\Domain\Kitchencar\Model\KitchencarRepositoryInterface;
-use DoSystem\Domain\Kitchencar\Model\KitchencarValueId;
-use DoSystem\Domain\Kitchencar\Model\KitchencarValueOrder;
-use DoSystem\Domain\Vendor\Model\VendorRepositoryInterface;
-use DoSystem\Domain\Vendor\Model\VendorValueId;
+use DoSystem\Core\Domain\Brand\Brand;
+use DoSystem\Core\Domain\Brand\BrandCollection;
+use DoSystem\Core\Domain\Brand\BrandRepositoryInterface;
+use DoSystem\Core\Domain\Brand\BrandValueId;
+use DoSystem\Core\Domain\Car\Car;
+use DoSystem\Core\Domain\Car\CarCollection;
+use DoSystem\Core\Domain\Car\CarRepositoryInterface;
+use DoSystem\Core\Domain\Car\CarValueId;
+use DoSystem\Core\Domain\Kitchencar\Kitchencar;
+use DoSystem\Core\Domain\Kitchencar\KitchencarCollection;
+use DoSystem\Core\Domain\Kitchencar\KitchencarRepositoryInterface;
+use DoSystem\Core\Domain\Kitchencar\KitchencarValueId;
+use DoSystem\Core\Domain\Kitchencar\KitchencarValueOrder;
+use DoSystem\Core\Domain\Vendor\VendorRepositoryInterface;
+use DoSystem\Core\Domain\Vendor\VendorValueId;
 use DoSystem\Exception\NotFoundException;
 use PseudoDatabase\Database;
 

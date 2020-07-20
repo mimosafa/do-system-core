@@ -2,7 +2,7 @@
 
 namespace DoSystem\Application\Car\Data;
 
-use DoSystem\Domain\Car\Model\Car;
+use DoSystem\Core\Domain\Car\Car;
 
 interface UpdateCarOutputInterface
 {

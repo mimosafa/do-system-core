@@ -6,7 +6,7 @@ use Illuminate\Support\Str;
 use PHPUnit\Framework\TestCase;
 use DoSystem\Application\Vendor\Data;
 use DoSystem\Application\Vendor\Service;
-use DoSystem\Domain\Vendor\Model;
+use DoSystem\Core\Domain\Vendor;
 use DoSystemMock\Application\Vendor\Data as MockData;
 use DoSystemMock\Database\Factory\VendorDataFactory;
 use DoSystemMock\Database\Seeder\VendorsSeeder;
@@ -40,12 +40,12 @@ class VendorServiceTest extends TestCase
         $input->name = 'Tokyo Do';
         $id = $createService->handle($input);
 
-        $this->assertTrue($id instanceof Model\VendorValueId);
+        $this->assertTrue($id instanceof Vendor\VendorValueId);
 
         $model = $this->repository->findById($id);
 
         $this->assertEquals($model->getName()->getValue(), 'Tokyo Do');
-        $this->assertEquals($model->getStatus()->getValue(), Model\VendorValueStatus::default()->getValue());
+        $this->assertEquals($model->getStatus()->getValue(), Vendor\VendorValueStatus::default()->getValue());
     }
 
     /**
@@ -58,8 +58,8 @@ class VendorServiceTest extends TestCase
         $seeder->seed($this->repository);
         $data = $seeder->get();
 
-        $id1 = Model\VendorValueId::of($data[0]['id']);
-        $id5 = Model\VendorValueId::of($data[4]['id']);
+        $id1 = Vendor\VendorValueId::of($data[0]['id']);
+        $id5 = Vendor\VendorValueId::of($data[4]['id']);
 
         $output1 = $getService->handle($id1);
         $output5 = $getService->handle($id5);
@@ -95,7 +95,7 @@ class VendorServiceTest extends TestCase
 
         $this->assertTrue($updateOutput->model->getId()->equals($id));
         $this->assertEquals(count($updateOutput->modified), 1);
-        $this->assertEquals($updateOutput->modified[0], Model\VendorValueName::class);
+        $this->assertEquals($updateOutput->modified[0], Vendor\VendorValueName::class);
         $this->assertEquals($updateOutput->model->getName()->getValue(), $newName);
     }
 

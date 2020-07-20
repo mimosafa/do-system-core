@@ -5,7 +5,7 @@ namespace DoSystemTest\Application\Kitchencar\Service;
 use PHPUnit\Framework\TestCase;
 use DoSystem\Application\Kitchencar\Data;
 use DoSystem\Application\Kitchencar\Service;
-use DoSystem\Domain\Kitchencar\Model;
+use DoSystem\Core\Domain\Kitchencar;
 use DoSystemMock\Application\Kitchencar\Data as MockData;
 use DoSystemMock\Database\Seeder;
 use DoSystemMock\Infrastructure\Repository;
@@ -100,7 +100,7 @@ class KitchencarServiceTest extends TestCase
 
         $id = $service->handle($input);
 
-        $this->assertTrue($id instanceof Model\KitchencarValueId);
+        $this->assertTrue($id instanceof Kitchencar\KitchencarValueId);
     }
 
     /**
@@ -114,7 +114,7 @@ class KitchencarServiceTest extends TestCase
         $kitchencarData4 = $data['kitchencars'][4];
         $id4 = $kitchencarData4['id'];
 
-        $output = $service->handle(Model\KitchencarValueId::of($id4));
+        $output = $service->handle(Kitchencar\KitchencarValueId::of($id4));
 
         $this->assertTrue($output instanceof Data\GetKitchencarOutputInterface);
         $this->assertEquals($kitchencarData4['brand_id'], $output->model->getBrand()->getId()->getValue());

@@ -7,7 +7,7 @@ use Illuminate\Support\Str;
 use PHPUnit\Framework\TestCase;
 use DoSystem\Application\Brand\Data;
 use DoSystem\Application\Brand\Service;
-use DoSystem\Domain\Brand\Model;
+use DoSystem\Core\Domain\Brand;
 use DoSystemMock\Application\Brand\Data as MockData;
 use DoSystemMock\Database\Factory\BrandDataFactory;
 use DoSystemMock\Database\Seeder;
@@ -54,13 +54,13 @@ class BrandServiceTest extends TestCase
 
         $id = $createService->handle($input);
 
-        $this->assertTrue($id instanceof Model\BrandValueId);
+        $this->assertTrue($id instanceof Brand\BrandValueId);
 
         $model = $this->brandRepository->findById($id);
 
         $this->assertEquals($model->belongsTo()->getId()->getValue(), $data['vendor_id']);
         $this->assertEquals($model->getName()->getValue(), $data['name']);
-        $this->assertEquals($model->getStatus()->getValue(), Model\BrandValueStatus::default()->getValue());
+        $this->assertEquals($model->getStatus()->getValue(), Brand\BrandValueStatus::default()->getValue());
     }
 
     /**
@@ -73,7 +73,7 @@ class BrandServiceTest extends TestCase
         $seeder = new Seeder\BrandsSeeder(6, (new Seeder\VendorsSeeder(2))->seed($this->vendorRepository));
         $data = $seeder->seed($this->brandRepository, $this->vendorRepository)->get();
 
-        $id3 = Model\BrandValueId::of($data[2]['id']);
+        $id3 = Brand\BrandValueId::of($data[2]['id']);
 
         $output3 = $getService->handle($id3);
 
@@ -94,7 +94,7 @@ class BrandServiceTest extends TestCase
         $ids = Faker::randomElements(\array_column($data, 'id'), 2);
 
         // Update name
-        $idName = Model\BrandValueId::of($ids[0]);
+        $idName = Brand\BrandValueId::of($ids[0]);
         $modelName = $this->brandRepository->findById($idName);
         $nameBefore = $modelName->getName()->getValue();
         $nameAfter = 'Awesome Restaurant';
@@ -108,7 +108,7 @@ class BrandServiceTest extends TestCase
 
         $this->assertTrue($outputName instanceof Data\UpdateBrandOutputInterface);
         $this->assertEquals(count($outputName->modified), 1);
-        $this->assertEquals($outputName->modified[0], Model\BrandValueName::class);
+        $this->assertEquals($outputName->modified[0], Brand\BrandValueName::class);
         $this->assertEquals($this->brandRepository->findById($idName)->getName()->getValue(), $nameAfter);
     }
 

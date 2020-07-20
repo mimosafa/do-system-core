@@ -2,28 +2,28 @@
 
 namespace DoSystemMock\Application\Brand\Data;
 
-use DoSystem\Domain\Brand\Model\Brand;
+use DoSystem\Core\Domain\Brand\Brand;
 use DoSystem\Application\Brand\Data\GetBrandOutputInterface;
 
 class GetBrandOutputMock implements GetBrandOutputInterface
 {
     /**
-     * @var \DoSystem\Domain\Brand\Model\BrandValueId
+     * @var \DoSystem\Core\Domain\Brand\BrandValueId
      */
     public $id;
 
     /**
-     * @var \DoSystem\Domain\Vendor\Model\Vendor
+     * @var \DoSystem\Core\Domain\Vendor\Vendor
      */
     public $vendor;
 
     /**
-     * @var \DoSystem\Domain\Brand\Model\BrandValueName
+     * @var \DoSystem\Core\Domain\Brand\BrandValueName
      */
     public $name;
 
     /**
-     * @var \DoSystem\Domain\Brand\Model\BrandValueStatus
+     * @var \DoSystem\Core\Domain\Brand\BrandValueStatus
      */
     public $status;
 

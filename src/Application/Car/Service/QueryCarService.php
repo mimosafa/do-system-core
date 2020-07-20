@@ -4,7 +4,7 @@ namespace DoSystem\Application\Car\Service;
 
 use DoSystem\Application\Car\Data\QueriedCarOutputInterface;
 use DoSystem\Application\Car\Data\QueryCarFilterInterface;
-use DoSystem\Domain\Car\Model\CarRepositoryInterface;
+use DoSystem\Core\Domain\Car\CarRepositoryInterface;
 
 class QueryCarService
 {

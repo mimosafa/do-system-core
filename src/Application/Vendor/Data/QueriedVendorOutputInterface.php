@@ -2,7 +2,7 @@
 
 namespace DoSystem\Application\Vendor\Data;
 
-use DoSystem\Domain\Vendor\Model\Vendor;
+use DoSystem\Core\Domain\Vendor\Vendor;
 
 interface QueriedVendorOutputInterface
 {

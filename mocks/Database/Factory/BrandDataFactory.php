@@ -2,7 +2,7 @@
 
 namespace DoSystemMock\Database\Factory;
 
-use DoSystem\Domain\Brand\Model\BrandValueStatus;
+use DoSystem\Core\Domain\Brand\BrandValueStatus;
 
 class BrandDataFactory extends AbstractDataFactory
 {

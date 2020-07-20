@@ -4,9 +4,9 @@ namespace DoSystem\Application\Brand\Service;
 
 use DoSystem\Application\Brand\Data\UpdateBrandInputInterface;
 use DoSystem\Application\Brand\Data\UpdateBrandOutputInterface;
-use DoSystem\Domain\Brand\Model\BrandRepositoryInterface;
-use DoSystem\Domain\Brand\Model\BrandValueId;
-use DoSystem\Domain\Brand\Model\BrandValueName;
+use DoSystem\Core\Domain\Brand\BrandRepositoryInterface;
+use DoSystem\Core\Domain\Brand\BrandValueId;
+use DoSystem\Core\Domain\Brand\BrandValueName;
 
 class UpdateBrandService
 {

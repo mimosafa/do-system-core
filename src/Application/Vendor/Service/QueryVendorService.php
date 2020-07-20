@@ -4,7 +4,7 @@ namespace DoSystem\Application\Vendor\Service;
 
 use DoSystem\Application\Vendor\Data\QueriedVendorOutputInterface;
 use DoSystem\Application\Vendor\Data\QueryVendorFilterInterface;
-use DoSystem\Domain\Vendor\Model\VendorRepositoryInterface;
+use DoSystem\Core\Domain\Vendor\VendorRepositoryInterface;
 
 class QueryVendorService
 {

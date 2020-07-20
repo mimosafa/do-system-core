@@ -3,8 +3,8 @@
 namespace DoSystem\Application\Kitchencar\Service;
 
 use DoSystem\Application\Kitchencar\Data\GetKitchencarOutputInterface;
-use DoSystem\Domain\Kitchencar\Model\KitchencarRepositoryInterface;
-use DoSystem\Domain\Kitchencar\Model\KitchencarValueId;
+use DoSystem\Core\Domain\Kitchencar\KitchencarRepositoryInterface;
+use DoSystem\Core\Domain\Kitchencar\KitchencarValueId;
 
 class GetKitchencarService
 {

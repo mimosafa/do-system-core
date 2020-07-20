@@ -2,15 +2,15 @@
 
 namespace DoSystemMock\Database\Seeder;
 
-use DoSystem\Domain\Car\Model\Car;
-use DoSystem\Domain\Car\Model\CarRepositoryInterface;
-use DoSystem\Domain\Car\Model\CarValueId;
-use DoSystem\Domain\Car\Model\CarValueName;
-use DoSystem\Domain\Car\Model\CarValueOrder;
-use DoSystem\Domain\Car\Model\CarValueStatus;
-use DoSystem\Domain\Car\Model\CarValueVin;
-use DoSystem\Domain\Vendor\Model\VendorRepositoryInterface;
-use DoSystem\Domain\Vendor\Model\VendorValueId;
+use DoSystem\Core\Domain\Car\Car;
+use DoSystem\Core\Domain\Car\CarRepositoryInterface;
+use DoSystem\Core\Domain\Car\CarValueId;
+use DoSystem\Core\Domain\Car\CarValueName;
+use DoSystem\Core\Domain\Car\CarValueOrder;
+use DoSystem\Core\Domain\Car\CarValueStatus;
+use DoSystem\Core\Domain\Car\CarValueVin;
+use DoSystem\Core\Domain\Vendor\VendorRepositoryInterface;
+use DoSystem\Core\Domain\Vendor\VendorValueId;
 use DoSystemMock\Database\Factory\CarDataFactory;
 
 class CarsSeeder

@@ -2,7 +2,7 @@
 
 namespace DoSystem\Application\Brand\Data;
 
-use DoSystem\Domain\Brand\Model\Brand;
+use DoSystem\Core\Domain\Brand\Brand;
 
 interface UpdateBrandOutputInterface
 {

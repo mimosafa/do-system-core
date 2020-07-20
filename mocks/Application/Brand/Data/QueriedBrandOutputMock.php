@@ -3,7 +3,7 @@
 namespace DoSystemMock\Application\Brand\Data;
 
 use DoSystem\Application\Brand\Data\QueriedBrandOutputInterface;
-use DoSystem\Domain\Brand\Model\Brand;
+use DoSystem\Core\Domain\Brand\Brand;
 
 class QueriedBrandOutputMock implements QueriedBrandOutputInterface
 {

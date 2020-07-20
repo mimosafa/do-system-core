@@ -3,7 +3,7 @@
 namespace DoSystemMock\Application\Car\Data;
 
 use DoSystem\Application\Car\Data\UpdateCarOutputInterface;
-use DoSystem\Domain\Car\Model\Car;
+use DoSystem\Core\Domain\Car\Car;
 
 class UpdateCarOutputMock implements UpdateCarOutputInterface
 {

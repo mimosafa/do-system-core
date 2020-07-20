@@ -2,8 +2,8 @@
 
 namespace DoSystem\Domain\Car\Service;
 
-use DoSystem\Domain\Car\Model\CarRepositoryInterface;
-use DoSystem\Domain\Car\Model\CarValueVin;
+use DoSystem\Core\Domain\Car\CarRepositoryInterface;
+use DoSystem\Core\Domain\Car\CarValueVin;
 
 class VinService
 {

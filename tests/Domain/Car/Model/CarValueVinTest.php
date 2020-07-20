@@ -3,7 +3,7 @@
 namespace DoSystemTest\Domain\Car\Model;
 
 use PHPUnit\Framework\TestCase;
-use DoSystem\Domain\Car\Model\CarValueVin;
+use DoSystem\Core\Domain\Car\CarValueVin;
 
 class CarValueVinTest extends TestCase
 {

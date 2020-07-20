@@ -3,8 +3,8 @@
 namespace DoSystem\Application\Car\Service;
 
 use DoSystem\Application\Car\Data\GetCarOutputInterface;
-use DoSystem\Domain\Car\Model\CarRepositoryInterface;
-use DoSystem\Domain\Car\Model\CarValueId;
+use DoSystem\Core\Domain\Car\CarRepositoryInterface;
+use DoSystem\Core\Domain\Car\CarValueId;
 
 class GetCarService
 {

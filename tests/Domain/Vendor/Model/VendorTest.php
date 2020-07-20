@@ -3,8 +3,8 @@
 namespace DoSystemTest\Domain\Vendor\Model;
 
 use PHPUnit\Framework\TestCase;
-use DoSystem\Domain\Brand\Model\BrandCollection;
-use DoSystem\Domain\Car\Model\CarCollection;
+use DoSystem\Core\Domain\Brand\BrandCollection;
+use DoSystem\Core\Domain\Car\CarCollection;
 use DoSystemMock\Infrastructure\Repository\InMemoryBrandRepository;
 use DoSystemMock\Infrastructure\Repository\InMemoryCarRepository;
 use DoSystemMock\Infrastructure\Repository\InMemoryVendorRepository;

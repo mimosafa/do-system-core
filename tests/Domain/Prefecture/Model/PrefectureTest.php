@@ -3,10 +3,10 @@
 namespace DoSystemTest\Domain\Prefecture\Model;
 
 use PHPUnit\Framework\TestCase;
-use DoSystem\Domain\Prefecture\Model\Prefecture;
-use DoSystem\Domain\Prefecture\Model\PrefectureValueId;
-use DoSystem\Domain\Prefecture\Model\PrefectureValueName;
-use DoSystem\Domain\Prefecture\Model\PrefectureRepositoryInterface;
+use DoSystem\Core\Domain\Prefecture\Prefecture;
+use DoSystem\Core\Domain\Prefecture\PrefectureValueId;
+use DoSystem\Core\Domain\Prefecture\PrefectureValueName;
+use DoSystem\Core\Domain\Prefecture\PrefectureRepositoryInterface;
 
 class PrefectureTest extends TestCase
 {

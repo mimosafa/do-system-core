@@ -3,8 +3,8 @@
 namespace DoSystemMock\Application\Car\Data;
 
 use DoSystem\Application\Car\Data\QueriedCarOutputInterface;
-use DoSystem\Domain\Car\Model\Car;
-use DoSystem\Domain\Car\Model\CarValueVin;
+use DoSystem\Core\Domain\Car\Car;
+use DoSystem\Core\Domain\Car\CarValueVin;
 
 class QueriedCarOutputMock implements QueriedCarOutputInterface
 {

@@ -4,7 +4,7 @@ namespace DoSystem\Application\Brand\Service;
 
 use DoSystem\Application\Brand\Data\QueriedBrandOutputInterface;
 use DoSystem\Application\Brand\Data\QueryBrandFilterInterface;
-use DoSystem\Domain\Brand\Model\BrandRepositoryInterface;
+use DoSystem\Core\Domain\Brand\BrandRepositoryInterface;
 
 class QueryBrandService
 {

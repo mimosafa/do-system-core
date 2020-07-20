@@ -4,13 +4,13 @@ namespace DoSystem\Application\Car\Service;
 
 use DoSystem\Application\Car\Data\UpdateCarInputInterface;
 use DoSystem\Application\Car\Data\UpdateCarOutputInterface;
-use DoSystem\Domain\Car\Model\CarRepositoryInterface;
-use DoSystem\Domain\Car\Model\CarValueId;
-use DoSystem\Domain\Car\Model\CarValueName;
-use DoSystem\Domain\Car\Model\CarValueStatus;
-use DoSystem\Domain\Car\Model\CarValueVin;
+use DoSystem\Core\Domain\Car\CarRepositoryInterface;
+use DoSystem\Core\Domain\Car\CarValueId;
+use DoSystem\Core\Domain\Car\CarValueName;
+use DoSystem\Core\Domain\Car\CarValueStatus;
+use DoSystem\Core\Domain\Car\CarValueVin;
 use DoSystem\Domain\Car\Service\CarService;
-use DoSystem\Domain\Vendor\Model\VendorRepositoryInterface;
+use DoSystem\Core\Domain\Vendor\VendorRepositoryInterface;
 
 class UpdateCarService
 {

@@ -3,8 +3,8 @@
 namespace DoSystem\Application\Vendor\Service;
 
 use DoSystem\Application\Vendor\Data\GetVendorOutputInterface;
-use DoSystem\Domain\Vendor\Model\VendorRepositoryInterface;
-use DoSystem\Domain\Vendor\Model\VendorValueId;
+use DoSystem\Core\Domain\Vendor\VendorRepositoryInterface;
+use DoSystem\Core\Domain\Vendor\VendorValueId;
 
 class GetVendorService
 {
