@@ -1,7 +1,7 @@
 <?php
 
-use DoSystem\Application;
-use DoSystem\Domain;
+use DoSystem\Core\Application;
+use DoSystem\Core\Domain;
 use DoSystem\Infrastructure;
 use DoSystemMock\Application as MockApplication;
 use DoSystemMock\Infrastructure as MockInfrastructure;
@@ -12,19 +12,19 @@ define('DOSYSTEM_TESTS_ROOT_DIR', __DIR__);
  * Repositories
  */
 doSystem()->singleton(
-    \DoSystem\Core\Domain\Brand\BrandRepositoryInterface::class,
+    Domain\Brand\BrandRepositoryInterface::class,
     MockInfrastructure\Repository\InMemoryBrandRepository::class
 );
 doSystem()->singleton(
-    \DoSystem\Core\Domain\Car\CarRepositoryInterface::class,
+    Domain\Car\CarRepositoryInterface::class,
     MockInfrastructure\Repository\InMemoryCarRepository::class
 );
 doSystem()->singleton(
-    \DoSystem\Core\Domain\Prefecture\PrefectureRepositoryInterface::class,
+    Domain\Prefecture\PrefectureRepositoryInterface::class,
     Infrastructure\Repository\PrefectureRepository::class
 );
 doSystem()->singleton(
-    \DoSystem\Core\Domain\Vendor\VendorRepositoryInterface::class,
+    Domain\Vendor\VendorRepositoryInterface::class,
     MockInfrastructure\Repository\InMemoryVendorRepository::class
 );
 

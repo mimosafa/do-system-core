@@ -1,6 +1,6 @@
 <?php
 
-namespace DoSystem\Application\Brand\Data;
+namespace DoSystem\Core\Application\Brand\Data;
 
 interface QueryBrandFilterInterface
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace DoSystem\Application\Vendor\Service;
+namespace DoSystem\Core\Application\Vendor\Service;
 
 class ChangeVendorStatusService
 {

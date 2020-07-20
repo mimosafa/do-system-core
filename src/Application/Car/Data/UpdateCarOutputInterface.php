@@ -1,6 +1,6 @@
 <?php
 
-namespace DoSystem\Application\Car\Data;
+namespace DoSystem\Core\Application\Car\Data;
 
 use DoSystem\Core\Domain\Car\Car;
 
@@ -11,7 +11,7 @@ interface UpdateCarOutputInterface
      *
      * ** Note **
      * Parameter 1 & 2 must be named '$model' & '$modified'
-     * @see DoSystem\Application\Car\Service\UpdateCarService::handle()
+     * @see DoSystem\Core\Application\Car\Service\UpdateCarService::handle()
      *
      * @param Car $model
      * @param string[] $modified Class names of modified property

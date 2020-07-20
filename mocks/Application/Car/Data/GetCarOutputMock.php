@@ -2,7 +2,7 @@
 
 namespace DoSystemMock\Application\Car\Data;
 
-use DoSystem\Application\Car\Data\GetCarOutputInterface;
+use DoSystem\Core\Application\Car\Data\GetCarOutputInterface;
 use DoSystem\Core\Domain\Car\Car;
 use DoSystem\Core\Domain\Car\CarValueId;
 use DoSystem\Core\Domain\Car\CarValueName;

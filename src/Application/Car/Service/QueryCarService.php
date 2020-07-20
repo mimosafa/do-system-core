@@ -1,9 +1,9 @@
 <?php
 
-namespace DoSystem\Application\Car\Service;
+namespace DoSystem\Core\Application\Car\Service;
 
-use DoSystem\Application\Car\Data\QueriedCarOutputInterface;
-use DoSystem\Application\Car\Data\QueryCarFilterInterface;
+use DoSystem\Core\Application\Car\Data\QueriedCarOutputInterface;
+use DoSystem\Core\Application\Car\Data\QueryCarFilterInterface;
 use DoSystem\Core\Domain\Car\CarRepositoryInterface;
 
 class QueryCarService

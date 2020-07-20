@@ -2,7 +2,7 @@
 
 namespace DoSystemMock\Application\Brand\Data;
 
-use DoSystem\Application\Brand\Data\QueriedBrandOutputInterface;
+use DoSystem\Core\Application\Brand\Data\QueriedBrandOutputInterface;
 use DoSystem\Core\Domain\Brand\Brand;
 
 class QueriedBrandOutputMock implements QueriedBrandOutputInterface

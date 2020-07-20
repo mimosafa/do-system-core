@@ -1,9 +1,9 @@
 <?php
 
-namespace DoSystem\Application\Car\Service;
+namespace DoSystem\Core\Application\Car\Service;
 
-use DoSystem\Application\Car\Data\UpdateCarInputInterface;
-use DoSystem\Application\Car\Data\UpdateCarOutputInterface;
+use DoSystem\Core\Application\Car\Data\UpdateCarInputInterface;
+use DoSystem\Core\Application\Car\Data\UpdateCarOutputInterface;
 use DoSystem\Core\Domain\Car\CarRepositoryInterface;
 use DoSystem\Core\Domain\Car\CarValueId;
 use DoSystem\Core\Domain\Car\CarValueName;

@@ -4,8 +4,8 @@ namespace DoSystemTest\Application\Vendor\Service;
 
 use Illuminate\Support\Str;
 use PHPUnit\Framework\TestCase;
-use DoSystem\Application\Vendor\Data;
-use DoSystem\Application\Vendor\Service;
+use DoSystem\Core\Application\Vendor\Data;
+use DoSystem\Core\Application\Vendor\Service;
 use DoSystem\Core\Domain\Vendor;
 use DoSystemMock\Application\Vendor\Data as MockData;
 use DoSystemMock\Database\Factory\VendorDataFactory;

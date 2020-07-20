@@ -1,6 +1,6 @@
 <?php
 
-namespace DoSystem\Application\Brand\Data;
+namespace DoSystem\Core\Application\Brand\Data;
 
 use DoSystem\Core\Domain\Brand\Brand;
 
@@ -11,7 +11,7 @@ interface UpdateBrandOutputInterface
      *
      * ** Note **
      * Parameter 1 & 2 must be named '$model' & '$modified'
-     * @see DoSystem\Application\Brand\Service\UpdateBrandService::handle()
+     * @see DoSystem\Core\Application\Brand\Service\UpdateBrandService::handle()
      *
      * @param Brand $model
      * @param string[] $modified Class names of modified property

@@ -3,8 +3,8 @@
 namespace DoSystemTest\Application\Kitchencar\Service;
 
 use PHPUnit\Framework\TestCase;
-use DoSystem\Application\Kitchencar\Data;
-use DoSystem\Application\Kitchencar\Service;
+use DoSystem\Core\Application\Kitchencar\Data;
+use DoSystem\Core\Application\Kitchencar\Service;
 use DoSystem\Core\Domain\Kitchencar;
 use DoSystemMock\Application\Kitchencar\Data as MockData;
 use DoSystemMock\Database\Seeder;

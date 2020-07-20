@@ -2,7 +2,7 @@
 
 namespace DoSystemMock\Application\Brand\Data;
 
-use DoSystem\Application\Brand\Data\CreateBrandInputInterface;
+use DoSystem\Core\Application\Brand\Data\CreateBrandInputInterface;
 
 class CreateBrandInputMock implements CreateBrandInputInterface
 {

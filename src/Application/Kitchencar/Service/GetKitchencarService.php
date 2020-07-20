@@ -1,8 +1,8 @@
 <?php
 
-namespace DoSystem\Application\Kitchencar\Service;
+namespace DoSystem\Core\Application\Kitchencar\Service;
 
-use DoSystem\Application\Kitchencar\Data\GetKitchencarOutputInterface;
+use DoSystem\Core\Application\Kitchencar\Data\GetKitchencarOutputInterface;
 use DoSystem\Core\Domain\Kitchencar\KitchencarRepositoryInterface;
 use DoSystem\Core\Domain\Kitchencar\KitchencarValueId;
 

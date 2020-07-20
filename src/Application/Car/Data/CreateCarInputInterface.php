@@ -1,6 +1,6 @@
 <?php
 
-namespace DoSystem\Application\Car\Data;
+namespace DoSystem\Core\Application\Car\Data;
 
 interface CreateCarInputInterface
 {

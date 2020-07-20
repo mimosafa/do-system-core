@@ -1,6 +1,6 @@
 <?php
 
-namespace DoSystem\Application\Vendor\Data;
+namespace DoSystem\Core\Application\Vendor\Data;
 
 use DoSystem\Core\Domain\Vendor\Vendor;
 
@@ -11,7 +11,7 @@ interface QueriedVendorOutputInterface
      *
      * ** note **
      * Parameter must be named '$model'
-     * @see DoSystem\Application\Vendor\Service\QueryVendorService::handle()
+     * @see DoSystem\Core\Application\Vendor\Service\QueryVendorService::handle()
      *
      * @param Vendor $model
      */

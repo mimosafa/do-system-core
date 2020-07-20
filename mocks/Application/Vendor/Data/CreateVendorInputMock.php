@@ -2,7 +2,7 @@
 
 namespace DoSystemMock\Application\Vendor\Data;
 
-use DoSystem\Application\Vendor\Data\CreateVendorInputInterface;
+use DoSystem\Core\Application\Vendor\Data\CreateVendorInputInterface;
 
 class CreateVendorInputMock implements CreateVendorInputInterface
 {

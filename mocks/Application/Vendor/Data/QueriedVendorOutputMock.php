@@ -2,7 +2,7 @@
 
 namespace DoSystemMock\Application\Vendor\Data;
 
-use DoSystem\Application\Vendor\Data\QueriedVendorOutputInterface;
+use DoSystem\Core\Application\Vendor\Data\QueriedVendorOutputInterface;
 use DoSystem\Core\Domain\Vendor\Vendor;
 use DoSystem\Core\Domain\Vendor\VendorValueName;
 

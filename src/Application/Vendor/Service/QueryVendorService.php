@@ -1,9 +1,9 @@
 <?php
 
-namespace DoSystem\Application\Vendor\Service;
+namespace DoSystem\Core\Application\Vendor\Service;
 
-use DoSystem\Application\Vendor\Data\QueriedVendorOutputInterface;
-use DoSystem\Application\Vendor\Data\QueryVendorFilterInterface;
+use DoSystem\Core\Application\Vendor\Data\QueriedVendorOutputInterface;
+use DoSystem\Core\Application\Vendor\Data\QueryVendorFilterInterface;
 use DoSystem\Core\Domain\Vendor\VendorRepositoryInterface;
 
 class QueryVendorService

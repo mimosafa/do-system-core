@@ -2,7 +2,7 @@
 
 namespace DoSystemMock\Application\Car\Data;
 
-use DoSystem\Application\Car\Data\UpdateCarOutputInterface;
+use DoSystem\Core\Application\Car\Data\UpdateCarOutputInterface;
 use DoSystem\Core\Domain\Car\Car;
 
 class UpdateCarOutputMock implements UpdateCarOutputInterface

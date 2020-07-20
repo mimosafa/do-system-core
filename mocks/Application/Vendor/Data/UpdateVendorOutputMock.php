@@ -2,7 +2,7 @@
 
 namespace DoSystemMock\Application\Vendor\Data;
 
-use DoSystem\Application\Vendor\Data\UpdateVendorOutputInterface;
+use DoSystem\Core\Application\Vendor\Data\UpdateVendorOutputInterface;
 use DoSystem\Core\Domain\Vendor\Vendor;
 
 class UpdateVendorOutputMock implements UpdateVendorOutputInterface

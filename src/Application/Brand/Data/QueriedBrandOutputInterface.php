@@ -1,6 +1,6 @@
 <?php
 
-namespace DoSystem\Application\Brand\Data;
+namespace DoSystem\Core\Application\Brand\Data;
 
 use DoSystem\Core\Domain\Brand\Brand;
 
@@ -11,7 +11,7 @@ interface QueriedBrandOutputInterface
      *
      * ** note **
      * Parameter must be named '$model'
-     * @see DoSystem\Application\Brand\Service\QueryBrandService::handle()
+     * @see DoSystem\Core\Application\Brand\Service\QueryBrandService::handle()
      *
      * @param Brand $model
      */

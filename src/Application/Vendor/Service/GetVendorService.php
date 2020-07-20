@@ -1,8 +1,8 @@
 <?php
 
-namespace DoSystem\Application\Vendor\Service;
+namespace DoSystem\Core\Application\Vendor\Service;
 
-use DoSystem\Application\Vendor\Data\GetVendorOutputInterface;
+use DoSystem\Core\Application\Vendor\Data\GetVendorOutputInterface;
 use DoSystem\Core\Domain\Vendor\VendorRepositoryInterface;
 use DoSystem\Core\Domain\Vendor\VendorValueId;
 

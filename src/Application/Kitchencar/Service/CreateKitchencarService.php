@@ -1,8 +1,8 @@
 <?php
 
-namespace DoSystem\Application\Kitchencar\Service;
+namespace DoSystem\Core\Application\Kitchencar\Service;
 
-use DoSystem\Application\Kitchencar\Data\CreateKitchencarInputInterface;
+use DoSystem\Core\Application\Kitchencar\Data\CreateKitchencarInputInterface;
 use DoSystem\Core\Domain\Brand\BrandRepositoryInterface;
 use DoSystem\Core\Domain\Brand\BrandValueId;
 use DoSystem\Core\Domain\Car\CarRepositoryInterface;

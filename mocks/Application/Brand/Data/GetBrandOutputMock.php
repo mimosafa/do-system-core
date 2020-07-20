@@ -3,7 +3,7 @@
 namespace DoSystemMock\Application\Brand\Data;
 
 use DoSystem\Core\Domain\Brand\Brand;
-use DoSystem\Application\Brand\Data\GetBrandOutputInterface;
+use DoSystem\Core\Application\Brand\Data\GetBrandOutputInterface;
 
 class GetBrandOutputMock implements GetBrandOutputInterface
 {

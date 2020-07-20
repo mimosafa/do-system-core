@@ -2,7 +2,7 @@
 
 namespace DoSystemMock\Application\Kitchencar\Data;
 
-use DoSystem\Application\Kitchencar\Data\GetKitchencarOutputInterface;
+use DoSystem\Core\Application\Kitchencar\Data\GetKitchencarOutputInterface;
 use DoSystem\Core\Domain\Kitchencar\Kitchencar;
 
 class GetKitchencarOutputMock implements GetKitchencarOutputInterface

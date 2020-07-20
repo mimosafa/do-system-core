@@ -1,8 +1,8 @@
 <?php
 
-namespace DoSystem\Application\Car\Service;
+namespace DoSystem\Core\Application\Car\Service;
 
-use DoSystem\Application\Car\Data\GetCarOutputInterface;
+use DoSystem\Core\Application\Car\Data\GetCarOutputInterface;
 use DoSystem\Core\Domain\Car\CarRepositoryInterface;
 use DoSystem\Core\Domain\Car\CarValueId;
 

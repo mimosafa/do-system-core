@@ -2,7 +2,7 @@
 
 namespace DoSystemMock\Application\Brand\Data;
 
-use DoSystem\Application\Brand\Data\UpdateBrandOutputInterface;
+use DoSystem\Core\Application\Brand\Data\UpdateBrandOutputInterface;
 use DoSystem\Core\Domain\Brand\Brand;
 
 class UpdateBrandOutputMock implements UpdateBrandOutputInterface

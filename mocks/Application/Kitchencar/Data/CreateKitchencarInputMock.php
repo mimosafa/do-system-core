@@ -2,7 +2,7 @@
 
 namespace DoSystemMock\Application\Kitchencar\Data;
 
-use DoSystem\Application\Kitchencar\Data\CreateKitchencarInputInterface;
+use DoSystem\Core\Application\Kitchencar\Data\CreateKitchencarInputInterface;
 
 class CreateKitchencarInputMock implements CreateKitchencarInputInterface
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace DoSystem\Application\Brand\Service;
+namespace DoSystem\Core\Application\Brand\Service;
 
-use DoSystem\Application\Brand\Data\CreateBrandInputInterface;
+use DoSystem\Core\Application\Brand\Data\CreateBrandInputInterface;
 use DoSystem\Core\Domain\Brand\Brand;
 use DoSystem\Core\Domain\Brand\BrandRepositoryInterface;
 use DoSystem\Core\Domain\Brand\BrandValueId;

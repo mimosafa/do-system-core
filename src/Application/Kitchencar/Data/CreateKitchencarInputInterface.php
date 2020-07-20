@@ -1,6 +1,6 @@
 <?php
 
-namespace DoSystem\Application\Kitchencar\Data;
+namespace DoSystem\Core\Application\Kitchencar\Data;
 
 interface CreateKitchencarInputInterface
 {

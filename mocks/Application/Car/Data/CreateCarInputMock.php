@@ -2,7 +2,7 @@
 
 namespace DoSystemMock\Application\Car\Data;
 
-use DoSystem\Application\Car\Data\CreateCarInputInterface;
+use DoSystem\Core\Application\Car\Data\CreateCarInputInterface;
 
 class CreateCarInputMock implements CreateCarInputInterface
 {
