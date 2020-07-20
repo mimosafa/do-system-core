@@ -12,7 +12,7 @@ use DoSystem\Core\Domain\Brand\BrandValueOrder;
 use DoSystem\Core\Domain\Brand\BrandValueStatus;
 use DoSystem\Core\Domain\Vendor\VendorRepositoryInterface;
 use DoSystem\Core\Domain\Vendor\VendorValueId;
-use DoSystem\Exception\NotFoundException;
+use DoSystem\Core\Exception\NotFoundException;
 use PseudoDatabase\Database;
 
 class InMemoryBrandRepository implements BrandRepositoryInterface

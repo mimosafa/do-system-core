@@ -9,7 +9,7 @@ use DoSystem\Core\Domain\Vendor\VendorRepositoryInterface;
 use DoSystem\Core\Domain\Vendor\VendorValueId;
 use DoSystem\Core\Domain\Vendor\VendorValueName;
 use DoSystem\Core\Domain\Vendor\VendorValueStatus;
-use DoSystem\Exception\NotFoundException;
+use DoSystem\Core\Exception\NotFoundException;
 use PseudoDatabase\Database;
 
 class InMemoryVendorRepository implements VendorRepositoryInterface

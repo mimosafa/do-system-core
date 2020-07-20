@@ -17,7 +17,7 @@ use DoSystem\Core\Domain\Kitchencar\KitchencarValueId;
 use DoSystem\Core\Domain\Kitchencar\KitchencarValueOrder;
 use DoSystem\Core\Domain\Vendor\VendorRepositoryInterface;
 use DoSystem\Core\Domain\Vendor\VendorValueId;
-use DoSystem\Exception\NotFoundException;
+use DoSystem\Core\Exception\NotFoundException;
 use PseudoDatabase\Database;
 
 class InMemoryKitchencarRepository implements KitchencarRepositoryInterface

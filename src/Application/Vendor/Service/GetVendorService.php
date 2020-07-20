@@ -28,7 +28,7 @@ class GetVendorService
      *
      * @param VendorValueId $id
      * @return GetVendorOutputInterface
-     * @throws \DoSystem\Exception\NotFoundException
+     * @throws \DoSystem\Core\Exception\NotFoundException
      */
     public function handle(VendorValueId $id): GetVendorOutputInterface
     {

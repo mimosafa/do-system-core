@@ -7,14 +7,14 @@ interface BrandRepositoryInterface
     /**
      * @param Brand $model
      * @return BrandValueId
-     * @throws \DoSystem\Exception\NotFoundException
+     * @throws \DoSystem\Core\Exception\NotFoundException
      */
     public function store(Brand $model): BrandValueId;
 
     /**
      * @param BrandValueId $id
      * @return Brand
-     * @throws \DoSystem\Exception\NotFoundException
+     * @throws \DoSystem\Core\Exception\NotFoundException
      */
     public function findById(BrandValueId $id): Brand;
 

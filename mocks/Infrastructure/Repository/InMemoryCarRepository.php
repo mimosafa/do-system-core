@@ -13,7 +13,7 @@ use DoSystem\Core\Domain\Car\CarValueStatus;
 use DoSystem\Core\Domain\Car\CarValueVin;
 use DoSystem\Core\Domain\Vendor\VendorRepositoryInterface;
 use DoSystem\Core\Domain\Vendor\VendorValueId;
-use DoSystem\Exception\NotFoundException;
+use DoSystem\Core\Exception\NotFoundException;
 use PseudoDatabase\Database;
 
 class InMemoryCarRepository implements CarRepositoryInterface
