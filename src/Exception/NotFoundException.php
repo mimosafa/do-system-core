@@ -1,6 +1,6 @@
 <?php
 
-namespace DoSystem\Exception;
+namespace DoSystem\Core\Exception;
 
 use Exception;
 

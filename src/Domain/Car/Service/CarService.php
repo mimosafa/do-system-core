@@ -1,8 +1,8 @@
 <?php
 
-namespace DoSystem\Domain\Car\Service;
+namespace DoSystem\Core\Domain\Car\Service;
 
-use DoSystem\Domain\Car\Model\CarRepositoryInterface;
+use DoSystem\Core\Domain\Car\CarRepositoryInterface;
 
 class CarService
 {

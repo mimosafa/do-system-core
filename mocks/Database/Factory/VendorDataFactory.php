@@ -1,8 +1,8 @@
 <?php
 
-namespace DoSystemMock\Database\Factory;
+namespace DoSystemCoreMock\Database\Factory;
 
-use DoSystem\Domain\Vendor\Model\VendorValueStatus;
+use DoSystem\Core\Domain\Vendor\VendorValueStatus;
 
 class VendorDataFactory extends AbstractDataFactory
 {

@@ -1,12 +1,12 @@
 <?php
 
-namespace DoSystemMock\Application\Car\Data;
+namespace DoSystemCoreMock\Application\Car\Data;
 
-use DoSystem\Application\Car\Data\GetCarOutputInterface;
-use DoSystem\Domain\Car\Model\Car;
-use DoSystem\Domain\Car\Model\CarValueId;
-use DoSystem\Domain\Car\Model\CarValueName;
-use DoSystem\Domain\Car\Model\CarValueVin;
+use DoSystem\Core\Application\Car\Data\GetCarOutputInterface;
+use DoSystem\Core\Domain\Car\Car;
+use DoSystem\Core\Domain\Car\CarValueId;
+use DoSystem\Core\Domain\Car\CarValueName;
+use DoSystem\Core\Domain\Car\CarValueVin;
 
 class GetCarOutputMock implements GetCarOutputInterface
 {

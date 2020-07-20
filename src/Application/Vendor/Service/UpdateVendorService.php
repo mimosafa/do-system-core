@@ -1,12 +1,12 @@
 <?php
 
-namespace DoSystem\Application\Vendor\Service;
+namespace DoSystem\Core\Application\Vendor\Service;
 
-use DoSystem\Application\Vendor\Data\UpdateVendorInputInterface;
-use DoSystem\Application\Vendor\Data\UpdateVendorOutputInterface;
-use DoSystem\Domain\Vendor\Model\VendorRepositoryInterface;
-use DoSystem\Domain\Vendor\Model\VendorValueId;
-use DoSystem\Domain\Vendor\Model\VendorValueName;
+use DoSystem\Core\Application\Vendor\Data\UpdateVendorInputInterface;
+use DoSystem\Core\Application\Vendor\Data\UpdateVendorOutputInterface;
+use DoSystem\Core\Domain\Vendor\VendorRepositoryInterface;
+use DoSystem\Core\Domain\Vendor\VendorValueId;
+use DoSystem\Core\Domain\Vendor\VendorValueName;
 
 class UpdateVendorService
 {

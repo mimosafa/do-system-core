@@ -1,8 +1,8 @@
 <?php
 
-namespace DoSystem\Application\Car\Data;
+namespace DoSystem\Core\Application\Car\Data;
 
-use DoSystem\Domain\Car\Model\Car;
+use DoSystem\Core\Domain\Car\Car;
 
 interface QueriedCarOutputInterface
 {
@@ -11,7 +11,7 @@ interface QueriedCarOutputInterface
      *
      * ** note **
      * Parameter must be named '$model'
-     * @see DoSystem\Application\Car\Service\QueryCarService::handle()
+     * @see DoSystem\Core\Application\Car\Service\QueryCarService::handle()
      *
      * @param Car $model
      */

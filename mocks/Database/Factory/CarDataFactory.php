@@ -1,9 +1,9 @@
 <?php
 
-namespace DoSystemMock\Database\Factory;
+namespace DoSystemCoreMock\Database\Factory;
 
-use DoSystem\Domain\Car\Model\CarValueStatus;
-use DoSystem\Domain\Car\Model\CarValueVin;
+use DoSystem\Core\Domain\Car\CarValueStatus;
+use DoSystem\Core\Domain\Car\CarValueVin;
 
 class CarDataFactory extends AbstractDataFactory
 {

@@ -1,12 +1,12 @@
 <?php
 
-namespace DoSystemMock\Application\Vendor\Data;
+namespace DoSystemCoreMock\Application\Vendor\Data;
 
-use DoSystem\Application\Vendor\Data\GetVendorOutputInterface;
-use DoSystem\Domain\Vendor\Model\Vendor;
-use DoSystem\Domain\Vendor\Model\VendorValueId;
-use DoSystem\Domain\Vendor\Model\VendorValueName;
-use DoSystem\Domain\Vendor\Model\VendorValueStatus;
+use DoSystem\Core\Application\Vendor\Data\GetVendorOutputInterface;
+use DoSystem\Core\Domain\Vendor\Vendor;
+use DoSystem\Core\Domain\Vendor\VendorValueId;
+use DoSystem\Core\Domain\Vendor\VendorValueName;
+use DoSystem\Core\Domain\Vendor\VendorValueStatus;
 
 class GetVendorOutputMock implements GetVendorOutputInterface
 {

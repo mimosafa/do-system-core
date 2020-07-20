@@ -1,11 +1,11 @@
 <?php
 
-namespace DoSystem\Application\Vendor\Data;
+namespace DoSystem\Core\Application\Vendor\Data;
 
-use DoSystem\Domain\Vendor\Model\Vendor;
-use DoSystem\Domain\Vendor\Model\VendorValueId;
-use DoSystem\Domain\Vendor\Model\VendorValueName;
-use DoSystem\Domain\Vendor\Model\VendorValueStatus;
+use DoSystem\Core\Domain\Vendor\Vendor;
+use DoSystem\Core\Domain\Vendor\VendorValueId;
+use DoSystem\Core\Domain\Vendor\VendorValueName;
+use DoSystem\Core\Domain\Vendor\VendorValueStatus;
 
 interface GetVendorOutputInterface
 {
@@ -14,7 +14,7 @@ interface GetVendorOutputInterface
      *
      * ** note **
      * Parameter must be named '$model'
-     * @see DoSystem\Application\Vendor\Service\GetVendorService::handle(int $id)
+     * @see DoSystem\Core\Application\Vendor\Service\GetVendorService::handle(int $id)
      *
      * @param Vendor $model
      */

@@ -1,6 +1,6 @@
 <?php
 
-namespace DoSystem\Application\Vendor\Data;
+namespace DoSystem\Core\Application\Vendor\Data;
 
 interface UpdateVendorInputInterface
 {

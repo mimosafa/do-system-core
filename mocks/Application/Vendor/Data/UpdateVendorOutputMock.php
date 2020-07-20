@@ -1,9 +1,9 @@
 <?php
 
-namespace DoSystemMock\Application\Vendor\Data;
+namespace DoSystemCoreMock\Application\Vendor\Data;
 
-use DoSystem\Application\Vendor\Data\UpdateVendorOutputInterface;
-use DoSystem\Domain\Vendor\Model\Vendor;
+use DoSystem\Core\Application\Vendor\Data\UpdateVendorOutputInterface;
+use DoSystem\Core\Domain\Vendor\Vendor;
 
 class UpdateVendorOutputMock implements UpdateVendorOutputInterface
 {

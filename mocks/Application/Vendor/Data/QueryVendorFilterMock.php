@@ -1,8 +1,8 @@
 <?php
 
-namespace DoSystemMock\Application\Vendor\Data;
+namespace DoSystemCoreMock\Application\Vendor\Data;
 
-use DoSystem\Application\Vendor\Data\QueryVendorFilterInterface;
+use DoSystem\Core\Application\Vendor\Data\QueryVendorFilterInterface;
 
 class QueryVendorFilterMock implements QueryVendorFilterInterface
 {

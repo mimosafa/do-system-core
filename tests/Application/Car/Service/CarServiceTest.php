@@ -1,18 +1,18 @@
 <?php
 
-namespace DoSystemTest\Application\Car\Service;
+namespace DoSystemCoreTest\Application\Car\Service;
 
 use Faker\Provider\Base as Faker;
 use Illuminate\Support\Str;
 use PHPUnit\Framework\TestCase;
-use DoSystem\Application\Car\Data;
-use DoSystem\Application\Car\Service;
-use DoSystem\Domain\Car\Model;
-use DoSystem\Domain\Car\Service as DomainService;
-use DoSystemMock\Application\Car\Data as MockData;
-use DoSystemMock\Database\Factory\CarDataFactory;
-use DoSystemMock\Database\Seeder;
-use DoSystemMock\Infrastructure\Repository;
+use DoSystem\Core\Application\Car\Data;
+use DoSystem\Core\Application\Car\Service;
+use DoSystem\Core\Domain\Car;
+use DoSystem\Core\Domain\Car\Service as DomainService;
+use DoSystemCoreMock\Application\Car\Data as MockData;
+use DoSystemCoreMock\Database\Factory\CarDataFactory;
+use DoSystemCoreMock\Database\Seeder;
+use DoSystemCoreMock\Infrastructure\Repository;
 
 class CarServiceTest extends TestCase
 {
@@ -59,13 +59,13 @@ class CarServiceTest extends TestCase
 
         $id = $createService->handle($input);
 
-        $this->assertTrue($id instanceof Model\CarValueId);
+        $this->assertTrue($id instanceof Car\CarValueId);
 
         $model = $this->carRepository->findById($id);
 
         $this->assertEquals($model->belongsTo()->getId()->getValue(), $data['vendor_id']);
         $this->assertEquals($model->getVin()->getValue(), $data['vin']);
-        $this->assertEquals($model->getStatus()->getValue(), Model\CarValueStatus::default()->getValue());
+        $this->assertEquals($model->getStatus()->getValue(), Car\CarValueStatus::default()->getValue());
         $this->assertEquals($model->getName()->getValue(), $data['name']);
     }
 
@@ -79,8 +79,8 @@ class CarServiceTest extends TestCase
         $seeder = new Seeder\CarsSeeder(7, (new Seeder\VendorsSeeder(3))->seed($this->vendorRepository));
         $data = $seeder->seed($this->carRepository, $this->vendorRepository)->get();
 
-        $id2 = Model\CarValueId::of($data[1]['id']);
-        $id6 = Model\CarValueId::of($data[5]['id']);
+        $id2 = Car\CarValueId::of($data[1]['id']);
+        $id6 = Car\CarValueId::of($data[5]['id']);
 
         $output2 = $getService->handle($id2);
         $output6 = $getService->handle($id6);
@@ -104,10 +104,10 @@ class CarServiceTest extends TestCase
         $ids = Faker::randomElements(\array_column($data, 'id'), 3);
 
         // Update vin
-        $idVin = Model\CarValueId::of($ids[0]);
+        $idVin = Car\CarValueId::of($ids[0]);
         $modelVin = $this->carRepository->findById($idVin);
         $vinBefore = $modelVin->getVin()->getValue();
-        $vinAfter = Faker::regexify(Model\CarValueVin::getRegexPattern());
+        $vinAfter = Faker::regexify(Car\CarValueVin::getRegexPattern());
 
         $this->assertNotEquals($vinBefore, $vinAfter);
 
@@ -118,11 +118,11 @@ class CarServiceTest extends TestCase
 
         $this->assertTrue($outputVin instanceof Data\UpdateCarOutputInterface);
         $this->assertEquals(count($outputVin->modified), 1);
-        $this->assertEquals($outputVin->modified[0], Model\CarValueVin::class);
+        $this->assertEquals($outputVin->modified[0], Car\CarValueVin::class);
         $this->assertEquals($this->carRepository->findById($idVin)->getVin()->getValue(), $vinAfter);
 
         // Update name
-        $idName = Model\CarValueId::of($ids[1]);
+        $idName = Car\CarValueId::of($ids[1]);
         $modelName = $this->carRepository->findById($idName);
         $nameBefore = $modelName->getName()->getValue();
         $nameAfter = 'Awesome Car Name';
@@ -135,15 +135,15 @@ class CarServiceTest extends TestCase
         $outputName = $updateService->handle($inputName);
 
         $this->assertEquals(count($outputName->modified), 1);
-        $this->assertEquals($outputName->modified[0], Model\CarValueName::class);
+        $this->assertEquals($outputName->modified[0], Car\CarValueName::class);
         $this->assertEquals($this->carRepository->findById($idName)->getName()->getValue(), $nameAfter);
 
         // Update vin & name
-        $idVinName = Model\CarValueId::of($ids[2]);
+        $idVinName = Car\CarValueId::of($ids[2]);
         $modelVinName = $this->carRepository->findById($idVinName);
         $vinBefore2 = $modelVinName->getVin()->getValue();
         $nameBefore2 = $modelVinName->getName()->getValue();
-        $vinAfter2 = Faker::regexify(Model\CarValueVin::getRegexPattern());
+        $vinAfter2 = Faker::regexify(Car\CarValueVin::getRegexPattern());
         $nameAfter2 = '素晴らしい車';
 
         $this->assertNotEquals($vinBefore2, $vinAfter2);

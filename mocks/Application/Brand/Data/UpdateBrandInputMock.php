@@ -1,8 +1,8 @@
 <?php
 
-namespace DoSystemMock\Application\Brand\Data;
+namespace DoSystemCoreMock\Application\Brand\Data;
 
-use DoSystem\Application\Brand\Data\UpdateBrandInputInterface;
+use DoSystem\Core\Application\Brand\Data\UpdateBrandInputInterface;
 
 class UpdateBrandInputMock implements UpdateBrandInputInterface
 {

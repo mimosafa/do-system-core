@@ -1,6 +1,6 @@
 <?php
 
-namespace DoSystemMock\Database\Seeder;
+namespace DoSystemCoreMock\Database\Seeder;
 
 trait SeederTrait
 {

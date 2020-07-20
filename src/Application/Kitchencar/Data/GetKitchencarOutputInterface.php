@@ -1,8 +1,8 @@
 <?php
 
-namespace DoSystem\Application\Kitchencar\Data;
+namespace DoSystem\Core\Application\Kitchencar\Data;
 
-use DoSystem\Domain\Kitchencar\Model\Kitchencar;
+use DoSystem\Core\Domain\Kitchencar\Kitchencar;
 
 interface GetKitchencarOutputInterface
 {
@@ -11,7 +11,7 @@ interface GetKitchencarOutputInterface
      *
      * ** note **
      * Parameter must be named '$model'
-     * @see DoSystem\Application\Kitchencar\Service\GetKitchencarService::handle($id)
+     * @see DoSystem\Core\Application\Kitchencar\Service\GetKitchencarService::handle($id)
      *
      * @param Kitchencar $model
      */

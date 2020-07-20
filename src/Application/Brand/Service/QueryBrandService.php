@@ -1,10 +1,10 @@
 <?php
 
-namespace DoSystem\Application\Brand\Service;
+namespace DoSystem\Core\Application\Brand\Service;
 
-use DoSystem\Application\Brand\Data\QueriedBrandOutputInterface;
-use DoSystem\Application\Brand\Data\QueryBrandFilterInterface;
-use DoSystem\Domain\Brand\Model\BrandRepositoryInterface;
+use DoSystem\Core\Application\Brand\Data\QueriedBrandOutputInterface;
+use DoSystem\Core\Application\Brand\Data\QueryBrandFilterInterface;
+use DoSystem\Core\Domain\Brand\BrandRepositoryInterface;
 
 class QueryBrandService
 {

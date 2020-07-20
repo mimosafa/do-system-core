@@ -19,7 +19,7 @@
     },
     "autoload": {
         "psr-4": {
-            "DoSystem\\": "src/"
+            "DoSystem\\Core\\": "src/"
         },
         "files": [
             "src/bootstrap.php"
@@ -27,7 +27,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "DoSystemMock\\": "mocks/",
+            "DoSystemCoreMock\\": "mocks/",
             "PseudoDatabase\\": "packages/mimosafa/PseudoDatabase/"
         }
     },

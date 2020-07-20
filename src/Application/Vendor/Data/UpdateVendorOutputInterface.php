@@ -1,8 +1,8 @@
 <?php
 
-namespace DoSystem\Application\Vendor\Data;
+namespace DoSystem\Core\Application\Vendor\Data;
 
-use DoSystem\Domain\Vendor\Model\Vendor;
+use DoSystem\Core\Domain\Vendor\Vendor;
 
 interface UpdateVendorOutputInterface
 {
@@ -11,7 +11,7 @@ interface UpdateVendorOutputInterface
      *
      * ** Note **
      * Parameter 1 & 2 must be named '$model' & '$modified'
-     * @see DoSystem\Application\Vendor\Service\UpdateVendorService::handle()
+     * @see DoSystem\Core\Application\Vendor\Service\UpdateVendorService::handle()
      *
      * @param Vendor $model
      * @param string[] $modified

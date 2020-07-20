@@ -1,16 +1,16 @@
 <?php
 
-namespace DoSystem\Application\Kitchencar\Service;
+namespace DoSystem\Core\Application\Kitchencar\Service;
 
-use DoSystem\Application\Kitchencar\Data\CreateKitchencarInputInterface;
-use DoSystem\Domain\Brand\Model\BrandRepositoryInterface;
-use DoSystem\Domain\Brand\Model\BrandValueId;
-use DoSystem\Domain\Car\Model\CarRepositoryInterface;
-use DoSystem\Domain\Car\Model\CarValueId;
-use DoSystem\Domain\Kitchencar\Model\Kitchencar;
-use DoSystem\Domain\Kitchencar\Model\KitchencarRepositoryInterface;
-use DoSystem\Domain\Kitchencar\Model\KitchencarValueId;
-use DoSystem\Domain\Kitchencar\Model\KitchencarValueOrder;
+use DoSystem\Core\Application\Kitchencar\Data\CreateKitchencarInputInterface;
+use DoSystem\Core\Domain\Brand\BrandRepositoryInterface;
+use DoSystem\Core\Domain\Brand\BrandValueId;
+use DoSystem\Core\Domain\Car\CarRepositoryInterface;
+use DoSystem\Core\Domain\Car\CarValueId;
+use DoSystem\Core\Domain\Kitchencar\Kitchencar;
+use DoSystem\Core\Domain\Kitchencar\KitchencarRepositoryInterface;
+use DoSystem\Core\Domain\Kitchencar\KitchencarValueId;
+use DoSystem\Core\Domain\Kitchencar\KitchencarValueOrder;
 
 class CreateKitchencarService
 {

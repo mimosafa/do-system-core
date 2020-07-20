@@ -1,13 +1,13 @@
 <?php
 
-namespace DoSystem\Application\Vendor\Service;
+namespace DoSystem\Core\Application\Vendor\Service;
 
-use DoSystem\Application\Vendor\Data\CreateVendorInputInterface;
-use DoSystem\Domain\Vendor\Model\VendorRepositoryInterface;
-use DoSystem\Domain\Vendor\Model\Vendor;
-use DoSystem\Domain\Vendor\Model\VendorValueId;
-use DoSystem\Domain\Vendor\Model\VendorValueName;
-use DoSystem\Domain\Vendor\Model\VendorValueStatus;
+use DoSystem\Core\Application\Vendor\Data\CreateVendorInputInterface;
+use DoSystem\Core\Domain\Vendor\VendorRepositoryInterface;
+use DoSystem\Core\Domain\Vendor\Vendor;
+use DoSystem\Core\Domain\Vendor\VendorValueId;
+use DoSystem\Core\Domain\Vendor\VendorValueName;
+use DoSystem\Core\Domain\Vendor\VendorValueStatus;
 
 class CreateVendorService
 {

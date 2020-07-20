@@ -1,9 +1,9 @@
 <?php
 
-namespace DoSystemMock\Application\Kitchencar\Data;
+namespace DoSystemCoreMock\Application\Kitchencar\Data;
 
-use DoSystem\Application\Kitchencar\Data\GetKitchencarOutputInterface;
-use DoSystem\Domain\Kitchencar\Model\Kitchencar;
+use DoSystem\Core\Application\Kitchencar\Data\GetKitchencarOutputInterface;
+use DoSystem\Core\Domain\Kitchencar\Kitchencar;
 
 class GetKitchencarOutputMock implements GetKitchencarOutputInterface
 {

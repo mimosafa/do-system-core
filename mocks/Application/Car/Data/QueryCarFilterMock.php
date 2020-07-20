@@ -1,8 +1,8 @@
 <?php
 
-namespace DoSystemMock\Application\Car\Data;
+namespace DoSystemCoreMock\Application\Car\Data;
 
-use DoSystem\Application\Car\Data\QueryCarFilterInterface;
+use DoSystem\Core\Application\Car\Data\QueryCarFilterInterface;
 
 class QueryCarFilterMock implements QueryCarFilterInterface
 {

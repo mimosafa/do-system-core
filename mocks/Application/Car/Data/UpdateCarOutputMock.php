@@ -1,9 +1,9 @@
 <?php
 
-namespace DoSystemMock\Application\Car\Data;
+namespace DoSystemCoreMock\Application\Car\Data;
 
-use DoSystem\Application\Car\Data\UpdateCarOutputInterface;
-use DoSystem\Domain\Car\Model\Car;
+use DoSystem\Core\Application\Car\Data\UpdateCarOutputInterface;
+use DoSystem\Core\Domain\Car\Car;
 
 class UpdateCarOutputMock implements UpdateCarOutputInterface
 {

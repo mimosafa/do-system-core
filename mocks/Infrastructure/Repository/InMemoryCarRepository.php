@@ -1,19 +1,19 @@
 <?php
 
-namespace DoSystemMock\Infrastructure\Repository;
+namespace DoSystemCoreMock\Infrastructure\Repository;
 
 use Illuminate\Support\Arr;
-use DoSystem\Domain\Car\Model\Car;
-use DoSystem\Domain\Car\Model\CarCollection;
-use DoSystem\Domain\Car\Model\CarRepositoryInterface;
-use DoSystem\Domain\Car\Model\CarValueId;
-use DoSystem\Domain\Car\Model\CarValueName;
-use DoSystem\Domain\Car\Model\CarValueOrder;
-use DoSystem\Domain\Car\Model\CarValueStatus;
-use DoSystem\Domain\Car\Model\CarValueVin;
-use DoSystem\Domain\Vendor\Model\VendorRepositoryInterface;
-use DoSystem\Domain\Vendor\Model\VendorValueId;
-use DoSystem\Exception\NotFoundException;
+use DoSystem\Core\Domain\Car\Car;
+use DoSystem\Core\Domain\Car\CarCollection;
+use DoSystem\Core\Domain\Car\CarRepositoryInterface;
+use DoSystem\Core\Domain\Car\CarValueId;
+use DoSystem\Core\Domain\Car\CarValueName;
+use DoSystem\Core\Domain\Car\CarValueOrder;
+use DoSystem\Core\Domain\Car\CarValueStatus;
+use DoSystem\Core\Domain\Car\CarValueVin;
+use DoSystem\Core\Domain\Vendor\VendorRepositoryInterface;
+use DoSystem\Core\Domain\Vendor\VendorValueId;
+use DoSystem\Core\Exception\NotFoundException;
 use PseudoDatabase\Database;
 
 class InMemoryCarRepository implements CarRepositoryInterface

@@ -1,8 +1,8 @@
 <?php
 
-namespace DoSystem\Application\Brand\Data;
+namespace DoSystem\Core\Application\Brand\Data;
 
-use DoSystem\Domain\Brand\Model\Brand;
+use DoSystem\Core\Domain\Brand\Brand;
 
 interface GetBrandOutputInterface
 {
@@ -11,7 +11,7 @@ interface GetBrandOutputInterface
      *
      * ** note **
      * Parameter must be named '$model'
-     * @see DoSystem\Application\Brand\Service\GetBrandService::handle($id)
+     * @see DoSystem\Core\Application\Brand\Service\GetBrandService::handle($id)
      *
      * @param Brand $model
      */

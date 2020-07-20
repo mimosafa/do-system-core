@@ -1,10 +1,10 @@
 <?php
 
-use DoSystem\Application;
-use DoSystem\Domain;
-use DoSystem\Infrastructure;
-use DoSystemMock\Application as MockApplication;
-use DoSystemMock\Infrastructure as MockInfrastructure;
+use DoSystem\Core\Application;
+use DoSystem\Core\Domain;
+use DoSystem\Core\Infrastructure;
+use DoSystemCoreMock\Application as MockApplication;
+use DoSystemCoreMock\Infrastructure as MockInfrastructure;
 
 define('DOSYSTEM_TESTS_ROOT_DIR', __DIR__);
 
@@ -12,19 +12,19 @@ define('DOSYSTEM_TESTS_ROOT_DIR', __DIR__);
  * Repositories
  */
 doSystem()->singleton(
-    Domain\Brand\Model\BrandRepositoryInterface::class,
+    Domain\Brand\BrandRepositoryInterface::class,
     MockInfrastructure\Repository\InMemoryBrandRepository::class
 );
 doSystem()->singleton(
-   Domain\Car\Model\CarRepositoryInterface::class,
-   MockInfrastructure\Repository\InMemoryCarRepository::class
+    Domain\Car\CarRepositoryInterface::class,
+    MockInfrastructure\Repository\InMemoryCarRepository::class
 );
 doSystem()->singleton(
-    Domain\Prefecture\Model\PrefectureRepositoryInterface::class,
+    Domain\Prefecture\PrefectureRepositoryInterface::class,
     Infrastructure\Repository\PrefectureRepository::class
 );
 doSystem()->singleton(
-    Domain\Vendor\Model\VendorRepositoryInterface::class,
+    Domain\Vendor\VendorRepositoryInterface::class,
     MockInfrastructure\Repository\InMemoryVendorRepository::class
 );
 
@@ -36,12 +36,12 @@ doSystem()->bind(
     MockApplication\Brand\Data\GetBrandOutputMock::class
 );
 doSystem()->bind(
-   Application\Car\Data\GetCarOutputInterface::class,
-   MockApplication\Car\Data\GetCarOutputMock::class
+    Application\Car\Data\GetCarOutputInterface::class,
+    MockApplication\Car\Data\GetCarOutputMock::class
 );
 doSystem()->bind(
-   Application\Kitchencar\Data\GetKitchencarOutputInterface::class,
-   MockApplication\Kitchencar\Data\GetKitchencarOutputMock::class
+    Application\Kitchencar\Data\GetKitchencarOutputInterface::class,
+    MockApplication\Kitchencar\Data\GetKitchencarOutputMock::class
 );
 doSystem()->bind(
     Application\Vendor\Data\GetVendorOutputInterface::class,
@@ -68,8 +68,8 @@ doSystem()->bind(
     MockApplication\Brand\Data\QueriedBrandOutputMock::class
 );
 doSystem()->bind(
-   Application\Car\Data\QueriedCarOutputInterface::class,
-   MockApplication\Car\Data\QueriedCarOutputMock::class
+    Application\Car\Data\QueriedCarOutputInterface::class,
+    MockApplication\Car\Data\QueriedCarOutputMock::class
 );
 doSystem()->bind(
     Application\Vendor\Data\QueriedVendorOutputInterface::class,
@@ -84,10 +84,10 @@ doSystem()->bind(
     MockApplication\Brand\Data\UpdateBrandOutputMock::class
 );
 doSystem()->bind(
-   Application\Car\Data\UpdateCarOutputInterface::class,
-   MockApplication\Car\Data\UpdateCarOutputMock::class
+    Application\Car\Data\UpdateCarOutputInterface::class,
+    MockApplication\Car\Data\UpdateCarOutputMock::class
 );
 doSystem()->bind(
-   Application\Vendor\Data\UpdateVendorOutputInterface::class,
-   MockApplication\Vendor\Data\UpdateVendorOutputMock::class
+    Application\Vendor\Data\UpdateVendorOutputInterface::class,
+    MockApplication\Vendor\Data\UpdateVendorOutputMock::class
 );

@@ -1,13 +1,13 @@
 <?php
 
-namespace DoSystemTest\Domain\Car\Service;
+namespace DoSystemCoreTest\Domain\Car\Service;
 
 use PHPUnit\Framework\TestCase;
-use DoSystem\Domain\Car\Service\VinService;
-use DoSystemMock\Infrastructure\Repository\InMemoryCarRepository;
-use DoSystemMock\Infrastructure\Repository\InMemoryVendorRepository;
-use DoSystemMock\Database\Seeder\CarsSeeder;
-use DoSystemMock\Database\Seeder\VendorsSeeder;
+use DoSystem\Core\Domain\Car\Service\VinService;
+use DoSystemCoreMock\Infrastructure\Repository\InMemoryCarRepository;
+use DoSystemCoreMock\Infrastructure\Repository\InMemoryVendorRepository;
+use DoSystemCoreMock\Database\Seeder\CarsSeeder;
+use DoSystemCoreMock\Database\Seeder\VendorsSeeder;
 
 class VinServiceTest extends TestCase
 {

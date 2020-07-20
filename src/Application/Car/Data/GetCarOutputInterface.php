@@ -1,11 +1,11 @@
 <?php
 
-namespace DoSystem\Application\Car\Data;
+namespace DoSystem\Core\Application\Car\Data;
 
-use DoSystem\Domain\Car\Model\Car;
-use DoSystem\Domain\Car\Model\CarValueId;
-use DoSystem\Domain\Car\Model\CarValueName;
-use DoSystem\Domain\Car\Model\CarValueVin;
+use DoSystem\Core\Domain\Car\Car;
+use DoSystem\Core\Domain\Car\CarValueId;
+use DoSystem\Core\Domain\Car\CarValueName;
+use DoSystem\Core\Domain\Car\CarValueVin;
 
 interface GetCarOutputInterface
 {
@@ -14,7 +14,7 @@ interface GetCarOutputInterface
      *
      * ** note **
      * Parameter must be named '$model'
-     * @see DoSystem\Application\Car\Service\GetCarService::handle(int $id)
+     * @see DoSystem\Core\Application\Car\Service\GetCarService::handle(int $id)
      *
      * @param Car $model
      */

@@ -1,9 +1,9 @@
 <?php
 
-namespace DoSystemMock\Module\Domain\Model;
+namespace DoSystemCoreMock\Module\Domain\Model;
 
-use DoSystem\Module\Domain\Model\AbstractValueObjectString;
-use DoSystem\Module\Domain\Model\ValueObjectStringInterface;
+use DoSystem\Core\Module\Domain\AbstractValueObjectString;
+use DoSystem\Core\Module\Domain\ValueObjectStringInterface;
 
 class SampleValueObjectString extends AbstractValueObjectString implements ValueObjectStringInterface
 {

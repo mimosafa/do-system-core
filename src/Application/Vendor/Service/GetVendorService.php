@@ -1,10 +1,10 @@
 <?php
 
-namespace DoSystem\Application\Vendor\Service;
+namespace DoSystem\Core\Application\Vendor\Service;
 
-use DoSystem\Application\Vendor\Data\GetVendorOutputInterface;
-use DoSystem\Domain\Vendor\Model\VendorRepositoryInterface;
-use DoSystem\Domain\Vendor\Model\VendorValueId;
+use DoSystem\Core\Application\Vendor\Data\GetVendorOutputInterface;
+use DoSystem\Core\Domain\Vendor\VendorRepositoryInterface;
+use DoSystem\Core\Domain\Vendor\VendorValueId;
 
 class GetVendorService
 {
@@ -28,7 +28,7 @@ class GetVendorService
      *
      * @param VendorValueId $id
      * @return GetVendorOutputInterface
-     * @throws \DoSystem\Exception\NotFoundException
+     * @throws \DoSystem\Core\Exception\NotFoundException
      */
     public function handle(VendorValueId $id): GetVendorOutputInterface
     {
