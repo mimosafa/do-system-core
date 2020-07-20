@@ -4,8 +4,8 @@ namespace DoSystemTests\Module\Domain\Model;
 
 use PHPUnit\Framework\TestCase;
 use DoSystem\Core\Module\Domain\ValueObjectEnumInterface;
-use DoSystemMock\Module\Domain\Model\SampleValueObjectEnum;
-use DoSystemMock\Module\Domain\Model\SampleValueObjectEnumInherited;
+use DoSystemCoreMock\Module\Domain\Model\SampleValueObjectEnum;
+use DoSystemCoreMock\Module\Domain\Model\SampleValueObjectEnumInherited;
 
 class ValueObjectEnumTest extends TestCase
 {

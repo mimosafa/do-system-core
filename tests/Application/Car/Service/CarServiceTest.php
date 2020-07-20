@@ -9,10 +9,10 @@ use DoSystem\Core\Application\Car\Data;
 use DoSystem\Core\Application\Car\Service;
 use DoSystem\Core\Domain\Car;
 use DoSystem\Core\Domain\Car\Service as DomainService;
-use DoSystemMock\Application\Car\Data as MockData;
-use DoSystemMock\Database\Factory\CarDataFactory;
-use DoSystemMock\Database\Seeder;
-use DoSystemMock\Infrastructure\Repository;
+use DoSystemCoreMock\Application\Car\Data as MockData;
+use DoSystemCoreMock\Database\Factory\CarDataFactory;
+use DoSystemCoreMock\Database\Seeder;
+use DoSystemCoreMock\Infrastructure\Repository;
 
 class CarServiceTest extends TestCase
 {

@@ -3,7 +3,7 @@
 namespace DoSystemTest\Module\Domain\Model;
 
 use PHPUnit\Framework\TestCase;
-use DoSystemMock\Module\Domain\Model\SampleValueObjectString;
+use DoSystemCoreMock\Module\Domain\Model\SampleValueObjectString;
 
 class ValueObjectStringTest extends TestCase
 {

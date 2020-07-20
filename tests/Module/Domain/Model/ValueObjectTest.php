@@ -4,8 +4,8 @@ namespace DoSystemTests\Module\Domain\Model;
 
 use PHPUnit\Framework\TestCase;
 use DoSystem\Core\Module\Domain\ValueObjectInterface;
-use DoSystemMock\Module\Domain\Model\SampleValueObject;
-use DoSystemMock\Module\Domain\Model\SampleValueObjectInherited;
+use DoSystemCoreMock\Module\Domain\Model\SampleValueObject;
+use DoSystemCoreMock\Module\Domain\Model\SampleValueObjectInherited;
 
 class ValueObjectTest extends TestCase
 {

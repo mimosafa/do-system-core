@@ -6,9 +6,9 @@ use PHPUnit\Framework\TestCase;
 use DoSystem\Core\Application\Kitchencar\Data;
 use DoSystem\Core\Application\Kitchencar\Service;
 use DoSystem\Core\Domain\Kitchencar;
-use DoSystemMock\Application\Kitchencar\Data as MockData;
-use DoSystemMock\Database\Seeder;
-use DoSystemMock\Infrastructure\Repository;
+use DoSystemCoreMock\Application\Kitchencar\Data as MockData;
+use DoSystemCoreMock\Database\Seeder;
+use DoSystemCoreMock\Infrastructure\Repository;
 
 class KitchencarServiceTest extends TestCase
 {

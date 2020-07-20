@@ -1,6 +1,6 @@
 <?php
 
-namespace DoSystemMock\Database\Seeder;
+namespace DoSystemCoreMock\Database\Seeder;
 
 use DoSystem\Core\Domain\Brand\Brand;
 use DoSystem\Core\Domain\Brand\BrandRepositoryInterface;
@@ -10,7 +10,7 @@ use DoSystem\Core\Domain\Brand\BrandValueOrder;
 use DoSystem\Core\Domain\Brand\BrandValueStatus;
 use DoSystem\Core\Domain\Vendor\VendorRepositoryInterface;
 use DoSystem\Core\Domain\Vendor\VendorValueId;
-use DoSystemMock\Database\Factory\BrandDataFactory;
+use DoSystemCoreMock\Database\Factory\BrandDataFactory;
 
 class BrandsSeeder
 {

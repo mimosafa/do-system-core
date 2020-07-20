@@ -1,6 +1,6 @@
 <?php
 
-namespace DoSystemMock\Application\Car\Data;
+namespace DoSystemCoreMock\Application\Car\Data;
 
 use DoSystem\Core\Application\Car\Data\UpdateCarOutputInterface;
 use DoSystem\Core\Domain\Car\Car;

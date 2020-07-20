@@ -3,7 +3,7 @@
 namespace DoSystemTest\Module\Domain\Model;
 
 use PHPUnit\Framework\TestCase;
-use DoSystemMock\Module\Domain\Model\SampleValueObjectFile;
+use DoSystemCoreMock\Module\Domain\Model\SampleValueObjectFile;
 use DOSYSTEM_TESTS_ROOT_DIR;
 
 class ValueObjectFileTest extends TestCase

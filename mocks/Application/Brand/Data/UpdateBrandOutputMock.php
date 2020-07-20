@@ -1,6 +1,6 @@
 <?php
 
-namespace DoSystemMock\Application\Brand\Data;
+namespace DoSystemCoreMock\Application\Brand\Data;
 
 use DoSystem\Core\Application\Brand\Data\UpdateBrandOutputInterface;
 use DoSystem\Core\Domain\Brand\Brand;

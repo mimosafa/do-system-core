@@ -1,6 +1,6 @@
 <?php
 
-namespace DoSystemMock\Module\Domain\Model;
+namespace DoSystemCoreMock\Module\Domain\Model;
 
 use DoSystem\Core\Module\Domain\ValueObjectInterface;
 use DoSystem\Core\Module\Domain\ValueObjectTrait;

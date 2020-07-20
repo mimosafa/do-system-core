@@ -1,6 +1,6 @@
 <?php
 
-namespace DoSystemMock\Database\Seeder;
+namespace DoSystemCoreMock\Database\Seeder;
 
 use DoSystem\Core\Domain\Brand\BrandRepositoryInterface;
 use DoSystem\Core\Domain\Brand\BrandValueId;
@@ -10,7 +10,7 @@ use DoSystem\Core\Domain\Kitchencar\Kitchencar;
 use DoSystem\Core\Domain\Kitchencar\KitchencarRepositoryInterface;
 use DoSystem\Core\Domain\Kitchencar\KitchencarValueId;
 use DoSystem\Core\Domain\Kitchencar\KitchencarValueOrder;
-use DoSystemMock\Database\Factory\KitchencarDataFactory;
+use DoSystemCoreMock\Database\Factory\KitchencarDataFactory;
 
 class KitchencarsSeeder
 {

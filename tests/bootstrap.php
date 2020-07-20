@@ -3,8 +3,8 @@
 use DoSystem\Core\Application;
 use DoSystem\Core\Domain;
 use DoSystem\Core\Infrastructure;
-use DoSystemMock\Application as MockApplication;
-use DoSystemMock\Infrastructure as MockInfrastructure;
+use DoSystemCoreMock\Application as MockApplication;
+use DoSystemCoreMock\Infrastructure as MockInfrastructure;
 
 define('DOSYSTEM_TESTS_ROOT_DIR', __DIR__);
 

@@ -5,12 +5,12 @@ namespace DoSystemTest\Domain\Vendor\Model;
 use PHPUnit\Framework\TestCase;
 use DoSystem\Core\Domain\Brand\BrandCollection;
 use DoSystem\Core\Domain\Car\CarCollection;
-use DoSystemMock\Infrastructure\Repository\InMemoryBrandRepository;
-use DoSystemMock\Infrastructure\Repository\InMemoryCarRepository;
-use DoSystemMock\Infrastructure\Repository\InMemoryVendorRepository;
-use DoSystemMock\Database\Seeder\BrandsSeeder;
-use DoSystemMock\Database\Seeder\VendorsSeeder;
-use DoSystemMock\Database\Seeder\CarsSeeder;
+use DoSystemCoreMock\Infrastructure\Repository\InMemoryBrandRepository;
+use DoSystemCoreMock\Infrastructure\Repository\InMemoryCarRepository;
+use DoSystemCoreMock\Infrastructure\Repository\InMemoryVendorRepository;
+use DoSystemCoreMock\Database\Seeder\BrandsSeeder;
+use DoSystemCoreMock\Database\Seeder\VendorsSeeder;
+use DoSystemCoreMock\Database\Seeder\CarsSeeder;
 
 class VendorTest extends TestCase
 {

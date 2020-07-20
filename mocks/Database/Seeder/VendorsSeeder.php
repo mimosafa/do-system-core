@@ -1,13 +1,13 @@
 <?php
 
-namespace DoSystemMock\Database\Seeder;
+namespace DoSystemCoreMock\Database\Seeder;
 
 use DoSystem\Core\Domain\Vendor\Vendor;
 use DoSystem\Core\Domain\Vendor\VendorRepositoryInterface;
 use DoSystem\Core\Domain\Vendor\VendorValueId;
 use DoSystem\Core\Domain\Vendor\VendorValueName;
 use DoSystem\Core\Domain\Vendor\VendorValueStatus;
-use DoSystemMock\Database\Factory\VendorDataFactory;
+use DoSystemCoreMock\Database\Factory\VendorDataFactory;
 
 class VendorsSeeder
 {

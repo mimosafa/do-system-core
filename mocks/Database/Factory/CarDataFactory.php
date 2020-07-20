@@ -1,6 +1,6 @@
 <?php
 
-namespace DoSystemMock\Database\Factory;
+namespace DoSystemCoreMock\Database\Factory;
 
 use DoSystem\Core\Domain\Car\CarValueStatus;
 use DoSystem\Core\Domain\Car\CarValueVin;

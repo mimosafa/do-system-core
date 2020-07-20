@@ -1,6 +1,6 @@
 <?php
 
-namespace DoSystemMock\Infrastructure\Repository;
+namespace DoSystemCoreMock\Infrastructure\Repository;
 
 use DoSystem\Core\Domain\Brand\Brand;
 use DoSystem\Core\Domain\Brand\BrandCollection;

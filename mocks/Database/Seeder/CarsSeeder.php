@@ -1,6 +1,6 @@
 <?php
 
-namespace DoSystemMock\Database\Seeder;
+namespace DoSystemCoreMock\Database\Seeder;
 
 use DoSystem\Core\Domain\Car\Car;
 use DoSystem\Core\Domain\Car\CarRepositoryInterface;
@@ -11,7 +11,7 @@ use DoSystem\Core\Domain\Car\CarValueStatus;
 use DoSystem\Core\Domain\Car\CarValueVin;
 use DoSystem\Core\Domain\Vendor\VendorRepositoryInterface;
 use DoSystem\Core\Domain\Vendor\VendorValueId;
-use DoSystemMock\Database\Factory\CarDataFactory;
+use DoSystemCoreMock\Database\Factory\CarDataFactory;
 
 class CarsSeeder
 {

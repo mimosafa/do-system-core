@@ -8,10 +8,10 @@ use PHPUnit\Framework\TestCase;
 use DoSystem\Core\Application\Brand\Data;
 use DoSystem\Core\Application\Brand\Service;
 use DoSystem\Core\Domain\Brand;
-use DoSystemMock\Application\Brand\Data as MockData;
-use DoSystemMock\Database\Factory\BrandDataFactory;
-use DoSystemMock\Database\Seeder;
-use DoSystemMock\Infrastructure\Repository;
+use DoSystemCoreMock\Application\Brand\Data as MockData;
+use DoSystemCoreMock\Database\Factory\BrandDataFactory;
+use DoSystemCoreMock\Database\Seeder;
+use DoSystemCoreMock\Infrastructure\Repository;
 
 class BrandServiceTest extends TestCase
 {

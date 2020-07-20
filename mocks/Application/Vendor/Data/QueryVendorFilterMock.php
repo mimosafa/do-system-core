@@ -1,6 +1,6 @@
 <?php
 
-namespace DoSystemMock\Application\Vendor\Data;
+namespace DoSystemCoreMock\Application\Vendor\Data;
 
 use DoSystem\Core\Application\Vendor\Data\QueryVendorFilterInterface;
 

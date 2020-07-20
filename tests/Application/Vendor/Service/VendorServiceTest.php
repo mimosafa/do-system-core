@@ -7,10 +7,10 @@ use PHPUnit\Framework\TestCase;
 use DoSystem\Core\Application\Vendor\Data;
 use DoSystem\Core\Application\Vendor\Service;
 use DoSystem\Core\Domain\Vendor;
-use DoSystemMock\Application\Vendor\Data as MockData;
-use DoSystemMock\Database\Factory\VendorDataFactory;
-use DoSystemMock\Database\Seeder\VendorsSeeder;
-use DoSystemMock\Infrastructure\Repository\InMemoryVendorRepository;
+use DoSystemCoreMock\Application\Vendor\Data as MockData;
+use DoSystemCoreMock\Database\Factory\VendorDataFactory;
+use DoSystemCoreMock\Database\Seeder\VendorsSeeder;
+use DoSystemCoreMock\Infrastructure\Repository\InMemoryVendorRepository;
 
 class VendorServiceTest extends TestCase
 {
