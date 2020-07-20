@@ -1,6 +1,6 @@
 <?php
 
-namespace DoSystemTest\Application\Kitchencar\Service;
+namespace DoSystemCoreTest\Application\Kitchencar\Service;
 
 use PHPUnit\Framework\TestCase;
 use DoSystem\Core\Application\Kitchencar\Data;

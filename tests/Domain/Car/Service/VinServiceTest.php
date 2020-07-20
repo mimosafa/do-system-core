@@ -1,6 +1,6 @@
 <?php
 
-namespace DoSystemTest\Domain\Car\Service;
+namespace DoSystemCoreTest\Domain\Car\Service;
 
 use PHPUnit\Framework\TestCase;
 use DoSystem\Core\Domain\Car\Service\VinService;

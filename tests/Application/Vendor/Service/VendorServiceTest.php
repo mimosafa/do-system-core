@@ -1,6 +1,6 @@
 <?php
 
-namespace DoSystemTest\Application\Vendor\Service;
+namespace DoSystemCoreTest\Application\Vendor\Service;
 
 use Illuminate\Support\Str;
 use PHPUnit\Framework\TestCase;

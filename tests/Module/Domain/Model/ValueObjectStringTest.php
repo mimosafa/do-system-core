@@ -1,6 +1,6 @@
 <?php
 
-namespace DoSystemTest\Module\Domain\Model;
+namespace DoSystemCoreTest\Module\Domain\Model;
 
 use PHPUnit\Framework\TestCase;
 use DoSystemCoreMock\Module\Domain\Model\SampleValueObjectString;

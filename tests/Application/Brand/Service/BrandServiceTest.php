@@ -1,6 +1,6 @@
 <?php
 
-namespace DoSystemTest\Application\Brand\Service;
+namespace DoSystemCoreTest\Application\Brand\Service;
 
 use Faker\Provider\Base as Faker;
 use Illuminate\Support\Str;

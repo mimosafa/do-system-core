@@ -1,6 +1,6 @@
 <?php
 
-namespace DoSystemTest\Application\Car\Service;
+namespace DoSystemCoreTest\Application\Car\Service;
 
 use Faker\Provider\Base as Faker;
 use Illuminate\Support\Str;
