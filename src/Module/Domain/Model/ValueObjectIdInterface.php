@@ -7,5 +7,5 @@ interface ValueObjectIdInterface extends ValueObjectInterface
     /**
      * @return bool
      */
-    public function exists(): bool;
+    public function isPseudo(): bool;
 }

@@ -4,13 +4,15 @@ namespace DoSystem\Application\Car\Service;
 
 use DoSystem\Application\Car\Data\CreateCarInputInterface;
 use DoSystem\Domain\Car\Model\Car;
+use DoSystem\Domain\Car\Model\CarRepositoryInterface;
 use DoSystem\Domain\Car\Model\CarValueId;
 use DoSystem\Domain\Car\Model\CarValueName;
+use DoSystem\Domain\Car\Model\CarValueOrder;
 use DoSystem\Domain\Car\Model\CarValueStatus;
-use DoSystem\Domain\Car\Model\CarRepositoryInterface;
+use DoSystem\Domain\Car\Model\CarValueVin;
+use DoSystem\Domain\Car\Service\CarService;
 use DoSystem\Domain\Vendor\Model\VendorValueId;
 use DoSystem\Domain\Vendor\Model\VendorRepositoryInterface;
-use DoSystem\Domain\Vin\Model\ValueObjectVin;
 
 class CreateCarService
 {
@@ -25,14 +27,22 @@ class CreateCarService
     private $vendorRepository;
 
     /**
+     * @var CarService
+     */
+    private $service;
+
+    /**
      * Constructor
      *
      * @param CarRepositoryInterface $carRepository
+     * @param VendorRepositoryInterface $vendorRepository
+     * @param CarService $service
      */
-    public function __construct(CarRepositoryInterface $carRepository, VendorRepositoryInterface $vendorRepository)
+    public function __construct(CarRepositoryInterface $carRepository, VendorRepositoryInterface $vendorRepository, CarService $service)
     {
         $this->carRepository = $carRepository;
         $this->vendorRepository = $vendorRepository;
+        $this->service = $service;
     }
 
     /**
@@ -41,19 +51,30 @@ class CreateCarService
      */
     public function handle(CreateCarInputInterface $input): CarValueId
     {
-        $id = CarValueId::of(null); // Pseudo Id for createing
-
+        // Vendor
         $vendorId = $input->getVendorId();
         $vendor = $this->vendorRepository->findById(VendorValueId::of($vendorId));
-        $vin = ValueObjectVin::of($input->getVin());
 
-        $status = $input->getStatus();
+        // Vin
+        $vinString = $input->getVin();
+        if ($this->service->vinExists($vinString)) {
+            throw new \Exception();
+        }
+        $vin = CarValueVin::of($vinString);
 
-        // If not set $status, pass default status
-        $status = isset($status) ? CarValueStatus::of($status) : CarValueStatus::default();
+        // Status, if not set, pass the default
+        $statusInt = $input->getStatus();
+        $status = isset($statusInt) ? CarValueStatus::of($statusInt) : CarValueStatus::default();
 
+        // Name
         $name = CarValueName::of($input->getName());
 
-        return $this->carRepository->store(new Car($id, $vendor, $vin, $status, $name));
+        // Order
+        $order = CarValueOrder::of($input->getOrder());
+
+        // Pseudo Id for createing
+        $id = CarValueId::of(null);
+
+        return $this->carRepository->store(new Car($id, $vendor, $vin, $status, $name, $order));
     }
 }

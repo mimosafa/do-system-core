@@ -22,6 +22,10 @@ interface VendorRepositoryInterface
      * @param array{
      *      @type string|null $name
      *      @type int[]|null  $status
+     *      @type int|null    $size_per_page
+     *      @type int|null    $page
+     *      @type string|null $order_by  'id'|'name'|'status'
+     *      @type string|null $order  'ASC'|'DESC'
      * } $params
      * @return VendorCollection
      */

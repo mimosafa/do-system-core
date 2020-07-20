@@ -28,4 +28,14 @@ interface QueryCarFilterInterface
      * @return int|null
      */
     public function getPage(): ?int;
+
+    /**
+     * @return string|null
+     */
+    public function getOrderBy(): ?string;
+
+    /**
+     * @return string|null
+     */
+    public function getOrder(): ?string;
 }

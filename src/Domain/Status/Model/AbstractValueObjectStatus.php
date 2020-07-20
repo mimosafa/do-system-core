@@ -37,6 +37,6 @@ abstract class AbstractValueObjectStatus extends AbstractValueObjectEnum
      */
     public static function default(): self
     {
-        return static::$defaultStatus ? static::of(static::$defaultStatus) : \array_values(static::values())[0];
+        return isset(static::$defaultStatus) ? static::of(static::$defaultStatus) : \array_values(static::values())[0];
     }
 }

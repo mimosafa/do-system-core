@@ -41,9 +41,9 @@ abstract class AbstractValueObjectIntForId
     /**
      * @return bool
      */
-    public function exists(): bool
+    public function isPseudo(): bool
     {
-        return $this->value !== self::UNSTORED_ENTITY_ID;
+        return $this->value === self::UNSTORED_ENTITY_ID;
     }
 
     /**

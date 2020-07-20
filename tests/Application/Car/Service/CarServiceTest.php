@@ -2,174 +2,236 @@
 
 namespace DoSystemTest\Application\Car\Service;
 
-use Mockery;
+use Faker\Provider\Base as Faker;
+use Illuminate\Support\Str;
 use PHPUnit\Framework\TestCase;
-use DoSystem\Application\Car\Data\CreateCarInputInterface;
-use DoSystem\Application\Car\Data\GetCarOutputInterface;
-use DoSystem\Application\Car\Data\QueryCarFilterInterface;
-use DoSystem\Application\Car\Data\QueriedCarOutputInterface;
-use DoSystem\Application\Car\Service\CreateCarService;
-use DoSystem\Application\Car\Service\GetCarService;
-use DoSystem\Application\Car\Service\QueryCarService;
-use DoSystem\Application\Vendor\Data\CreateVendorInputInterface;
-use DoSystem\Application\Vendor\Service\CreateVendorService;
-use DoSystem\Domain\Car\Model\CarRepositoryInterface;
-use DoSystem\Domain\Car\Model\CarValueId;
-use DoSystem\Domain\Vendor\Model\VendorRepositoryInterface;
-use DoSystemMock\Factory\CarsFactory;
-use DoSystemMock\Factory\VendorsFactory;
+use DoSystem\Application\Car\Data;
+use DoSystem\Application\Car\Service;
+use DoSystem\Domain\Car\Model;
+use DoSystem\Domain\Car\Service as DomainService;
+use DoSystemMock\Application\Car\Data as MockData;
+use DoSystemMock\Database\Factory\CarDataFactory;
+use DoSystemMock\Database\Seeder;
+use DoSystemMock\Infrastructure\Repository;
 
 class CarServiceTest extends TestCase
 {
     /**
-     * @var CarsFactory
+     * @var Repository\InMemoryCarRepository
      */
-    private static $factory;
+    private $carRepository;
 
     /**
-     * Sample data for tests
-     *
-     * @var array
+     * @var Repository\InMemoryVendorRepository
      */
-    private static $sampleData;
+    private $vendorRepository;
 
-    /**
-     * Sample Car data for tests
-     */
-    private static $sampleCarData = [
-        /* 0 => */ [ /*'id' => 1, */ 'vendor_id' => 1, 'vin' => '品川500さ2345', 'status' => 3, 'name' => 'Test Car'],
-        /* 1 => */ [ /*'id' => 2, */ 'vendor_id' => 1, 'vin' => '多摩500さ4649', 'status' => 4, 'name' => 'DeLorean'],
-        /* 2 => */ [ /*'id' => 3, */ 'vendor_id' => 2, 'vin' => '京都500あ4649', 'status' => 3, 'name' => 'Benz'],
-        /* 3 => */ [ /*'id' => 4, */ 'vendor_id' => 3, 'vin' => '北見580あ4649', 'status' => 5, 'name' => 'Crown'],
-        /* 4 => */ [ /*'id' => 5, */ 'vendor_id' => 1, 'vin' => '鹿児島480り4649', 'status' => 3, 'name' => 'Delica'],
-        /* 5 => */ [ /*'id' => 6, */ 'vendor_id' => 3, 'vin' => '品川500り4649', 'status' => 4, 'name' => 'Super Car'],
-    ];
-
-    /**
-     * Prepare Vendor repository before tests
-     */
-    public static function setUpBeforeClass(): void
+    protected function setUp(): void
     {
-        $vendorsFactory = new VendorsFactory(5);
-        $vendorSampleData = $vendorsFactory->provide();
-        $service = doSystem()->make(CreateVendorService::class);
-
-        foreach ($vendorSampleData as $array) {
-            $data = Mockery::mock('CreateVendorInput', CreateVendorInputInterface::class);
-            $data->shouldReceive('getName')->andReturn($array['name']);
-            $data->shouldReceive('getStatus')->andReturn($array['status']);
-            $service->handle($data);
-        }
-
-        $vendorRepository = doSystem()->make(VendorRepositoryInterface::class);
-        /** @see \DoSystemMock\InMemoryInfrastructure\VendorRepositoryMock::getIds() */
-        $vendorIds = $vendorRepository->getIds();
-        self::$factory = new CarsFactory(20, $vendorIds);
-        self::$sampleData = self::$factory->provide();
+        $this->vendorRepository ?? $this->vendorRepository = new Repository\InMemoryVendorRepository();
+        $this->carRepository ?? $this->carRepository = new Repository\InMemoryCarRepository($this->vendorRepository);
     }
 
-    /**
-     * Flush VendorRepository
-     */
-    public static function tearDownAfterClass(): void
+    protected function tearDown(): void
     {
-        doSystem()->make(VendorRepositoryInterface::class)->flush();
-        doSystem()->make(CarRepositoryInterface::class)->flush();
+        $this->carRepository->flush();
+        $this->vendorRepository->flush();
     }
 
     /**
      * @test
-     *
-     * @return CarValueId[]
      */
-    public function testCreateCar(): array
+    public function testCreateCar()
     {
-        $service = doSystem()->make(CreateCarService::class);
+        $domainCarService = new DomainService\CarService($this->carRepository);
+        $createService = new Service\CreateCarService(
+            $this->carRepository, $this->vendorRepository, $domainCarService
+        );
 
-        $ids = [];
-        foreach (self::$sampleData as $array) {
-            $data = Mockery::mock('CreateCarInput', CreateCarInputInterface::class);
-            $data->shouldReceive('getVendorId')->andReturn($array['vendor_id']);
-            $data->shouldReceive('getVin')->andReturn($array['vin']);
-            $data->shouldReceive('getStatus')->andReturn($array['status']);
-            $data->shouldReceive('getName')->andReturn($array['name']);
-            $id = $service->handle($data);
+        $vendorData = (new Seeder\VendorsSeeder(1))->seed($this->vendorRepository)->get();
+        $vendorIds = \array_column($vendorData, 'id');
 
-            $this->assertTrue($id instanceof CarValueId);
+        $data = CarDataFactory::generate($vendorIds);
+        $input = new MockData\CreateCarInputMock();
+        $input->vendorId = $data['vendor_id'];
+        $input->vin = $data['vin'];
+        $input->name = $data['name'];
 
-            $ids[] = $id;
-        }
-        return $ids;
+        $id = $createService->handle($input);
+
+        $this->assertTrue($id instanceof Model\CarValueId);
+
+        $model = $this->carRepository->findById($id);
+
+        $this->assertEquals($model->belongsTo()->getId()->getValue(), $data['vendor_id']);
+        $this->assertEquals($model->getVin()->getValue(), $data['vin']);
+        $this->assertEquals($model->getStatus()->getValue(), Model\CarValueStatus::default()->getValue());
+        $this->assertEquals($model->getName()->getValue(), $data['name']);
     }
 
     /**
      * @test
-     * @depends testCreateCar
-     *
-     * @param CarValueId[] $ids
      */
-    public function testGetCar(array $ids)
+    public function testGetCar()
     {
-        $service = doSystem()->make(GetCarService::class);
+        $getService = new Service\GetCarService($this->carRepository);
 
-        foreach ($ids as $i => $id) {
-            $output = $service->handle($id);
+        $seeder = new Seeder\CarsSeeder(7, (new Seeder\VendorsSeeder(3))->seed($this->vendorRepository));
+        $data = $seeder->seed($this->carRepository, $this->vendorRepository)->get();
 
-            $this->assertTrue($output instanceof GetCarOutputInterface);
-            $this->assertEquals($output->getVin()->getValue(), self::$sampleData[$i]['vin']);
-            $this->assertEquals($output->getName()->getValue(), self::$sampleData[$i]['name']);
-        }
+        $id2 = Model\CarValueId::of($data[1]['id']);
+        $id6 = Model\CarValueId::of($data[5]['id']);
+
+        $output2 = $getService->handle($id2);
+        $output6 = $getService->handle($id6);
+
+        $this->assertTrue($output2 instanceof Data\GetCarOutputInterface);
+
+        $this->assertEquals($output2->getVin()->getValue(), $data[1]['vin']);
+        $this->assertEquals($output6->getVin()->getValue(), $data[5]['vin']);
     }
 
     /**
      * @test
-     * @depends testCreateCar
-     *
-     * @param CarValueId[] $ids
      */
-    public function testQueryCar(array $ids)
+    public function testUpdateCar()
     {
-        $service = doSystem()->make(QueryCarService::class);
+        $domainCarService = new DomainService\CarService($this->carRepository);
+        $updateService = new Service\UpdateCarService($this->carRepository, $domainCarService);
 
-        // all
-        $allFilter = doSystem()->make(QueryCarFilterInterface::class);
-        $allOutputs = $service->handle($allFilter);
+        $seeder = new Seeder\CarsSeeder(5, (new Seeder\VendorsSeeder(2))->seed($this->vendorRepository));
+        $data = $seeder->seed($this->carRepository, $this->vendorRepository)->get();
+        $ids = Faker::randomElements(\array_column($data, 'id'), 3);
 
-        $this->assertTrue($allOutputs[0] instanceof QueriedCarOutputInterface);
-        $this->assertEquals(count($ids), count($allOutputs));
+        // Update vin
+        $idVin = Model\CarValueId::of($ids[0]);
+        $modelVin = $this->carRepository->findById($idVin);
+        $vinBefore = $modelVin->getVin()->getValue();
+        $vinAfter = Faker::regexify(Model\CarValueVin::getRegexPattern());
 
-        // filter by vendor
-        $vendorFilter = doSystem()->makeWith(QueryCarFilterInterface::class, [
-            'vendorId' => [1, 4],
-        ]);
-        $vendorOutputs = $service->handle($vendorFilter);
+        $this->assertNotEquals($vinBefore, $vinAfter);
 
-        $this->assertEquals(count($vendorOutputs), self::$factory->countByVendorId(1) + self::$factory->countByVendorId(4));
+        $inputVin = new MockData\UpdateCarInputMock();
+        $inputVin->id = $idVin->getValue();
+        $inputVin->vin = $vinAfter;
+        $outputVin = $updateService->handle($inputVin);
 
-        // filter by vin
-        $vinFilter = doSystem()->makeWith(QueryCarFilterInterface::class, [
-            'vin' => '品川',
-        ]);
-        $vinOutputs = $service->handle($vinFilter);
+        $this->assertTrue($outputVin instanceof Data\UpdateCarOutputInterface);
+        $this->assertEquals(count($outputVin->modified), 1);
+        $this->assertEquals($outputVin->modified[0], Model\CarValueVin::class);
+        $this->assertEquals($this->carRepository->findById($idVin)->getVin()->getValue(), $vinAfter);
 
-        $this->assertEquals(count($vinOutputs), self::$factory->countByVin品川());
+        // Update name
+        $idName = Model\CarValueId::of($ids[1]);
+        $modelName = $this->carRepository->findById($idName);
+        $nameBefore = $modelName->getName()->getValue();
+        $nameAfter = 'Awesome Car Name';
 
-        // filter by status
-        $statusFilter = doSystem()->makeWith(QueryCarFilterInterface::class, [
-            'status' => [0, 7],
-        ]);
-        $statusOutput = $service->handle($statusFilter);
+        $this->assertNotEquals($nameBefore, $nameAfter);
 
-        $this->assertEquals(count($statusOutput), self::$factory->countByStatus(0) + self::$factory->countByStatus(7));
+        $inputName = new MockData\UpdateCarInputMock();
+        $inputName->id = $idName->getValue();
+        $inputName->name = $nameAfter;
+        $outputName = $updateService->handle($inputName);
 
-        // paged
-        $pageFilter = doSystem()->makeWith(QueryCarFilterInterface::class, [
-            'sizePerPage' => 6,
-            'page' => 4,
-        ]);
-        $pageOutputs = $service->handle($pageFilter);
+        $this->assertEquals(count($outputName->modified), 1);
+        $this->assertEquals($outputName->modified[0], Model\CarValueName::class);
+        $this->assertEquals($this->carRepository->findById($idName)->getName()->getValue(), $nameAfter);
 
-        $this->assertEquals(2, count($pageOutputs)); // 20 - (6 * (4 - 1))
-        $this->assertEquals(self::$sampleData[6 * 3 + 1 - 1]['vin'], $pageOutputs[0]->getVin()->getValue());
+        // Update vin & name
+        $idVinName = Model\CarValueId::of($ids[2]);
+        $modelVinName = $this->carRepository->findById($idVinName);
+        $vinBefore2 = $modelVinName->getVin()->getValue();
+        $nameBefore2 = $modelVinName->getName()->getValue();
+        $vinAfter2 = Faker::regexify(Model\CarValueVin::getRegexPattern());
+        $nameAfter2 = '素晴らしい車';
+
+        $this->assertNotEquals($vinBefore2, $vinAfter2);
+        $this->assertNotEquals($nameBefore2, $nameAfter2);
+
+        $inputVinName = new MockData\UpdateCarInputMock();
+        $inputVinName->id = $idVinName->getValue();
+        $inputVinName->vin = $vinAfter2;
+        $inputVinName->name = $nameAfter2;
+        $outputVinName = $updateService->handle($inputVinName);
+
+        $this->assertEquals(count($outputVinName->modified), 2);
+        $modelVinName2 = $this->carRepository->findById($idVinName);
+        $this->assertEquals($modelVinName2->getVin()->getValue(), $vinAfter2);
+        $this->assertEquals($modelVinName2->getName()->getValue(), $nameAfter2);
+    }
+
+    /**
+     * @test
+     */
+    public function testQueryCar()
+    {
+        $queryService = new Service\QueryCarService($this->carRepository);
+
+        $seeder = new Seeder\CarsSeeder(30, (new Seeder\VendorsSeeder(15))->seed($this->vendorRepository));
+        $data = $seeder->seed($this->carRepository, $this->vendorRepository)->get();
+
+        $filterAll = new MockData\QueryCarFilterMock();
+        $resultAll = $queryService->handle($filterAll);
+
+        $this->assertEquals(count($resultAll), 30);
+        $this->assertTrue($resultAll[0] instanceof Data\QueriedCarOutputInterface);
+
+        $filterVendorId = new MockData\QueryCarFilterMock();
+        $filterVendorId->vendorId = [1, 5, 14];
+        $resultVendorId = $queryService->handle($filterVendorId);
+
+        $filterVin = new MockData\QueryCarFilterMock();
+        $filterVin->vin = '9';
+        $resultVin = $queryService->handle($filterVin);
+
+        $filterStatus = new MockData\QueryCarFilterMock();
+        $filterStatus->status = [4, 6, 7];
+        $resultStatus = $queryService->handle($filterStatus);
+
+        $vendorId1514Num = 0;
+        $vinContains9Num = 0;
+        $status467Num = 0;
+        foreach ($data as $arr) {
+            if (\in_array($arr['vendor_id'], [1, 5, 14], true)) {
+                $vendorId1514Num++;
+            }
+            if (Str::contains($arr['vin'], '9')) {
+                $vinContains9Num++;
+            }
+            if (\in_array($arr['status'], [4, 6, 7], true)) {
+                $status467Num++;
+            }
+        }
+        $this->assertEquals(count($resultVendorId), $vendorId1514Num);
+        $this->assertEquals(count($resultVin), $vinContains9Num);
+        $this->assertEquals(count($resultStatus), $status467Num);
+
+        $filterPage = new MockData\QueryCarFilterMock();
+        $filterPage->sizePerPage = 7;
+        $filterPage->page = 5;
+        $resultPage = $queryService->handle($filterPage);
+
+        $this->assertEquals(count($resultPage), 30 - (7 * (5 - 1)));
+        $this->assertEquals($resultPage[0]->getVin()->getValue(), $data[28]['vin']);
+
+        $filterOrder = new MockData\QueryCarFilterMock();
+        $filterOrder->orderBy = 'status';
+        $filterOrder->order = 'DESC';
+        $resultOrder = $queryService->handle($filterOrder);
+        $statusCache = 9;
+        $c = 0;
+        foreach ($resultOrder as $output) {
+            $status = $output->model->getStatus()->getValue();
+            if ($status > $statusCache) {
+                break;
+            }
+            $c++;
+            if ($status < $statusCache) {
+                $statusCache = $status;
+            }
+        }
+
+        $this->assertEquals($c, 30);
     }
 }
